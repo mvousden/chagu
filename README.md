@@ -11,10 +11,10 @@ Requirements
 
 To use Chagu, you will need:
 
-Python 2.7
-VTK 5.8.0 (support for >6 is coming, possibly)
-Numpy
-GraphViz (the python module)
+ - Python 2.7
+ - VTK 5.8.0 (support for >6 is coming, possibly)
+ - Numpy
+ - GraphViz (the python module)
 
 Getting Started and Helping Out
 ===============================
