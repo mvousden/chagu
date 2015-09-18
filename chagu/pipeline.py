@@ -4,7 +4,7 @@
 import copy
 import vtk
 
-import termini
+import chagu.termini as termini
 
 
 def autopipe(self):

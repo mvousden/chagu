@@ -5,7 +5,7 @@
 
 import vtk
 
-import helpers
+import chagu.helpers as helpers
 
 
 def extract_vector_components(self, componentsName=None, component=0):

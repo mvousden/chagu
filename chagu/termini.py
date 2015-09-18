@@ -7,8 +7,8 @@ import matplotlib.cm
 import numpy as np
 import vtk
 
-import helpers
-import mask
+import chagu.helpers as helpers
+import chagu.mask as mask
 
 
 class Terminus:

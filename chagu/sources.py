@@ -3,7 +3,7 @@
 
 import vtk
 
-import helpers
+import chagu.helpers as helpers
 
 
 def load_visualisation_toolkit_file(self, filePath, readerName=None):
