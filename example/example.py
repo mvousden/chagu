@@ -1,13 +1,16 @@
 # This is an example script demonstrating the elegance of the visualisation
 # class I've just written.
 
-import visualisation
 import os
+import sys
+sys.path.append("../")  # Equivalent to adding the previous directory to the
+                        # pythonpath.
+import chagu
 
 
 def mmm():
-    vis = visualisation.Visualisation(name="mmm")
-    readerName = vis.load_visualisation_toolkit_file("example_data/data2.vtu")
+    vis = chagu.Visualisation(name="mmm")
+    readerName = vis.load_visualisation_toolkit_file("data/data2.vtu")
     sliceName = vis.slice_data_with_plane()
     compName = vis.extract_vector_components(component=2)
     compName_2 = vis.extract_vector_components(component=2)
@@ -44,12 +47,12 @@ def mmm():
     vis.windowSize = [1650, 950]
 
 #    vis.visualise_interact()
-    vis.visualise_save("example_data/out.png")
+    vis.visualise_save("output/out.png")
 
 
 def example_nasty_2d():
-    vis = visualisation.Visualisation(name="2d_nasty")
-    readerName = vis.load_visualisation_toolkit_file("example_data/data.vtu")
+    vis = chagu.Visualisation(name="2d_nasty")
+    readerName = vis.load_visualisation_toolkit_file("data/data.vtu")
     sliceName = vis.slice_data_with_plane()
     compName = vis.extract_vector_components(component=2)
 
@@ -65,12 +68,12 @@ def example_nasty_2d():
     vis.build_pipeline_from_dict(pipeline)
 
     vis.visualise_interact()
-    vis.draw_pipeline_graphviz(directory="example_data")
+    vis.draw_pipeline_graphviz(directory="output")
 
 
 def example_the_works():
-    vis = visualisation.Visualisation(name="full_example")
-    readerName = vis.load_visualisation_toolkit_file("example_data/data.vtu")
+    vis = chagu.Visualisation(name="full_example")
+    readerName = vis.load_visualisation_toolkit_file("data/data.vtu")
     compName = vis.extract_vector_components(component=2)
 
     coneLength = 1.0
@@ -87,12 +90,12 @@ def example_the_works():
     vis.build_pipeline_from_dict(pipeline)
 
     vis.visualise_interact()
-    vis.visualise_save("example_data/out.png")
-    vis.draw_pipeline_graphviz(directory="example_data")
+    vis.visualise_save("output/out.png")
+    vis.draw_pipeline_graphviz(directory="output")
 
 
 def example_tiny():
-    vis = visualisation.Visualisation(filePath="example_data/data.vtu")
+    vis = chagu.Visualisation(filePath="data/data.vtu")
     vis.extract_vector_components(component=2)
     vis.act_cone_vector_field(1, .5, 20, maskType="plane")
     vis.act_surface(opacity=0.5)
@@ -100,8 +103,8 @@ def example_tiny():
 
 
 def example_autopipe_1():
-    vis = visualisation.Visualisation(name="autopipe_example_1",
-                                      filePath="example_data/data.vtu")
+    vis = chagu.Visualisation(name="autopipe_example_1",
+                              filePath="data/data.vtu")
     compName = vis.extract_vector_components(component=2)
 
     coneLength = 1.0
@@ -113,13 +116,13 @@ def example_autopipe_1():
     cmapName = vis.act_colourbar()
 
     vis.visualise_interact()
-    vis.visualise_save("example_data/out.png")
-    vis.draw_pipeline_graphviz(directory="example_data")
+    vis.visualise_save("output/out.png")
+    vis.draw_pipeline_graphviz(directory="output")
 
 
 def example_autopipe_2():
-    vis = visualisation.Visualisation(name="autopipe_example_2",
-                                      filePath="example_data/data.vtu")
+    vis = chagu.Visualisation(name="autopipe_example_2",
+                                      filePath="data/data.vtu")
     sliceName = vis.slice_data_with_plane()
     compName = vis.extract_vector_components(component=2)
 
@@ -129,24 +132,24 @@ def example_autopipe_2():
     cmapName = vis.act_colourbar()
 
     vis.visualise_interact()
-    vis.draw_pipeline_graphviz(directory="example_data")
+    vis.draw_pipeline_graphviz(directory="output")
 
 
 def example_animate_rotate():
-    vis = visualisation.Visualisation(filePath="example_data/data.vtu")
+    vis = chagu.Visualisation(filePath="data/data.vtu")
     horiz = 1680
     ratio = 3.0
     vis.windowSize = [horiz, horiz * ratio]
     vis.extract_vector_components(component=2)
     vis.act_cone_vector_field(1, .5, 20, maskType="plane")
     vis.act_surface(opacity=0.5)
-    vis.visualise_animate_rotate("example_data/rot", offscreenRendering=True,
+    vis.visualise_animate_rotate("output/rot", offscreenRendering=True,
                                  rotation_resolution=4)
 
 
 if __name__ == "__main__":
-    if os.path.exists("example_data") is False:
-        os.mkdir("example_data")
+    if os.path.exists("output") is False:
+        os.mkdir("output")
     # example_the_works()
     # example_nasty_2d()
     # mmm()
