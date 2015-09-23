@@ -4,7 +4,10 @@ Chagu
 Chagu (pronounced châghu, or knife) is a Python module designed to ease
 visualisation of vector fields. It is designed to render magnetic moment vector
 fields from the discipline of micromagnetics, but can be extended to any
-project requiring vector field plots. It uses VTK to do this.
+project requiring vector field plots. It uses VTK to do this. Here is a pretty
+example:
+
+![Quiver plot](http://www.southampton.ac.uk/~mv3g08/chagu_example.png)
 
 Requirements
 ============
