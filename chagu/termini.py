@@ -288,8 +288,8 @@ def act_cone_vector_field(self, coneLength, coneRadius, coneResolution,
     return sensibleName
 
 
-def act_nasty_vector_field(self, arrowLength, maskDomain=None,
-                           maskResolution=None, maskType=None,
+def act_nasty_vector_field(self, arrowLength, arrowColour=[0., 0., 0.],
+                           maskDomain=None, maskResolution=None, maskType=None,
                            uniformLength=True, vectorsName=None):
     """
     Define a vtkActor that draws a vector field of nasty arrows representing
@@ -298,6 +298,9 @@ def act_nasty_vector_field(self, arrowLength, maskDomain=None,
     Arguments:
 
       - arrowLength: Float denoting the length of the nasty arrow vectors.
+
+      - arrowColour: Three element list of floats between 0 and 1 that define
+          the colour of the arrows in RGB format.
 
       - maskDomain: Nine element list that defines a rectangle in
           three-dimensional space. The input data represents three adjacent
@@ -362,7 +365,7 @@ def act_nasty_vector_field(self, arrowLength, maskDomain=None,
 
     # Create the actor for the vectors.
     vectorActor = vtk.vtkActor()
-    vectorActor.GetProperty().SetColor(0., 0., 0.)
+    vectorActor.GetProperty().SetColor(arrowColour)
 
     # Connect internal stuff together.
     vectorActor.SetMapper(vectorMapper)
