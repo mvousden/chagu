@@ -25,3 +25,22 @@ the functionality of this module.
 
 If you want to help out, the "notes/chagu.org" orgfile contains some tasks to
 do. Try opening it with emacs.
+
+A Word on Offscreen Rendering
+=============================
+
+Some systems seem to have trouble rendering offscreen with VTK. This is
+important when trying to save a batch of images. One solution to this problem
+is to render using a virtual framebuffer, which can be done using Xvfb, Xpra,
+or similar. As an example in your terminal:
+
+```
+$ xpra start :25
+$ export TEMP_DISPLAY=$DISPLAY
+$ export DISPLAY=:25
+$ python example.py
+$ export DISPLAY=$TEMP_DISPLAY
+$ xpra stop :25
+```
+
+For more information on this, visit https://www.xpra.org/.
