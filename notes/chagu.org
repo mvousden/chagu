@@ -10,6 +10,11 @@
   need to write a script. This means each dataset has its own set of properties
   that will render the vector fields consistently.
 
+* TODO [#A] Convert examples into a notebook file that can be read by GitHub
+
+  This makes the examples more attractive, since you can see their output more
+  easily.
+
 * TODO [#A] Write unit tests
 
   Good luck!
