@@ -19,18 +19,18 @@
 
   Good luck!
 
+* TODO [#B] Advanced pipeline features
+
+  Allow pipeline disconnections to make the visualisation class more robust. It
+  would also help users when creating multiple different visualisations from
+  the same file.
+
 * TODO [#B] Advanced sourcing
 
   Allow the user to change the file loaded by a given fileReader object, and to
   draw multiple datasets simultaneously. The motivation for the former is that
   the user may wish to create an animation through a dataseries. Not sure of a
   motivation for the latter, but it might already "just work".
-
-* TODO [#B] Advanced pipeline features
-
-  Allow pipeline disconnections to make the visualisation class more robust. It
-  would also help users when creating multiple different visualisations from
-  the same file.
 
 * TODO [#B] Fix automatic camera
 
@@ -45,6 +45,11 @@
   manually. Find a fix for this problem; some way for the user to get hold of
   the name easily.
 
+* TODO [#C] Implement observers
+
+  More verbosity is usually a good thing with scripting libraries, and this
+  should fairly simply allow a user to debug a problem without significant
+  effort.
 * TODO [#C] Parameters for masking vector fields
 
   Come up with a more intuitive way of doing the masking for cone/nasty
@@ -53,11 +58,6 @@
   sensible values for them depending on the domain/resolution they select, if
   any.
 
-* TODO [#C] Implement observers
-
-  More verbosity is usually a good thing with scripting libraries, and this
-  should fairly simply allow a user to debug a problem without significant
-  effort.
 * TODO [#C] Progress bar for animate_rotate
 
   Instead of using a series of print statements for each image, use progressbar
