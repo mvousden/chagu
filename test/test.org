@@ -1,0 +1,61 @@
+# So we have a decent level of working functionality in Chagu. It is possible
+# to produce some output visualisations using short, simple scripts. In
+# retrospect, driving the development of this software using tests would have
+# been ideal because it means that the interface is designed for the user, as
+# opposed to match the functionality of Chagu. Unfortunatly, this is not what I
+# did when starting this project. Future features will warrant the use of
+# test-driven development to save time, reduce code complexity, and make me
+# happier. This will not retroactively fix existing features. To make up for
+# this, I am developing some tests to back-test this project. These black box
+# tests will exist from the user-interface level to the level of internals. The
+# rest of this note describes some testing objectives.
+
+* TODO Integrate tests with CircleCI
+  - Note taken on [2015-10-09 Fri 13:31] \\
+    A continuous integration tool will demonstrate the functionality of this
+    library to myself and others, and is an important part of the Agile
+    development paradigm.
+* TODO visualisation.py functionality.
+** TODO Visualisation object initialisation
+*** TODO Setting name
+*** TODO Passing filepath loads a file
+    - Note taken on [2015-10-09 Fri 13:28] \\
+      Depends on load_visualisation_toolkit_file working
+*** TODO Initial background must be black
+*** TODO Bounding box must have six elements
+*** TODO A colourmap is created and defined
+    - Note taken on [2015-10-09 Fri 13:28] \\
+      Depends on colourmap_lut setter working
+** TODO Background setting
+*** TODO Non-3 element arguments
+*** TODO Arguments are floats/ints/something similar
+*** TODO Input argument overflow behaviour
+** TODO Camera setting
+*** TODO Valid input arguments are not modified
+*** TODO Invalid camera key, view up, position, focal point, zoom, or parallel projection (including data types)
+** TODO LUT setting
+   - Note taken on [2015-10-09 Fri 13:27] \\
+     This should be tested by termini.lookup_table_from_RGB_colourmap.
+*** TODO The colourmap should be stored
+** TODO WindowSize setting
+*** TODO Valid input arguments are not modified
+*** TODO Non-2 element arguments
+*** TODO Values less than zero
+*** TODO Arguments are floats/ints/something similar
+* TODO helpers.py functionality
+** TODO generate_sensible_name
+*** TODO Valid name
+*** TODO Invalid name gets appended with a suffix _1
+*** TODO Invalid name gets appended with a suffix _N if more than one exists
+** TODO vtk_base_version
+   - Note taken on [2015-10-09 Fri 14:40] \\
+     Tests should be defined for VTK 5.X and 6.X, and should test for both
+     cases. This can be set on CircleCI hopefully.
+* TODO Write test descriptions for other files
+** TODO filters.py
+** TODO mask.py
+** TODO pipeline.py
+** TODO render.py
+** TODO sources.py
+** TODO termini.py
+** TODO tracking.py
