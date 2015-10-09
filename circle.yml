@@ -5,9 +5,10 @@ machine:
     version: 2.7.6
 
 dependencies:
-  post:
+  pre:
     - sudo apt-get update
     - sudo apt-get install python-vtk
+    - cp -r /usr/lib/pymodules/python2.7 $HOME/virtualenvs/venv-2.7.6/lib/python2.7/site-packages
     - pip install pytest
 
 test:
