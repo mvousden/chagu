@@ -1,0 +1,2 @@
+# This file is processed by CircleCI to cache packages installable with pip.
+pytest == 2.6.2
