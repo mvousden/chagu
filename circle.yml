@@ -10,6 +10,7 @@ dependencies:
     - cd ~ && tar -xvf ~/vtk-5.10.1.tar.gz
     - cd ~/VTK5.10.1/ && cmake -D VTK_WRAP_PYTHON:BOOL=ON -D BUILD_SHARED_LIBS:BOOL=ON ./
     - make all --directory=~/VTK5.10.1/
+    - cp ~/VTK5.10.1/vtkpython ~/virtualenvs/venv-2.7.6/bin/python
 
   post:
     - pip install -r requirements.txt
@@ -21,5 +22,4 @@ test:
   override:
     - py.test $HOME/chagu/test/:
         environment:
-          LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$HOME/VTK5.10.1/bin"
-          PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$HOME/VTK5.10.1/Wrapping/Python:$HOME/VTK5.10.1/bin"
+          PYTHONPATH: "$PYTHONPATH:$HOME/chagu"
