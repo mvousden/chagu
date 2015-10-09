@@ -1,8 +1,17 @@
+* TODO [#S] Write unit tests
+
+  Good luck!
+
 * TODO [#A] Choose sensible defaults for visualise_animate_rotate
 
   visualise_animate_rotate uses defaults for a specific example. Change these
   defaults to calculate positions in the rotation from the bounding box of the
   data.
+
+* TODO [#A] Resolution values for masks must be greater than zero
+
+  If the resolution for a mask is zero, then no vectors will be drawn. This is
+  very confusing for our pipeline, and will confuse the user.
 
 * TODO [#A] ConfigParser implementation
 
@@ -14,10 +23,6 @@
 
   This makes the examples more attractive, since you can see their output more
   easily.
-
-* TODO [#A] Write unit tests
-
-  Good luck!
 
 * TODO [#B] Advanced pipeline features
 
