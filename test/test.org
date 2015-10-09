@@ -10,7 +10,7 @@
 # tests will exist from the user-interface level to the level of internals. The
 # rest of this note describes some testing objectives.
 
-* TODO Integrate tests with CircleCI
+* IN-PROGRESS Integrate tests with CircleCI
   - Note taken on [2015-10-09 Fri 13:31] \\
     A continuous integration tool will demonstrate the functionality of this
     library to myself and others, and is an important part of the Agile
