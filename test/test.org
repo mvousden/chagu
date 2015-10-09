@@ -42,15 +42,6 @@
 *** TODO Non-2 element arguments
 *** TODO Values less than zero
 *** TODO Arguments are floats/ints/something similar
-* TODO helpers.py functionality
-** TODO generate_sensible_name
-*** TODO Valid name
-*** TODO Invalid name gets appended with a suffix _1
-*** TODO Invalid name gets appended with a suffix _N if more than one exists
-** TODO vtk_base_version
-   - Note taken on [2015-10-09 Fri 14:40] \\
-     Tests should be defined for VTK 5.X and 6.X, and should test for both
-     cases. This can be set on CircleCI hopefully.
 * TODO Write test descriptions for other files
 ** TODO filters.py
 ** TODO mask.py
