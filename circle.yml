@@ -1,10 +1,10 @@
 ---
 
 machine:
+  environment:
+    PYTHON_CONFIGURE_OPTS: "--enable-unicode=ucs4"
   python:
     version: 2.7.6
-    environment:
-      PYTHON_CONFIGURE_OPTS: "--enable-unicode=ucs4"
 
 dependencies:
   pre:
