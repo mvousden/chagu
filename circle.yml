@@ -10,10 +10,10 @@ dependencies:
     - cd ~ && tar -xvf ~/vtk-5.10.1.tar.gz
     - cd ~/VTK5.10.1/ && cmake -D VTK_WRAP_PYTHON:BOOL=ON -D BUILD_SHARED_LIBS:BOOL=ON ./
     - cd ~/VTK5.10.1/ && make all
-    - cp ~/VTK5.10.1/bin/vtkpython ~/virtualenvs/venv-2.7.6/bin/python
+    - pip install -r requirements.txt
 
   post:
-    - pip install -r requirements.txt
+    - cp ~/VTK5.10.1/bin/vtkpython ~/virtualenvs/venv-2.7.6/bin/python
 
   cache_directories:
     - ~/VTK5.10.1
