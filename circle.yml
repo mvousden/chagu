@@ -12,4 +12,6 @@ dependencies:
 
 test:
   override:
-    - py.test
+    - py.test:
+        environment:
+          PYTHONPATH: "$PYTHONPATH:$HOME/chagu"
