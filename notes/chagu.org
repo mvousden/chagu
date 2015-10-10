@@ -10,6 +10,11 @@
   need to write a script. This means each dataset has its own set of properties
   that will render the vector fields consistently.
 
+* TODO [#A] Create examples in IPython notebooks.
+
+  IPython notebooks render automatically in the Github pages. These would go a
+  long way to selling this work to others.
+
 * TODO [#A] Write unit tests
 
   Good luck!
