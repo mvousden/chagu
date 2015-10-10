@@ -1,0 +1,27 @@
+---
+
+machine:
+  environment:
+    PYTHON_CONFIGURE_OPTS: "--enable-unicode=ucs4"
+  python:
+    version: 2.7.6
+
+dependencies:
+  pre:
+    - cd ~ && wget http://www.vtk.org/files/release/5.10/vtk-5.10.1.tar.gz
+    - cd ~ && tar -xvf ~/vtk-5.10.1.tar.gz
+    - cd ~/VTK5.10.1/ && cmake -D VTK_WRAP_PYTHON:BOOL=ON -D BUILD_SHARED_LIBS:BOOL=ON ./
+    - cd ~/VTK5.10.1/ && make all
+
+  post:
+    - pip install -r requirements.txt
+
+  cache_directories:
+    - ~/VTK5.10.1
+
+test:
+  override:
+    - py.test $HOME/chagu/test/:
+        environment:
+          LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$HOME/VTK5.10.1/bin"
+          PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$HOME/VTK5.10.1/Wrapping/Python:$HOME/VTK5.10.1/bin"

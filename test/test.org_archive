@@ -1,0 +1,22 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/mark/repos/chagu/test/test.org
+
+
+* DONE helpers.py functionality
+  CLOSED: [2015-10-09 Fri 17:07]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2015-10-09 Fri 17:07
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:
+** TODO generate_sensible_name
+*** TODO Valid name
+*** TODO Invalid name gets appended with a suffix _1
+*** TODO Invalid name gets appended with a suffix _N if more than one exists
+** TODO vtk_base_version
+   - Note taken on [2015-10-09 Fri 14:40] \\
+     Tests should be defined for VTK 5.X and 6.X, and should test for both
+     cases. This can be set on CircleCI hopefully.
