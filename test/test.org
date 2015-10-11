@@ -26,7 +26,8 @@
 *** TODO Non-3 element arguments
 *** TODO Arguments are floats/ints/something similar
 *** TODO Input argument overflow behaviour
-** TODO Camera setting
+** DONE Camera setting
+   CLOSED: [2015-10-11 Sun 21:14]
 *** TODO Valid input arguments are not modified
 *** TODO Invalid camera key, view up, position, focal point, zoom, or parallel projection (including data types)
 ** TODO LUT setting
