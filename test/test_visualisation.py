@@ -31,11 +31,11 @@ def test_set_background():
 
     vis = chagu.Visualisation()
 
-    # Test 1: If backgroundInput is not iterable, a ValueError is raised.
+    # Test 1: If backgroundInput is not iterable, a TypeError is raised.
     backgroundInput_1 = -4.3
     expectedMsg = ("background value \"{}\" must be iterable."
                    .format(backgroundInput_1))
-    with pytest.raises(ValueError) as testException:
+    with pytest.raises(TypeError) as testException:
         vis.background = backgroundInput_1
     assert expectedMsg in testException.value.message
 
@@ -51,17 +51,13 @@ def test_set_background():
     # Test 3: If the elements of backgroundInput are not numerical, a
     # ValueError is raised.
     backgroundInput_3a = [1, 2, "d"]
-    expectedMsg_a("background value \"{}\" has element \"{}\", which is not "
-                  "numerical".format(backgroundInput_3a,
-                                     backgroundInput_3a[2]))
     with pytest.raises(ValueError) as testException:
         vis.background = backgroundInput_3a
-    assert expectedMsg_a in testException.value.message
 
     backgroundInput_3b = [1, [], "d"]
-    expectedMsg_b("background value \"{}\" has element \"{}\", which is not "
-                  "numerical".format(backgroundInput_3b,
-                                     backgroundInput_3b[1]))
+    expectedMsg_b = ("background value \"{}\" has element \"{}\", which is "
+                     "not numerical".format(backgroundInput_3b,
+                                            backgroundInput_3b[1]))
     with pytest.raises(ValueError) as testException:
         vis.background = backgroundInput_3b
     assert expectedMsg_b in testException.value.message
@@ -82,7 +78,7 @@ def test_set_background():
     vis.background = backgroundInput_5
     assert vis.background[0] == 0
     assert vis.background[1] == backgroundInput_5[1]
-    assert vis.background[2] == backgroundInput_5[1]
+    assert vis.background[2] == backgroundInput_5[2]
 
     # Test 6: If an element of backgroundinput is less than zero, and another
     # element is greater than zero, the visualisation instance has _background

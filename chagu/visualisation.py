@@ -99,16 +99,26 @@ class Visualisation(object):
     @background.setter
     def background(self, backgroundInput):
         backgroundValue = []
+        if hasattr(backgroundInput, "__getitem__") is False:
+            raise TypeError("background value \"{}\" must be iterable."
+                            .format(backgroundInput))
         if len(backgroundInput) != 3:
             raise ValueError("background value \"{}\" should contain exactly "
                              "three elements.".format(backgroundInput))
         for rgbValue in backgroundInput:
-            if rgbValue < 0:
+            try:
+                convertedValue = float(rgbValue)
+            except TypeError:
+                raise ValueError("background value \"{}\" has element "
+                                 "\"{}\", which is not numerical"
+                                 .format(backgroundInput, rgbValue))
+
+            if convertedValue < 0:
                 backgroundValue.append(0.)
-            elif rgbValue > 1:
+            elif convertedValue > 1:
                 backgroundValue.append(1.)
             else:
-                backgroundValue.append(rgbValue)
+                backgroundValue.append(convertedValue)
 
         self._background = backgroundValue
 
