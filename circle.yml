@@ -28,8 +28,8 @@ dependencies:
     - $PYTHON_EXEC_PATH/pip install -r requirements.txt
 
   cache_directories:
-    - $PYTHON_BUILD_PATH
-    - $VTK_BUILD_PATH
+    - ~/Python-2.7.10/
+    - ~/VTK5.10.1/
 
 test:
   override:
