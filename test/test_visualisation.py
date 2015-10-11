@@ -167,7 +167,7 @@ def test_set_camera():
 
         cameraInput_678_b = {key: [1, [], "d"]}
         expectedMsg_b = ("Camera key \"{}\" has value with element \"{}\", "
-                         "which is not numerical")
+                         "which is not numerical"
                          .format(key, cameraInput_678_b[key][1]))
         with pytest.raises(ValueError) as testException:
             vis.camera = cameraInput_678_b
