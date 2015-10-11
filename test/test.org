@@ -26,7 +26,7 @@
 *** TODO A colourmap is created and defined
     - Note taken on [2015-10-09 Fri 13:28] \\
       Depends on colourmap_lut setter working
-** TODO Background setting
+** IN-PROGRESS Background setting
 *** TODO Non-3 element arguments
 *** TODO Arguments are floats/ints/something similar
 *** TODO Input argument overflow behaviour
