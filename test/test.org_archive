@@ -20,3 +20,16 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
    - Note taken on [2015-10-09 Fri 14:40] \\
      Tests should be defined for VTK 5.X and 6.X, and should test for both
      cases. This can be set on CircleCI hopefully.
+
+* DONE Integrate tests with CircleCI
+  CLOSED: [2015-10-11 Sun 15:23]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2015-10-11 Sun 15:23
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:
+  - Note taken on [2015-10-09 Fri 13:31] \\
+    A continuous integration tool will demonstrate the functionality of this
+    library to myself and others, and is an important part of the Agile
+    development paradigm.
