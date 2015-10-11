@@ -125,7 +125,7 @@ def test_set_camera():
     # Test 1: If cameraInput does not have keys and values, a TypeError is
     # raised.
     cameraInput_1 = []
-    expectedMsg = ("camera input \"{}\" must have keys and values."
+    expectedMsg = ("Camera input \"{}\" must have keys and values."
                    .format(cameraInput_1))
     with pytest.raises(TypeError) as testException:
         vis.camera = cameraInput_1
@@ -134,7 +134,7 @@ def test_set_camera():
     # Test 2: If cameraInput contains an invalid camera key, a ValueError is
     # raised.
     cameraKey = "c"
-    while cameraKey in vis._validCameraKeys.keys():
+    while cameraKey in vis._validCameraKeys:
         cameraKey += cameraKey
     cameraInput_2 = {cameraKey: cameraKey}
     expectedMsg = ("Camera key \"{}\" is not valid. Try one of \"{}\"."
@@ -151,32 +151,32 @@ def test_set_camera():
         cameraInput_345 = {key: [2, "b"]}
         expectedMsg = ("Camera key \"{}\" has invalid value \"{}\", which "
                        "should contain exactly three elements."
-                       .format(key, cameraInput[key]))
+                       .format(key, cameraInput_345[key]))
         with pytest.raises(ValueError) as testException:
             vis.camera = cameraInput_345
         assert expectedMsg in testException.value.message
 
     # Test 6, 7, 8: If any element of cameraInput["view up"] is not numerical,
-    # a ValueError is raised. If any element of cameraInput["position"] is not
-    # numerical, a ValueError is raised. If any element of cameraInput["focal
-    # point"] is not numerical, a ValueError is raised.
+    # a TypeError is raised. If any element of cameraInput["position"] is not
+    # numerical, a TypeError is raised. If any element of cameraInput["focal
+    # point"] is not numerical, a TypeError is raised.
     for key in "view up", "position", "focal point":
         cameraInput_678_a = {key: [1, 2, "d"]}
-        with pytest.raises(ValueError) as testException:
+        with pytest.raises(TypeError) as testException:
             vis.camera = cameraInput_678_a
 
         cameraInput_678_b = {key: [1, [], "d"]}
         expectedMsg_b = ("Camera key \"{}\" has value with element \"{}\", "
                          "which is not numerical"
                          .format(key, cameraInput_678_b[key][1]))
-        with pytest.raises(ValueError) as testException:
+        with pytest.raises(TypeError) as testException:
             vis.camera = cameraInput_678_b
         assert expectedMsg_b in testException.value.message
 
     # Test 9: If cameraInput["zoom"] is not numerical, a TypeError is raised.
     cameraInput_9 = {"zoom": {}}
-    expectedMsg = ("Invalid zoom value \"{}\". This must be greater than zero."
-                   .format(cameraInput_10["zoom"]))
+    expectedMsg = ("Invalid zoom value \"{}\" is not numerical."
+                   .format(cameraInput_9["zoom"]))
     with pytest.raises(TypeError) as testException:
         vis.camera = cameraInput_9
     assert expectedMsg in testException.value.message
@@ -220,3 +220,4 @@ def test_set_camera():
 
 if __name__ == "__main__":
     test_set_background()
+    test_set_camera()

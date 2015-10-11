@@ -100,16 +100,16 @@ class Visualisation(object):
     def background(self, backgroundInput):
         backgroundValue = []
         if hasattr(backgroundInput, "__getitem__") is False:
-            raise TypeError("background value \"{}\" must be iterable."
+            raise TypeError("Background value \"{}\" must be iterable."
                             .format(backgroundInput))
         if len(backgroundInput) != 3:
-            raise ValueError("background value \"{}\" should contain exactly "
+            raise ValueError("Background value \"{}\" should contain exactly "
                              "three elements.".format(backgroundInput))
         for rgbValue in backgroundInput:
             try:
                 convertedValue = float(rgbValue)
             except TypeError:
-                raise ValueError("background value \"{}\" has element "
+                raise ValueError("Background value \"{}\" has element "
                                  "\"{}\", which is not numerical"
                                  .format(backgroundInput, rgbValue))
 
@@ -136,26 +136,41 @@ class Visualisation(object):
     def camera(self, cameraInput):
         cameraValue = {}
 
+        if hasattr(cameraInput, "iteritems") is False:
+            raise TypeError("Camera input \"{}\" must have keys and values."
+                            .format(cameraInput))
+
         # For each of the inputs, we check it for errors. If it passes, it gets
         # added.
         for key, value in cameraInput.iteritems():
             if key not in self._validCameraKeys:
                 raise ValueError("Camera key \"{}\" is not valid. Try one of "
-                                 "\"{}\"".format(key, self._validCameraKeys))
-            if key is "view up" or key is "position" or key is "focal point":
+                                 "\"{}\".".format(key, self._validCameraKeys))
+            if key == "view up" or key == "position" or key == "focal point":
                 if len(value) != 3:
                     raise ValueError("Camera key \"{}\" has invalid value "
                                      "\"{}\", which should contain exactly "
                                      "three elements.".format(key, value))
-            if key is "zoom":
+                for element in value:
+                    try:
+                        float(element)
+                    except (ValueError, TypeError):
+                        raise TypeError("Camera key \"{}\" has value with "
+                                        "element \"{}\", which is not "
+                                        "numerical".format(key, element))
+            if key == "zoom":
+                try:
+                    float(value)
+                except (ValueError, TypeError):
+                    raise TypeError("Invalid zoom value \"{}\" is not "
+                                    "numerical.".format(value))
                 if value <= 0:
                     raise ValueError("Invalid zoom value \"{}\". This must be "
                                      "greater than zero.".format(value))
-            if key is "parallel projection":
+            if key == "parallel projection":
                 if type(value) is not bool:
-                    raise ValueError("Invalid parallel projection value "
-                                     "\"{}\". This must be a boolean."
-                                     .format(value))
+                    raise TypeError("Invalid parallel projection value \"{}\""
+                                    ". This must be a boolean.".format(value))
             cameraValue[key] = value
 
         self._camera = cameraInput
