@@ -142,10 +142,10 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
     # bounding box to estimate a nice resolution. We use integer division
     # because resolution values must be integers.
     if maskResolution is None:
-        resolution = [(maxX - minX) // (glyphSize * 1.1),
-                      (maxY - minY) // (glyphSize * 1.1)]
+        resolution = [max((maxX - minX) // (glyphSize * 1.1), 1),
+                      max((maxY - minY) // (glyphSize * 1.1), 1)]
         if maskType == "volume":
-            resolution += [(maxZ - minZ) // (glyphSize * 1.1)]
+            resolution += [max((maxZ - minZ) // (glyphSize * 1.1), 1)]
     else:
         resolution = maskResolution
 
