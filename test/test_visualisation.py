@@ -238,7 +238,7 @@ def test_set_windowsize():
 
     # Test 1: If windowSizeInput is not iterable, a TypeError is raised.
     windowSizeInput_1 = -4.3
-    expectedMsg = ("WindowSize value \"{}\" must be iterable."
+    expectedMsg = ("Window size value \"{}\" must be iterable."
                    .format(windowSizeInput_1))
     with pytest.raises(TypeError) as testException:
         vis.windowSize = windowSizeInput_1
@@ -247,7 +247,7 @@ def test_set_windowsize():
     # Test 2: If windowSizeInput is iterable and does not have two elements
     # exactly, a ValueError is raised.
     windowSizeInput_2 = [2, "b", {}]
-    expectedMsg = ("WindowSize value \"{}\" should contain exactly two "
+    expectedMsg = ("Window size value \"{}\" should contain exactly two "
                    "elements.".format(windowSizeInput_2))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_2
@@ -255,17 +255,17 @@ def test_set_windowsize():
 
     # Test 3: If any element of windowSizeInput is not like an integer, a
     # ValueError is raised.
-    windowSizeInput_3a = [1, 2, 4.3]
-    expectedMsg_a = ("WindowSize value \"{}\" has element \"{}\", which is "
-                     "not an integer".format(windowSizeInput_3a,
-                                             windowSizeInput_3a[2]))
+    windowSizeInput_3a = [4.3, 1]
+    expectedMsg_a = ("Window size value \"{}\" has element \"{}\", which is "
+                     "not an integer.".format(windowSizeInput_3a,
+                                             windowSizeInput_3a[0]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_3a
     assert expectedMsg_a in testException.value.message
 
-    windowSizeInput_3b = ["1", [], "d"]
-    expectedMsg_b = ("WindowSize value \"{}\" has element \"{}\", which is "
-                     "not an integer".format(windowSizeInput_3b,
+    windowSizeInput_3b = ["1", []]
+    expectedMsg_b = ("Window size value \"{}\" has element \"{}\", which is "
+                     "not an integer.".format(windowSizeInput_3b,
                                              windowSizeInput_3b[1]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_3b
@@ -274,17 +274,17 @@ def test_set_windowsize():
     # Test 4: If any element of windowSizeInput is zero or less, a ValueError
     # is raised.
     windowSizeInput_4a = [-2, "180"]
-    expectedMsg_a = ("WindowSize value \"{}\" has element \"{}\", which is less"
-                     "than zero.".format(windowSizeInput_4a,
-                                         windowSizeInput_4a[0]))
+    expectedMsg_a = ("Window size value \"{}\" has element \"{}\", which must "
+                     "be greater than zero.".format(windowSizeInput_4a,
+                                                    windowSizeInput_4a[0]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_4a
     assert expectedMsg_a in testException.value.message
 
     windowSizeInput_4b = [2000, -4.3]
-    expectedMsg_b = ("WindowSize value \"{}\" has element \"{}\", which is less"
-                     "than zero.".format(windowSizeInput_4b,
-                                         windowSizeInput_4b[1]))
+    expectedMsg_b = ("Window size value \"{}\" has element \"{}\", which must "
+                     "be greater than zero.".format(windowSizeInput_4b,
+                                                    windowSizeInput_4b[1]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_4b
     assert expectedMsg_b in testException.value.message
