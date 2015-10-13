@@ -12,7 +12,7 @@ def test_set_background():
     """
     Test chagu.Visualisation setter "background". We test the following cases:
 
-    1. If backgroundInput is not iterable, a ValueError is raised.
+    1. If backgroundInput is not iterable, a TypeError is raised.
     2. If backgroundInput is iterable and does not have three elements exactly,
          a ValueError is raised.
     3. If any element of backgroundInput is not numerical, a ValueError is
@@ -216,6 +216,85 @@ def test_set_camera():
     cameraInput_13b = {}
     vis.camera = cameraInput_13b
     assert vis._camera == cameraInput_13b
+
+
+def test_set_windowsize():
+    """
+    Test chagu.Visualisation setter "windowSize". We test the following cases:
+
+    1. If windowSizeInput is not iterable, a TypeError is raised.
+    2. If windowSizeInput is iterable and does not have two elements exactly, a
+         ValueError is raised.
+    3. If any element of windowSizeInput is not like an integer, a ValueError
+         is raised.
+    4. If any element of windowSizeInput is zero or less, a ValueError is
+         raised.
+    5. If windowSizeInput is a two-element object containing integer-like
+       objects, the visualisation instance has _windowSize value equal to
+       windowSizeInput.
+    """
+
+    vis = chagu.Visualisation()
+
+    # Test 1: If windowSizeInput is not iterable, a TypeError is raised.
+    windowSizeInput_1 = -4.3
+    expectedMsg = ("WindowSize value \"{}\" must be iterable."
+                   .format(windowSizeInput_1))
+    with pytest.raises(TypeError) as testException:
+        vis.windowSize = windowSizeInput_1
+    assert expectedMsg in testException.value.message
+
+    # Test 2: If windowSizeInput is iterable and does not have two elements
+    # exactly, a ValueError is raised.
+    windowSizeInput_2 = [2, "b", {}]
+    expectedMsg = ("WindowSize value \"{}\" should contain exactly two "
+                   "elements.".format(windowSizeInput_2))
+    with pytest.raises(ValueError) as testException:
+        vis.windowSize = windowSizeInput_2
+    assert expectedMsg in testException.value.message
+
+    # Test 3: If any element of windowSizeInput is not like an integer, a
+    # ValueError is raised.
+    windowSizeInput_3a = [1, 2, 4.3]
+    expectedMsg_a = ("WindowSize value \"{}\" has element \"{}\", which is "
+                     "not an integer".format(windowSizeInput_3a,
+                                             windowSizeInput_3a[2]))
+    with pytest.raises(ValueError) as testException:
+        vis.windowSize = windowSizeInput_3a
+    assert expectedMsg_a in testException.value.message
+
+    windowSizeInput_3b = ["1", [], "d"]
+    expectedMsg_b = ("WindowSize value \"{}\" has element \"{}\", which is "
+                     "not an integer".format(windowSizeInput_3b,
+                                             windowSizeInput_3b[1]))
+    with pytest.raises(ValueError) as testException:
+        vis.windowSize = windowSizeInput_3b
+    assert expectedMsg_b in testException.value.message
+
+    # Test 4: If any element of windowSizeInput is zero or less, a ValueError
+    # is raised.
+    windowSizeInput_4a = [-2, "180"]
+    expectedMsg_a = ("WindowSize value \"{}\" has element \"{}\", which is less"
+                     "than zero.".format(windowSizeInput_4a,
+                                         windowSizeInput_4a[0]))
+    with pytest.raises(ValueError) as testException:
+        vis.windowSize = windowSizeInput_4a
+    assert expectedMsg_a in testException.value.message
+
+    windowSizeInput_4b = [2000, -4.3]
+    expectedMsg_b = ("WindowSize value \"{}\" has element \"{}\", which is less"
+                     "than zero.".format(windowSizeInput_4b,
+                                         windowSizeInput_4b[1]))
+    with pytest.raises(ValueError) as testException:
+        vis.windowSize = windowSizeInput_4b
+    assert expectedMsg_b in testException.value.message
+
+    # Task 5: If windowSizeInput is a two-element object containing
+    # integer-like objects, the visualisation instance has _windowSize value
+    # equal to windowSizeInput.
+    windowSizeInput_5 = [1680, 1050]
+    vis.windowSize = windowSizeInput_5
+    assert vis._windowSize == windowSizeInput_5
 
 
 if __name__ == "__main__":
