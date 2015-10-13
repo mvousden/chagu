@@ -98,6 +98,12 @@ class Visualisation(object):
 
     @background.setter
     def background(self, backgroundInput):
+        """
+        The input value must be an iterable object of length three containing
+        only numerical elements (RGB). Any element less than zero will be set
+        to zero, and any element greater than one will be set to one.
+        """
+
         backgroundValue = []
         if hasattr(backgroundInput, "__getitem__") is False:
             raise TypeError("Background value \"{}\" must be iterable."
@@ -134,6 +140,14 @@ class Visualisation(object):
 
     @camera.setter
     def camera(self, cameraInput):
+        """
+        The input value must have keys and values, can only have {} as
+        keys. "view up", "position", and "focal point" keys must have values
+        that are iterable objects containing only three numerical
+        elements. "zoom" must have a single numerical value greater than
+        zero. "parallel projection" must have a boolean value.
+        """.format(self._validCameraKeys)
+
         cameraValue = {}
 
         if hasattr(cameraInput, "iteritems") is False:
@@ -194,6 +208,11 @@ class Visualisation(object):
 
     @windowSize.setter
     def windowSize(self, windowSizeInput):
+        """
+        The input value must be an iterable object of length two containing
+        only integer-like elements greater than zero (width, height).
+        """
+
         windowSizeValue = []
         if hasattr(windowSizeInput, "__getitem__") is False:
             raise TypeError("Window size value \"{}\" must be iterable."
