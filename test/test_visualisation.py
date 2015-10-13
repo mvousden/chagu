@@ -8,6 +8,71 @@ import numpy
 import pytest
 
 
+def test_initialisation():
+    """
+    Test chagu.Visualisation initialisation method "__init__". We test the
+    following cases:
+
+    1. If name is provided as an optional argument, the visualisation instance
+         has name value equal to the argument.
+    2. If no arguments are provided, the visualisation object has _background
+         value equal to [0., 0., 0.], a two element list as its _windowSize
+         value, a six element list as its _boundingBox value, a _colourmap_lut
+         value of type vtkLookupTable, _order and _pipeline values defined as
+         empty lists, and _vtkObjects, _camera, and _vtkTermini values defined
+         as empty dictionaries.
+    3. If a valid filePath is provided, the visualisation object has
+         _vtkObjects value as a dictionary with one key-value pair in it, a six
+         element list _boundingBox value with no zeros in it, and all other
+         parameters the same. The functionality of adding a file source should
+         be covered by the tests of sources.load_visualisation_toolkit_file.
+    """
+
+    # Test 1: If name is provided as an optional argument, the visualisation
+    # instance has name value equal to the argument.
+    name_1 = "Hello world!"
+    vis_1 = chagu.Visualisation(name=name_1)
+    assert vis_1.name == name_1
+
+    # Test 2: If no arguments are provided, the visualisation object has
+    # _background value equal to [0., 0., 0.], a two element list as its
+    # _windowSize value, a six element list as its _boundingBox value, a
+    # _colourmap_lut value of type vtkLookupTable, _order and _pipeline values
+    # defined as empty lists, and _vtkObjects, _camera, and _vtkTermini values
+    # defined as empty dictionaries.
+    def check_clean(vis):
+        assert vis_2._background == [0., 0., 0.]
+        assert len(vis_2._windowSize) == 2
+        assert type(vis_2._windowSize) == list
+        assert len(vis_2._boundingBox) == 6
+        assert type(vis_2._boundingBox) == list
+        assert vis_2._colourmap_lut.IsA("vtkLookupTable") == 1
+        assert vis_2._order == []
+        assert vis_2._pipeline == []
+        assert vis_2._camera == {}
+        assert vis_2._vtkTermini == {}
+
+
+    vis_2 = chagu.Visualisation()
+    check_clean(vis_2)
+    assert vis_2._vtkObjects == {}
+
+    # Test 3: If a valid filePath is provided, the visualisation object has
+    # _vtkObjects value as a dictionary with one key-value pair in it, a six
+    # element list _boundingBox value with one or more non-zero elements, and
+    # all other parameters the same. The functionality of adding a file source
+    # should be covered by the tests of
+    # sources.load_visualisation_toolkit_file.
+    vis_3 = chagu.Visualisation(filePath="../example/data/data.vtu")
+    check_clean(vis_3)
+    assert len(vis_3._vtkObjects) == 1
+    for element in vis_3._boundingBox:
+        if element != 0:
+            break
+    else:
+        assert False
+
+
 def test_set_background():
     """
     Test chagu.Visualisation setter "background". We test the following cases:
@@ -298,5 +363,7 @@ def test_set_windowsize():
 
 
 if __name__ == "__main__":
+    test_initialisation()
     test_set_background()
     test_set_camera()
+    test_set_windowsize()
