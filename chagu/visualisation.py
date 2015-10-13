@@ -78,7 +78,7 @@ class Visualisation(object):
         # see.
         self._boundingBox = [0 for zI in range(6)]
         self._colourmap_lut = termini.lookup_table_from_RGB_colourmap("PuOr")
-        self._order = []  # This list maintains the order obejcts were
+        self._order = []  # This list maintains the order objects were
                           # added. This is for autopiping.
         self._pipeline = []
         self._vtkObjects = {}
