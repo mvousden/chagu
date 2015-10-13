@@ -1,3 +1,5 @@
+Build status: [![Circle CI](https://circleci.com/gh/mvousden/chagu.svg?style=shield)](https://circleci.com/gh/mvousden/chagu)
+
 Chagu
 =====
 
