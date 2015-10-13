@@ -195,14 +195,29 @@ class Visualisation(object):
     @windowSize.setter
     def windowSize(self, windowSizeInput):
         windowSizeValue = []
+        if hasattr(windowSizeInput, "__getitem__") is False:
+            raise TypeError("Window size value \"{}\" must be iterable."
+                            .format(windowSizeInput))
         if len(windowSizeInput) != 2:
-            raise ValueError("windowSize value \"{}\" should contain exactly "
+            raise ValueError("Window size value \"{}\" should contain exactly "
                              "two elements.".format(windowSizeInput))
         for resolution in windowSizeInput:
             if resolution <= 0:
-                raise ValueError("windowSize element \"{}\" cannot be zero or "
-                                 "less.".format(resolution))
-            windowSizeValue.append(resolution)
+                raise ValueError("Window size value \"{}\" has element "
+                                 "\"{}\", which must be greater than zero."
+                                 .format(windowSizeInput, resolution))
+            try:
+                convertedValue = int(resolution)
+
+                # Check to see if the value is integer-like
+                if float(resolution) != convertedValue:
+                    raise TypeError
+            except TypeError:
+                raise ValueError("Window size value \"{}\" has element "
+                                 "\"{}\", which is not an integer."
+                                 .format(windowSizeInput, resolution))
+
+            windowSizeValue.append(convertedValue)
 
         self._windowSize = windowSizeValue
 
