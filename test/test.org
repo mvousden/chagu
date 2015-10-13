@@ -34,7 +34,8 @@
    - Note taken on [2015-10-09 Fri 13:27] \\
      This should be tested by termini.lookup_table_from_RGB_colourmap.
 *** TODO The colourmap should be stored
-** TODO WindowSize setting
+** DONE WindowSize setting
+   CLOSED: [2015-10-13 Tue 18:15]
 *** TODO Valid input arguments are not modified
 *** TODO Non-2 element arguments
 *** TODO Values less than zero
