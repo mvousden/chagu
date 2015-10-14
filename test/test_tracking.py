@@ -73,7 +73,7 @@ def test_is_nasty():
     assert vis.is_nasty(surfaceName) == False
 
     # Test 4: If vtkObjectName is a nasty Terminus instance, True is returned.
-    nastyName = vtk.act_nasty_vector_field(1)
+    nastyName = vis.act_nasty_vector_field(1)
     assert vis.is_nasty(nastyName) == True
 
 
