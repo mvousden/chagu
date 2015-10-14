@@ -5,6 +5,7 @@ chagu/visualisation.py. Tests are detailed in the function documentation.
 
 import chagu
 import numpy
+import os
 import pytest
 
 
@@ -63,7 +64,11 @@ def test_initialisation():
     # all other parameters the same. The functionality of adding a file source
     # should be covered by the tests of
     # sources.load_visualisation_toolkit_file.
-    vis_3 = chagu.Visualisation(filePath="../example/data/data.vtu")
+    pathToThisFile = os.path.dirname(os.path.realpath(__file__))
+    relativeVtuFilePath = "../example/data/data.vtu"
+    absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
+    vis_3 = chagu.Visualisation(filePath=absFilePath)
+
     check_clean(vis_3)
     assert len(vis_3._vtkObjects) == 1
     for element in vis_3._boundingBox:
