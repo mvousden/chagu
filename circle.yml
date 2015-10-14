@@ -2,30 +2,21 @@
 
 machine:
   environment:
+    PYTHON_BUILD_PATH: $HOME
     PYTHON_BUILD_VERSION: 2.7.10
-    PYTHON_BUILD_PATH: $HOME/Python-$PYTHON_BUILD_VERSION
-    PYTHON_EXEC_PATH: $PYTHON_BUILD_PATH/bin
+    PYTHON_EXEC_PATH: $PYTHON_BUILD_PATH/Python-$PYTHON_BUILD_VERSION/bin
     PYTHON_TARBALL: Python-$PYTHON_BUILD_VERSION.tar.xz
+    VTK_BUILD_PATH: $HOME
     VTK_BUILD_VERSION: 5.10.1
-    VTK_BUILD_PREFIX: ${VTK_BUILD_VERSION::-2}
-    VTK_BUILD_PATH: $HOME/VTK$VTK_BUILD_VERSION
-    VTK_TARBALL: vtk-$VTK_BUILD_VERSION.tar.gz
+    VTK_UNTAR_PATH=$VTK_BUILD_PATH/VTK$VTK_BUILD_VERSION
 
 dependencies:
   pre:
-    - cd ~ && wget http://www.vtk.org/files/release/$VTK_BUILD_PREFIX/$VTK_TARBALL
-    - cd ~ && tar -xvf $VTK_TARBALL
-    - cd $VTK_BUILD_PATH && cmake -D VTK_WRAP_PYTHON:BOOL=ON -D BUILD_SHARED_LIBS:BOOL=ON ./
-    - cd $VTK_BUILD_PATH && make all
-
-    - cd ~ && wget https://www.python.org/ftp/python/$PYTHON_BUILD_VERSION/$PYTHON_TARBALL
-    - cd ~ && tar -xvf $PYTHON_TARBALL
-    - cd $PYTHON_BUILD_PATH && ./configure --enable-unicode=ucs4 --prefix=$PYTHON_BUILD_PATH --with-ensurepip="upgrade"
-    - cd $PYTHON_BUILD_PATH && make
-    - cd $PYTHON_BUILD_PATH && make install
+    - bash -x ./install/vtk.sh
+    - bash -x ./install/python.sh
 
   post:
-    - $PYTHON_EXEC_PATH/pip install -r requirements.txt
+    - $PYTHON_EXEC_PATH/pip install -r ./install/requirements.txt
 
   cache_directories:
     - ~/Python-2.7.10/
@@ -35,5 +26,5 @@ test:
   override:
     - $PYTHON_EXEC_PATH/python -m pytest ~/chagu/test/:
         environment:
-          LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_BUILD_PATH/bin"
-          PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_BUILD_PATH/Wrapping/Python:$VTK_BUILD_PATH/bin"
+          LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_UNTAR_PATH/bin"
+          PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_UNTAR_PATH/Wrapping/Python:$VTK_UNTAR_PATH/bin"
