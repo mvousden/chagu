@@ -47,5 +47,35 @@ def test_get_vtk_object():
     assert isinstance(vis.get_vtk_object(surfaceName), chagu.termini.Terminus)
 
 
+def test_is_nasty():
+    """
+    Test chagu.tracking.is_nasty. We test the following cases:
+
+    1. If vtkObjectName is not tracked, False is returned.
+    2. If vtkObjectName is a vtkObject, False is returned.
+    3. If vtkObjectName is a Terminus instance that is not nasty, False is
+         returned.
+    4. If vtkObjectName is a nasty Terminus instance, True is returned.
+    """
+
+    vis = chagu.Visualisation()
+
+    # Test 1: If vtkObjectName is not tracked, False is returned.
+    assert vis.is_nasty("Object that doesn't exist.") == False
+
+    # Test 2: If vtkObjectName is a vtkObject, False is returned.
+    componentsName = vis.extract_vector_components()
+    assert vis.is_nasty(componentsName) == False
+
+    # Test 3: If vtkObjectName is a Terminus instance that is not nasty, False
+    # is returned.
+    surfaceName = vis.act_surface()
+    assert vis.is_nasty(surfaceName) == False
+
+    # Test 4: If vtkObjectName is a nasty Terminus instance, True is returned.
+    nastyName = vtk.act_nasty_vector_field(1)
+    assert vis.is_nasty(nastyName) == True
+
+
 if __name__ == "__main__":
     test_get_vtk_object()
