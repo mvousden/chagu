@@ -283,6 +283,26 @@ def test_set_camera():
     assert vis._camera == cameraInput_13b
 
 
+def test_set_colourmap_lut():
+    """
+    Test chagu.Visualisation setter "colourmap_lut". We test the following
+    cases:
+
+    1. If arguments are valid, the visualisation instance has _colourmap_lut
+         value of type vtkLookupTablevalue.
+
+    The functionality of this is largely tested by tests for the function
+    lookup_table_from_RGB_colourmap defined in termini.py
+    """
+
+    vis = chagu.Visualisation()
+
+    # Test 1: If arguments are valid, the visualisation instance has
+    # _colourmap_lut value of type vtkLookupTablevalue.
+    vis.colourmap_lut = "PuOr"
+    assert vis._colourmap_lut.IsA("vtkLookupTable") == 1
+
+
 def test_set_windowsize():
     """
     Test chagu.Visualisation setter "windowSize". We test the following cases:
@@ -366,4 +386,5 @@ if __name__ == "__main__":
     test_initialisation()
     test_set_background()
     test_set_camera()
+    test_set_colourmap_lut()
     test_set_windowsize()
