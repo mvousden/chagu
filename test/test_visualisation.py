@@ -53,7 +53,6 @@ def test_initialisation():
         assert vis_2._camera == {}
         assert vis_2._vtkTermini == {}
 
-
     vis_2 = chagu.Visualisation()
     check_clean(vis_2)
     assert vis_2._vtkObjects == {}
@@ -280,8 +279,8 @@ def test_set_camera():
     # Test 13: The most recent cameraInput used to set camera is identical to
     # the _camera value in the visualisation instance.
     cameraInput_13a = {"zoom": 10, "parallel projection": True,
-                      "view up": [2, 4, 6], "position": [-4, 72, 8.2],
-                      "focal point": [0, 0, 0]}
+                       "view up": [2, 4, 6], "position": [-4, 72, 8.2],
+                       "focal point": [0, 0, 0]}
     vis.camera = cameraInput_13a
     cameraInput_13b = {}
     vis.camera = cameraInput_13b
@@ -348,7 +347,7 @@ def test_set_windowsize():
     windowSizeInput_3a = [4.3, 1]
     expectedMsg_a = ("Window size value \"{}\" has element \"{}\", which is "
                      "not an integer.".format(windowSizeInput_3a,
-                                             windowSizeInput_3a[0]))
+                                              windowSizeInput_3a[0]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_3a
     assert expectedMsg_a in testException.value.message
@@ -356,7 +355,7 @@ def test_set_windowsize():
     windowSizeInput_3b = ["1", []]
     expectedMsg_b = ("Window size value \"{}\" has element \"{}\", which is "
                      "not an integer.".format(windowSizeInput_3b,
-                                             windowSizeInput_3b[1]))
+                                              windowSizeInput_3b[1]))
     with pytest.raises(ValueError) as testException:
         vis.windowSize = windowSizeInput_3b
     assert expectedMsg_b in testException.value.message

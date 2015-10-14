@@ -88,13 +88,10 @@ class Visualisation(object):
         if filePath is not None:
             self.load_visualisation_toolkit_file(filePath)
 
-
     ## Properties and setters.
-
     @property
     def background(self):
         return self._background
-
 
     @background.setter
     def background(self, backgroundInput):
@@ -128,15 +125,12 @@ class Visualisation(object):
 
         self._background = backgroundValue
 
-
     @property
     def camera(self):
         return self._camera
 
-
     _validCameraKeys = ("parallel projection", "view up", "position",
                         "focal point", "zoom")
-
 
     @camera.setter
     def camera(self, cameraInput):
@@ -189,22 +183,18 @@ class Visualisation(object):
 
         self._camera = cameraInput
 
-
     @property
     def colourmap_lut(self):
         return self._colourmap_lut
-
 
     @colourmap_lut.setter
     def colourmap_lut(self, colourMap, **kwargs):
         out = termini.lookup_table_from_RGB_colourmap(colourMap, **kwargs)
         self._colourmap_lut = out
 
-
     @property
     def windowSize(self):
         return self._windowSize
-
 
     @windowSize.setter
     def windowSize(self, windowSizeInput):
@@ -239,7 +229,6 @@ class Visualisation(object):
             windowSizeValue.append(convertedValue)
 
         self._windowSize = windowSizeValue
-
 
     # Filter functions.
     extract_vector_components = filters.extract_vector_components

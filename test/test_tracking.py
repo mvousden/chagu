@@ -61,20 +61,20 @@ def test_is_nasty():
     vis = chagu.Visualisation()
 
     # Test 1: If vtkObjectName is not tracked, False is returned.
-    assert vis.is_nasty("Object that doesn't exist.") == False
+    assert vis.is_nasty("Object that doesn't exist.") is False
 
     # Test 2: If vtkObjectName is a vtkObject, False is returned.
     componentsName = vis.extract_vector_components()
-    assert vis.is_nasty(componentsName) == False
+    assert vis.is_nasty(componentsName) is False
 
     # Test 3: If vtkObjectName is a Terminus instance that is not nasty, False
     # is returned.
     surfaceName = vis.act_surface()
-    assert vis.is_nasty(surfaceName) == False
+    assert vis.is_nasty(surfaceName) is False
 
     # Test 4: If vtkObjectName is a nasty Terminus instance, True is returned.
     nastyName = vis.act_nasty_vector_field(1)
-    assert vis.is_nasty(nastyName) == True
+    assert vis.is_nasty(nastyName) is True
 
 
 def test_is_reader():
@@ -91,17 +91,17 @@ def test_is_reader():
     readerName = vis.load_visualisation_toolkit_file(absFilePath)
 
     # Test 1: If vtkObjectName is not mapped, False is returned.
-    assert vis.is_reader("Object that doesn't exist.") == False
+    assert vis.is_reader("Object that doesn't exist.") is False
 
     # Test 2: If vtkObjectName is mapped to an object that is not a reader,
     # False is returned.
     surfaceName = vis.act_surface()
     componentsName = vis.extract_vector_components()
-    assert vis.is_reader(surfaceName) == False
-    assert vis.is_reader(componentsName) == False
+    assert vis.is_reader(surfaceName) is False
+    assert vis.is_reader(componentsName) is False
 
     # Test 3: If vtkObjectName is mapped to a reader object, True is returned.
-    assert vis.is_reader(readerName) == True
+    assert vis.is_reader(readerName) is True
 
 
 if __name__ == "__main__":

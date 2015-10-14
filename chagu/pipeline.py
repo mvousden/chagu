@@ -61,7 +61,6 @@ def autopipe(self):
             if hasattr(self.get_vtk_object(vtkObjectRecv),
                        "GetNumberOfInputPorts") is True:
 
-
                 # If we are looking at nasty vectors, try to connect the
                 # terminus directly to the filereader. This preserves the
                 # direction. if the user wishes to slice their vector field,
@@ -92,7 +91,7 @@ def autopipe(self):
                 # If we can't find a match for the terminus, raise an
                 # exception.
                 if zJ not in toPop:
-                    raise # <!> Needs a message
+                    raise  # <!> Needs a message
 
             # If there are no input ports for the terminus, remove it from the
             # list.
@@ -110,10 +109,9 @@ def autopipe(self):
         # added in a strange order. Not much we can do about this though, so we
         # need to check it.
         if self.is_reader(order[zI - 1]) is True:
-            raise # <!> Needs a message
+            raise  # <!> Needs a message
 
         pipelineDescription.append([order[zI], order[zI - 1]])
-
 
     # Build the pipeline from our guess.
     self.build_pipeline_from_dict(pipelineDescription)
@@ -162,13 +160,15 @@ def build_pipeline_from_dict(self, pipelineDescription):
 
             if hasattr(self._vtkObjects[inputObjName],
                        "default_input_port") is True:
-                inputPortIndex = self._vtkObjects[inputObjName].default_input_port
+                inputPortIndex = self._vtkObjects[inputObjName].\
+                    default_input_port
             else:
                 inputPortIndex = 0
 
             if hasattr(self._vtkObjects[outputObjName],
                        "default_output_port") is True:
-                outputPortIndex = self._vtkObjects[outputObjName].default_output_port
+                outputPortIndex = self._vtkObjects[outputObjName]\
+                    .default_output_port
             else:
                 outputPortIndex = 0
 
@@ -192,13 +192,15 @@ def build_pipeline_from_dict(self, pipelineDescription):
 
             if hasattr(self._vtkObjects[inputObjName],
                        "default_input_port") is True:
-                inputPortIndex = self._vtkObjects[inputObjName].default_input_port
+                inputPortIndex = self._vtkObjects[inputObjName]\
+                    .default_input_port
             else:
                 inputPortIndex = 0
 
             if hasattr(self._vtkObjects[outputObjName],
                        "default_output_port") is True:
-                outputPortIndex = self._vtkObjects[outputObjName].default_output_port
+                outputPortIndex = self._vtkObjects[outputObjName]\
+                    .default_output_port
             else:
                 outputPortIndex = 0
 
@@ -211,7 +213,7 @@ def build_pipeline_from_dict(self, pipelineDescription):
 
     # Update the mappers for the actors. This in turn ensures that all objects
     # that are to be drawn are updated if they can be.
-    allOutputObjectNames = [zI[1] if type(zI[1]) is str else zI[1][0]\
+    allOutputObjectNames = [zI[1] if type(zI[1]) is str else zI[1][0]
                             for zI in pipelineDescription]
 
     for terminusName in self._vtkTermini.keys():

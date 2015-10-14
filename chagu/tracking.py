@@ -38,10 +38,9 @@ def is_reader(self, vtkObjectName):
     Returns True if the object is tracked and is a reader, and False otherwise.
     """
     if self.is_tracked(vtkObjectName):
-        if (isinstance(self.get_vtk_object(vtkObjectName), vtk.vtkXMLReader) or
-            isinstance(self.get_vtk_object(vtkObjectName), vtk.vtkDataReader))\
-            is True:
-            return True
+        vtkObject = self.get_vtk_object(vtkObjectName)
+        return isinstance(vtkObject, vtk.vtkXMLReader) or\
+            isinstance(vtkObject, vtk.vtkDataReader)
     return False
 
 

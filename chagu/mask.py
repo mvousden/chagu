@@ -98,7 +98,7 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
     else:
         if maskDomain is not None and maskResolution is not None:
             if (len(maskDomain) == 9 and len(maskResolution) == 2) or\
-              (len(maskDomain) == 12 and len(maskResolution) == 3):
+               (len(maskDomain) == 12 and len(maskResolution) == 3):
                 errorMsg = ("Invalid combination for the lengths of "
                             "maskDomain and maskResolution: {}-{}. Must "
                             "be either 9-2 or 12-3."

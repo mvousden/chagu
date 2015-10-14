@@ -34,18 +34,22 @@ def test_generate_sensible_name():
     # Test 2: If testFunction is a function that returns False with guessName
     # as its only argument, guessName is returned.
     guessName_2 = guessName_1
+
     def testFunction_2(guessName):
         return False
+
     out_2 = chagu.helpers.generate_sensible_name(guessName_2, testFunction_2)
     assert out_2 == guessName_2
 
     # Test 3: If testFunction is a function that returns True with guessName as
     # its only argument, "{}_0".format(guessName) is returned.
     guessName_3 = guessName_1
+
     def testFunction_3(guessName):
         if guessName == guessName_3:
             return True
         return False
+
     out_3 = chagu.helpers.generate_sensible_name(guessName_3, testFunction_3)
     assert out_3 == "{}_0".format(guessName_3)
 
@@ -54,21 +58,25 @@ def test_generate_sensible_name():
     # ["{}_{}".format(testName, zI) for zI in range(11)],
     # "{}_11".format(guessName) is returned.
     guessName_4 = guessName_1
+
     def testFunction_4(guessName):
-        if guessName in [guessName_4] + ["{}_{}".format(guessName_4, zI)\
+        if guessName in [guessName_4] + ["{}_{}".format(guessName_4, zI)
                                          for zI in range(11)]:
             return True
         return False
+
     out_4 = chagu.helpers.generate_sensible_name(guessName_4, testFunction_4)
     assert out_4 == "{}_11".format(guessName_4)
 
     # Test 5: As with test 4, but where testName ends with "_11".
     guessName_5 = guessName_1 + "_11"
+
     def testFunction_5(guessName):
-        if guessName in [guessName_5] + ["{}_{}".format(guessName_5, zI)\
+        if guessName in [guessName_5] + ["{}_{}".format(guessName_5, zI)
                                          for zI in range(11)]:
             return True
         return False
+
     out_5 = chagu.helpers.generate_sensible_name(guessName_5, testFunction_5)
     assert out_5 == "{}_11".format(guessName_5)
 
@@ -91,9 +99,9 @@ def test_vtk_base_version():
     # defined. If vtk_base_version returns 6, vtk.vtkDataObjectSource must not
     # be defined.
     if vtkVersion == 5:
-        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") == True
+        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") is True
     elif vtkVersion == 6:
-        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") == True
+        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") is True
 
 
 if __name__ == "__main__":

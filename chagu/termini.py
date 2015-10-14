@@ -237,8 +237,8 @@ def act_cone_vector_field(self, coneLength, coneRadius, coneResolution,
         masking = False
     else:
         masking = True
-        glyphSize = coneLength if coneLength > 2 * coneRadius\
-           else coneRadius * 2
+        glyphSize = (coneLength if coneLength > 2 * coneRadius else
+                     coneRadius * 2)
         maskFilter = mask.create_mask_from_opts(self._boundingBox, glyphSize,
                                                 maskDomain=maskDomain,
                                                 maskResolution=maskResolution,
@@ -349,7 +349,6 @@ def act_nasty_vector_field(self, arrowLength, arrowColour=[0., 0., 0.],
                                                 maskDomain=maskDomain,
                                                 maskResolution=maskResolution,
                                                 maskType=maskType)
-
 
     # Create the nasty arrow polydata.
     arrowPolyData = nasty_arrow_polydata(arrowLength, arrowLength / 2.,
