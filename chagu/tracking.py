@@ -26,8 +26,10 @@ def is_nasty(self, vtkObjectName):
     Returns True if the object is tracked and is nasty, and False otherwise.
     """
     if self.is_tracked(vtkObjectName):
-        if self.get_vtk_object(vtkObjectName).variety == "nasty_vector_field":
-            return True
+        if hasattr(self.get_vtk_object(vtkObjectName), "variety") is True:
+            variety = self.get_vtk_object(vtkObjectName).variety
+            if variety == "nasty_vector_field":
+                return True
     return False
 
 
