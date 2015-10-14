@@ -15,6 +15,7 @@ def get_vtk_object(self, objectName):
 
     Returns the VTK object.
     """
+
     if self.is_tracked(objectName) is False:
         raise ValueError("Object name \"{}\" is not tracked by visualisation "
                          "object \"{}\".".format(objectName, self))
@@ -25,6 +26,7 @@ def is_nasty(self, objectName):
     """
     Returns True if the object is tracked and is nasty, and False otherwise.
     """
+
     if self.is_tracked(objectName):
         if hasattr(self.get_vtk_object(objectName), "variety") is True:
             variety = self.get_vtk_object(objectName).variety
@@ -37,6 +39,7 @@ def is_reader(self, objectName):
     """
     Returns True if the object is tracked and is a reader, and False otherwise.
     """
+
     if self.is_tracked(objectName):
         vtkObject = self.get_vtk_object(objectName)
         return isinstance(vtkObject, vtk.vtkXMLReader) or\
@@ -55,6 +58,7 @@ def is_tracked(self, objectName):
     Returns True if the name is attached to an object is being tracked, and
     False otherwise.
     """
+
     return True if objectName in self._vtkObjects.keys() else False
 
 
@@ -78,6 +82,7 @@ def track_vtk_object(self, vtkObject, objectName, asTerminus=False):
 
     Returns nothing.
     """
+
     self._order.append(objectName)
     if asTerminus is True:
         self._vtkObjects[objectName] = vtkObject

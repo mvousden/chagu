@@ -19,6 +19,7 @@ def generate_sensible_name(guessName, testFunction):
 
     Returns a sensible name.
     """
+
     # If the guess is sensible, return it right away. Otherwise we have some
     # work to do...
     if testFunction(guessName) is False:
@@ -42,4 +43,5 @@ def vtk_base_version():
     """
     Returns the base version number of VTK being used, as an integer.
     """
+
     return int(vtk.vtkVersion().GetVTKVersion().split(".")[0])

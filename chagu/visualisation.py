@@ -64,6 +64,7 @@ class Visualisation(object):
           unless the window is floating.
 
     """
+
     def __init__(self, name="visualisation", filePath=None):
 
         # Set initial values for properties.
