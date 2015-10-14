@@ -62,17 +62,17 @@ def is_tracked(self, objectName):
     return True if objectName in self._vtkObjects.keys() else False
 
 
-def track_vtk_object(self, vtkObject, objectName, asTerminus=False):
+def track_vtk_object(self, objectToTrack, objectName, asTerminus=False):
     """
-    Add a VTK object to the objects tracked by this visualisation. Objects
-    tracked in this way can be used in the pipeline. User should call
-    'act_' functions to create VTK objects if their desired object is
-    supported, but this method is here for people whos objects are not
-    supported currently, and for internal use.
+    Add an object to the objects tracked by this visualisation. Objects tracked
+    in this way can be used in the pipeline. User should call functions defined
+    in termini.py and filters.py to create VTK objects if their desired object
+    is supported. This method is for users whos objects are not yet supported,
+    and for internal use.
 
     Arguments:
 
-      - vtkObject: The instance of the VTK object to track.
+      - objectToTrack: The object (VTK or otherwise) to track.
 
       - objectName: String denoting the name to assign the object in this
           visualisation.
@@ -85,7 +85,7 @@ def track_vtk_object(self, vtkObject, objectName, asTerminus=False):
 
     self._order.append(objectName)
     if asTerminus is True:
-        self._vtkObjects[objectName] = vtkObject
-        self._vtkTermini[objectName] = vtkObject
+        self._vtkObjects[objectName] = objectToTrack
+        self._vtkTermini[objectName] = objectToTrack
     else:
-        self._vtkObjects[objectName] = vtkObject
+        self._vtkObjects[objectName] = objectToTrack
