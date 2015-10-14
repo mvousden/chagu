@@ -110,3 +110,5 @@ def test_is_reader():
 
 if __name__ == "__main__":
     test_get_vtk_object()
+    test_is_nasty()
+    test_is_reader()
