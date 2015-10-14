@@ -21,24 +21,24 @@ def get_vtk_object(self, objectName):
     return self._vtkObjects[objectName]
 
 
-def is_nasty(self, vtkObjectName):
+def is_nasty(self, objectName):
     """
     Returns True if the object is tracked and is nasty, and False otherwise.
     """
-    if self.is_tracked(vtkObjectName):
-        if hasattr(self.get_vtk_object(vtkObjectName), "variety") is True:
-            variety = self.get_vtk_object(vtkObjectName).variety
+    if self.is_tracked(objectName):
+        if hasattr(self.get_vtk_object(objectName), "variety") is True:
+            variety = self.get_vtk_object(objectName).variety
             if variety == "nasty_vector_field":
                 return True
     return False
 
 
-def is_reader(self, vtkObjectName):
+def is_reader(self, objectName):
     """
     Returns True if the object is tracked and is a reader, and False otherwise.
     """
-    if self.is_tracked(vtkObjectName):
-        vtkObject = self.get_vtk_object(vtkObjectName)
+    if self.is_tracked(objectName):
+        vtkObject = self.get_vtk_object(objectName)
         return isinstance(vtkObject, vtk.vtkXMLReader) or\
             isinstance(vtkObject, vtk.vtkDataReader)
     return False
