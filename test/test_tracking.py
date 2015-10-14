@@ -51,11 +51,11 @@ def test_is_nasty():
     """
     Test chagu.tracking.is_nasty. We test the following cases:
 
-    1. If vtkObjectName is not tracked, False is returned.
-    2. If vtkObjectName is a vtkObject, False is returned.
-    3. If vtkObjectName is a Terminus instance that is not nasty, False is
+    1. If vtkObjectName is not mapped, False is returned.
+    2. If vtkObjectName maps to a vtkObject, False is returned.
+    3. If vtkObjectName maps to a Terminus instance that is not nasty, False is
          returned.
-    4. If vtkObjectName is a nasty Terminus instance, True is returned.
+    4. If vtkObjectName maps to a nasty Terminus instance, True is returned.
     """
 
     vis = chagu.Visualisation()
