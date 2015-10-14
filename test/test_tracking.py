@@ -6,6 +6,7 @@ chagu/tracking.py. Tests are detailed in the function documentation.
 import chagu
 import os
 import pytest
+import vtk
 
 
 def test_get_vtk_object():
@@ -28,16 +29,17 @@ def test_get_vtk_object():
     readerName = vis.load_visualisation_toolkit_file(absFilePath)
 
     # Test 1: If objectName is not in self._vtkObjects, a ValueError is raised.
+    fakeReaderName = readerName + " fake"
     expectedMsg = ("Object name \"{}\" is not tracked by visualisation object "
-                   "\"{}\"".format(readerName, vis))
+                   "\"{}\".".format(fakeReaderName, vis))
     with pytest.raises(ValueError) as testException:
-        vis.get_vtk_object(readerName + " lies")
+        vis.get_vtk_object(fakeReaderName)
     assert expectedMsg in testException.value.message
 
     # Test 2: If objectName maps to a vtkObject in self._vtkObjects, a
     # vtkObject is returned.
     reader = vis.get_vtk_object(readerName)
-    assert type(reader) == type(vtk.vtkCommonPython.vtkObject)
+    assert type(reader) == type(vtk.vtkActor())
 
     # Test 3: If objectName maps to a Terminus in self._vtkObjects, a terminus
     # is returned.

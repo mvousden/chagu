@@ -15,6 +15,9 @@ def get_vtk_object(self, objectName):
 
     Returns the VTK object.
     """
+    if objectName not in self._vtkObjects.keys():
+        raise ValueError("Object name \"{}\" is not tracked by visualisation "
+                         "object \"{}\".".format(objectName, self))
     return self._vtkObjects[objectName]
 
 
