@@ -77,5 +77,36 @@ def test_is_nasty():
     assert vis.is_nasty(nastyName) == True
 
 
+def test_is_reader():
+    """
+    Test chagu.tracking.is_reader. We test the following cases:
+
+    1. If vtkObjectName is not mapped, False is returned.
+    2. If vtkObjectName is mapped to an object that is not a reader, False is
+         returned.
+    3. If vtkObjectName is mapped to a reader object, True is returned.
+    """
+
+    pathToThisFile = os.path.dirname(os.path.realpath(__file__))
+    relativeVtuFilePath = "../example/data/data.vtu"
+    absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
+
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePath)
+
+    # Test 1: If vtkObjectName is not mapped, False is returned.
+    assert vis.is_reader("Object that doesn't exist.") == False
+
+    # Test 2: If vtkObjectName is mapped to an object that is not a reader,
+    # False is returned.
+    surfaceName = vis.act_surface()
+    componentsName = vis.extract_vector_components()
+    assert vis.is_reader(surfaceName) == False
+    assert vis.is_reader(componentsName) == False
+
+    # Test 3: If vtkObjectName is mapped to a reader object, True is returned.
+    assert vis.is_reader(readerName) == True
+
+
 if __name__ == "__main__":
     test_get_vtk_object()
