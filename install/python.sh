@@ -26,7 +26,7 @@ if [ ! -f $PYTHON_UNTAR_PATH/.is_built ]; then
     # Download the tarball and untar it into the build path directory.
     pushd $PYTHON_BUILD_PATH/
     wget https://www.python.org/ftp/python/$PYTHON_BUILD_VERSION/$PYTHON_TARBALL
-    tar -xvf $VTK_TARBALL
+    tar -xvf $PYTHON_TARBALL
     cd $PYTHON_UNTAR_PATH
 
     # Build.
