@@ -9,6 +9,11 @@ import pytest
 import vtk
 
 
+pathToThisFile = os.path.dirname(os.path.realpath(__file__))
+relativeVtuFilePath = "../example/data/data.vtu"
+absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
+
+
 def test_get_vtk_object():
     """
     Test chagu.tracking.get_vtk_object. We test the following cases:
@@ -19,11 +24,6 @@ def test_get_vtk_object():
     3. If objectName maps to a Terminus in self._vtkObjects, a terminus is
          returned.
     """
-
-    # Create the visualisation object for these tests.
-    pathToThisFile = os.path.dirname(os.path.realpath(__file__))
-    relativeVtuFilePath = "../example/data/data.vtu"
-    absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
 
     vis = chagu.Visualisation()
     readerName = vis.load_visualisation_toolkit_file(absFilePath)
@@ -86,10 +86,6 @@ def test_is_reader():
          returned.
     3. If vtkObjectName is mapped to a reader object, True is returned.
     """
-
-    pathToThisFile = os.path.dirname(os.path.realpath(__file__))
-    relativeVtuFilePath = "../example/data/data.vtu"
-    absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
 
     vis = chagu.Visualisation()
     readerName = vis.load_visualisation_toolkit_file(absFilePath)
