@@ -39,3 +39,4 @@ if [ ! -f $PYTHON_UNTAR_PATH/.is_built ]; then
     # future.
     touch .is_built
     popd
+fi
