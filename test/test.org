@@ -10,11 +10,11 @@
 # tests will exist from the user-interface level to the level of internals. The
 # rest of this note describes some testing objectives.
 
-* TODO Write test descriptions for other files
+* IN-PROGRESS Write test descriptions for other files
 ** TODO filters.py
 ** TODO mask.py
 ** TODO pipeline.py
 ** TODO render.py
 ** TODO sources.py
 ** TODO termini.py
-** TODO tracking.py
+** IN-PROGRESS tracking.py
