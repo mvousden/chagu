@@ -24,7 +24,7 @@ def test_get_vtk_object():
     relativeVtuFilePath = "../example/data/data.vtu"
     absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
 
-    vis = chagu.visualisation()
+    vis = chagu.Visualisation()
     readerName = vis.load_visualisation_toolkit_file(absFilePath)
 
     # Test 1: If objectName is not in self._vtkObjects, a ValueError is raised.
@@ -45,5 +45,5 @@ def test_get_vtk_object():
     assert isinstance(vis.get_vtk_object(surfaceName), chagu.termini.Terminus)
 
 
-if __name__ == "__main__";
+if __name__ == "__main__":
     test_get_vtk_object()
