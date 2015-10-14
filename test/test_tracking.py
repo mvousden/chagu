@@ -104,7 +104,39 @@ def test_is_reader():
     assert vis.is_reader(readerName) is True
 
 
+def test_is_tracked():
+    """
+    Test chagu.tracking.is_tracked. We test the following cases:
+
+    1. If objectName is not mapped, False is returned.
+    2. If objectName is the return value of a method that creates a vtkObject
+         and tracks it, True is returned.
+    3. If objectname is used with track_vtk_object to track an arbitrary
+         object, True is returned.
+    """
+
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePath)
+
+    # Test 1: If objectName is not mapped, False is returned.
+    assert vis.is_tracked("Object that doesn't exist.") is False
+
+    # Test 2: If objectName is the return value of a method that creates a
+    # vtkObject and tracks it, True is returned.
+    surfaceName = vis.act_surface()
+    componentsName = vis.extract_vector_components()
+    assert vis.is_tracked(surfaceName) is True
+    assert vis.is_tracked(componentsName) is True
+
+    # Test 3: If objectname is used with track_vtk_object to track an arbitrary
+    # object, True is returned.
+    trackName = "test_object"
+    vis.track_vtk_object("A proxy vtkObject", trackName)
+    assert vis.is_tracked(trackName) is True
+
+
 if __name__ == "__main__":
     test_get_vtk_object()
     test_is_nasty()
     test_is_reader()
+    test_is_tracked()
