@@ -135,8 +135,25 @@ def test_is_tracked():
     assert vis.is_tracked(trackName) is True
 
 
+def test_track_vtk_object():
+    """
+    Test chagu.tracking.track_vtk_object. We test the following cases:
+    """
+
+    # <!> Something to think about: Should the object check for methods used
+    # for the pipeline? It's probably a good idea to do this, because the user
+    # gets "instant" feedback if they are using this function to track
+    # unsupported objects, and it becomes easier to trace errors. Either way,
+    # "track_vtk_object" should be renamed to something like "track_object"
+    # anyway so that users think they can add their own Terminus objects in
+    # this way too. This function should probably check the isinstance of this
+    # object instead of passing isTerminus as well, for simplicity for the
+    # user.
+
+
 if __name__ == "__main__":
     test_get_vtk_object()
     test_is_nasty()
     test_is_reader()
     test_is_tracked()
+    test_track_vtk_object()
