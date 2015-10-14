@@ -14,12 +14,13 @@ example:
 Requirements
 ============
 
-To use Chagu, you will need:
+To use Chagu like we do, you will need:
 
- - Python 2.7
- - VTK 5.8.0 (support for >6 is coming, possibly)
- - Numpy
- - GraphViz (the python module)
+ - Python 2.7.10
+ - VTK 5.10.1 (support for >6 is coming, possibly)
+ - Numpy 1.9.2
+ - Matplotlib 1.3.1
+ - GraphViz (the python module) 0.4.5
 
 Getting Started and Helping Out
 ===============================
