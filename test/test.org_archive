@@ -33,3 +33,43 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
     A continuous integration tool will demonstrate the functionality of this
     library to myself and others, and is an important part of the Agile
     development paradigm.
+
+* DONE visualisation.py functionality.
+  CLOSED: [2015-10-14 Wed 10:59]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2015-10-14 Wed 10:59
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:
+** DONE Visualisation object initialisation
+   CLOSED: [2015-10-13 Tue 18:45]
+*** TODO Setting name
+*** TODO Passing filepath loads a file
+    - Note taken on [2015-10-09 Fri 13:28] \\
+      Depends on load_visualisation_toolkit_file working
+*** TODO Initial background must be black
+*** TODO Bounding box must have six elements
+*** TODO A colourmap is created and defined
+    - Note taken on [2015-10-09 Fri 13:28] \\
+      Depends on colourmap_lut setter working
+** DONE Background setting
+   CLOSED: [2015-10-11 Sun 15:21]
+*** TODO Non-3 element arguments
+*** TODO Arguments are floats/ints/something similar
+*** TODO Input argument overflow behaviour
+** DONE Camera setting
+   CLOSED: [2015-10-11 Sun 21:14]
+*** TODO Valid input arguments are not modified
+*** TODO Invalid camera key, view up, position, focal point, zoom, or parallel projection (including data types)
+** DONE LUT setting
+   CLOSED: [2015-10-14 Wed 10:59]
+   - Note taken on [2015-10-09 Fri 13:27] \\
+     This should be tested by termini.lookup_table_from_RGB_colourmap.
+*** TODO The colourmap should be stored
+** DONE WindowSize setting
+   CLOSED: [2015-10-13 Tue 18:15]
+*** TODO Valid input arguments are not modified
+*** TODO Non-2 element arguments
+*** TODO Values less than zero
+*** TODO Arguments are floats/ints/something similar
