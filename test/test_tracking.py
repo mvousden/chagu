@@ -112,8 +112,6 @@ def test_is_tracked():
     1. If objectName is not mapped, False is returned.
     2. If objectName is the return value of a method that creates a vtkObject
          and tracks it, True is returned.
-    3. If objectname is used with track_vtk_object to track an arbitrary
-         object, True is returned.
     """
 
     vis = chagu.Visualisation()
@@ -129,12 +127,6 @@ def test_is_tracked():
     assert vis.is_tracked(surfaceName) is True
     assert vis.is_tracked(componentsName) is True
 
-    # Test 3: If objectname is used with track_vtk_object to track an arbitrary
-    # object, True is returned.
-    trackName = "test_object"
-    vis.track_vtk_object("A proxy vtkObject", trackName)
-    assert vis.is_tracked(trackName) is True
-
 
 def test_track_object():
     """
@@ -144,28 +136,27 @@ def test_track_object():
          ValueError is raised.
     2. If objectToTrack is valid, but not a terminus object, objectName maps to
          objectToTrack in the _vtkObjects dictionary in the visualisation
+         instance, and objectName is appended to _order in the visualisation
          instance.
-    3. If objectToTrack is a valid terminus object, objectName maps to
-         objectToTrack in the _vtkObjects and _vtkTermini dictionaries in the
-         visualisation instance.
+    3. If objectToTrack is a terminus object, objectName maps to objectToTrack
+         in the _vtkObjects and _vtkTermini dictionaries in the visualisation
+         instance, and objectName is appended to _order in the visualisation
+         instance.
     """
 
     vis = chagu.Visualisation()
 
     # Test 1: If objectToTrack is missing a method required by the pipeline, a
     # ValueError is raised.
-    requiredAllMethodHandles = ["GetNumberOfOutputPorts",
-                                "GetNumberOfInputPorts", "Update",
-                                "SetInputConnection"]
-    requiredVTKMethodHandles = ["GetOutputPort"]
-    requiredMethodHandles = requiredAllMethodHandles + requiredVTKMethodHandles
+    requiredMethodHandles = ["Update", "SetInputConnection",
+                             "GetNumberOfInputPorts",
+                             "GetNumberOfOutputPorts", "GetOutputPort"]
 
     class testClass:
-        def __init__():
+        def __init__(self):
             pass
 
     # Test for failure when each method except for "requiredMethod" is defined.
-    expectedMsg = ("Input object has no method")
     for requiredMethod in requiredMethodHandles:
         methodsToAdd = copy.deepcopy(requiredMethodHandles)
         methodsToAdd.remove(requiredMethod)
@@ -173,16 +164,14 @@ def test_track_object():
         for method in methodsToAdd:
             setattr(testObj, method, lambda x: x)
         with pytest.raises(ValueError) as testException:
-            vis.track_vtk_object(testObj)
-        assert expectedMsg in testException.value.message
+            vis.track_object(testObj, "proxy_name")
 
     # Test for failure when all attributes are not methods.
     testObj = testClass()
     for method in requiredMethodHandles:
         setattr(testObj, method, 2)
     with pytest.raises(ValueError) as testException:
-        vis.track_vtk_object(testObj)
-    assert expectedMsg in testException.value.message
+        vis.track_object(testObj, "proxy_name")
 
     # Test 2: If objectToTrack is valid, but not a terminus object, objectName
     # maps to objectToTrack in the _vtkObjects dictionary in the visualisation
@@ -195,6 +184,7 @@ def test_track_object():
     vtkComps = vtk.vtkExtractVectorComponents()
     vis.track_object(vtkComps, vtkCompsName)
     assert vis._vtkObjects[vtkCompsName] == vtkComps
+    assert vis._order[-1] == vtkCompsName
 
     # Test 3: If objectToTrack is a valid terminus object, objectName maps to
     # objectToTrack in the _vtkObjects and _vtkTermini dictionaries in the
@@ -203,12 +193,13 @@ def test_track_object():
     # The note described in Test 2 applies here.
     terminusName = "testName_3"
     actor = vtk.vtkActor()
-    mapper = vtk.vtkMapper()
+    mapper = vtk.vtkDataSetMapper()
     actor.SetMapper(mapper)
     terminus = chagu.termini.Terminus(actor)
     vis.track_object(terminus, terminusName)
     assert vis._vtkObjects[terminusName] == terminus
     assert vis._vtkTermini[terminusName] == terminus
+    assert vis._order[-1] == terminusName
 
 
 if __name__ == "__main__":
@@ -216,4 +207,4 @@ if __name__ == "__main__":
     test_is_nasty()
     test_is_reader()
     test_is_tracked()
-    test_track_vtk_object()
+    test_track_object()
