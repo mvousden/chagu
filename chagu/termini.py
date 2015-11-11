@@ -154,7 +154,7 @@ def act_colourbar(self, colourBarName=None, colourMap=None, labelProps={},
 
     # Connect internal stuff together.
     terminus = Terminus(colourBarActor, variety="ColourBar")
-    self.track_vtk_object(terminus, sensibleName, asTerminus=True)
+    self.track_object(terminus, sensibleName)
     return sensibleName
 
 
@@ -284,7 +284,7 @@ def act_cone_vector_field(self, coneLength, coneRadius, coneResolution,
         terminus = Terminus(vectorActor, variety="cone_field",
                             vtkEndObject=vectorMapper)
 
-    self.track_vtk_object(terminus, sensibleName, asTerminus=True)
+    self.track_object(terminus, sensibleName)
     return sensibleName
 
 
@@ -386,7 +386,7 @@ def act_nasty_vector_field(self, arrowLength, arrowColour=[0., 0., 0.],
         terminus = Terminus(vectorActor, variety="nasty_vector_field",
                             vtkEndObject=vectorMapper)
 
-    self.track_vtk_object(terminus, sensibleName, asTerminus=True)
+    self.track_object(terminus, sensibleName)
     return sensibleName
 
 
@@ -450,7 +450,7 @@ def act_surface(self, colourMap="PuOr", opacity=1., position=[0., 0., 0.],
 
     terminus = Terminus(surfaceActor, variety="surface",
                         vtkEndObject=surfaceMapper)
-    self.track_vtk_object(terminus, sensibleName, asTerminus=True)
+    self.track_object(terminus, sensibleName)
     return sensibleName
 
 

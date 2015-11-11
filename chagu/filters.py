@@ -34,7 +34,7 @@ def extract_vector_components(self, componentsName=None, component=0):
     # Create the object.
     extractComponents = vtk.vtkExtractVectorComponents()
     extractComponents.default_output_port = component
-    self.track_vtk_object(extractComponents, sensibleName)
+    self.track_object(extractComponents, sensibleName)
     return sensibleName
 
 
@@ -72,5 +72,5 @@ def slice_data_with_plane(self, normal=[0., 0., 1.], origin=[0., 0., 0.],
     imageSlice = vtk.vtkCutter()
     imageSlice.SetCutFunction(cutPlane)
 
-    self.track_vtk_object(imageSlice, sensibleName)
+    self.track_object(imageSlice, sensibleName)
     return sensibleName

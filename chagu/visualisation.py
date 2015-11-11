@@ -262,4 +262,4 @@ class Visualisation(object):
     is_nasty = tracking.is_nasty
     is_reader = tracking.is_reader
     is_tracked = tracking.is_tracked
-    track_vtk_object = tracking.track_vtk_object
+    track_object = tracking.track_object

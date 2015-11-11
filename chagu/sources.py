@@ -59,7 +59,7 @@ def load_visualisation_toolkit_file(self, filePath, readerName=None):
     vtReader.SetFileName(filePath)
     vtReader.Update()
 
-    self.track_vtk_object(vtReader, sensibleName)
+    self.track_object(vtReader, sensibleName)
 
     # Get some bounding box data for later. If we have already loaded some
     # data, keep the most extreme.

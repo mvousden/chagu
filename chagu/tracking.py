@@ -1,6 +1,7 @@
 # This source file defines tracking methods for the visualisation object to
 # keep a record of VTK objects it is looking after.
 
+import termini
 import vtk
 
 
@@ -62,13 +63,17 @@ def is_tracked(self, objectName):
     return True if objectName in self._vtkObjects.keys() else False
 
 
-def track_vtk_object(self, objectToTrack, objectName, asTerminus=False):
+def track_object(self, objectToTrack, objectName):
     """
-    Add an object to the objects tracked by this visualisation. Objects tracked
-    in this way can be used in the pipeline. User should call functions defined
-    in termini.py and filters.py to create VTK objects if their desired object
-    is supported. This method is for users whos objects are not yet supported,
-    and for internal use.
+    Add an object to the objects tracked by this visualisation.
+
+    Objects tracked in this way can be used in the pipeline. User should call
+    functions defined in termini.py and filters.py to create VTK objects if
+    their desired object is supported. This method is for users whos objects
+    are not yet supported, and for internal use. Non-terminus objects tracked
+    in this way must have pipeline methods defined. The handles for these
+    methods are listed in requiredAllMethodHandles and requiredVTKMethodHandles
+    below.
 
     Arguments:
 
@@ -77,14 +82,33 @@ def track_vtk_object(self, objectToTrack, objectName, asTerminus=False):
       - objectName: String denoting the name to assign the object in this
           visualisation.
 
-      - asTerminus: Boolean denoting whether or not to track this object as a
-          terminus as well as a VTK Object. This is only for Terminus objects.
-
     Returns nothing.
     """
 
+    # Define the method handles required by objects.
+    requiredMethodHandles = ["Update", "SetInputConnection",
+                             "GetNumberOfInputPorts", "GetNumberOfOutputPorts",
+                             "GetOutputPort"]
+
+    # Check that the object has these methods if it is not a Terminus, and that
+    # they are callable.
+    isTerminus = isinstance(objectToTrack, termini.Terminus)
+    if isTerminus is False:
+        for methodHandle in requiredMethodHandles:
+            if hasattr(objectToTrack, methodHandle) is True:
+                method = getattr(objectToTrack, methodHandle)
+                if hasattr(method, "__call__") is False:
+                    raise ValueError("Member \"{}\" of object \"{}\" must be "
+                                     "callable."
+                                     .format(methodHandle, objectName))
+            else:
+                raise ValueError("Object \"{}\" has no method \"{}\", which "
+                                 "is required for the pipeline."
+                                 .format(objectName, methodHandle))
+
+    # All pipeline methods are defined, so we track the object.
     self._order.append(objectName)
-    if asTerminus is True:
+    if isTerminus is True:
         self._vtkObjects[objectName] = objectToTrack
         self._vtkTermini[objectName] = objectToTrack
     else:
