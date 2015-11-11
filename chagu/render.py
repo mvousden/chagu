@@ -75,8 +75,6 @@ def build_renderer_and_window(self):
     renderWindow.AddRenderer(renderer)
     renderWindow.SetSize(*self._windowSize)
 
-    print self._camera
-
     return renderer, renderWindow
 
 
