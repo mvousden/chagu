@@ -3,6 +3,7 @@ This python file tests the functionality of functions defined in
 chagu/tracking.py. Tests are detailed in the function documentation.
 """
 
+import copy
 import chagu
 import os
 import pytest
@@ -135,20 +136,79 @@ def test_is_tracked():
     assert vis.is_tracked(trackName) is True
 
 
-def test_track_vtk_object():
+def test_track_object():
     """
-    Test chagu.tracking.track_vtk_object. We test the following cases:
+    Test chagu.tracking.track_object. We test the following cases:
+
+    1. If objectToTrack is missing a method required by the pipeline, a
+         ValueError is raised.
+    2. If objectToTrack is valid, but not a terminus object, objectName maps to
+         objectToTrack in the _vtkObjects dictionary in the visualisation
+         instance.
+    3. If objectToTrack is a valid terminus object, objectName maps to
+         objectToTrack in the _vtkObjects and _vtkTermini dictionaries in the
+         visualisation instance.
     """
 
-    # <!> Something to think about: Should the object check for methods used
-    # for the pipeline? It's probably a good idea to do this, because the user
-    # gets "instant" feedback if they are using this function to track
-    # unsupported objects, and it becomes easier to trace errors. Either way,
-    # "track_vtk_object" should be renamed to something like "track_object"
-    # anyway so that users think they can add their own Terminus objects in
-    # this way too. This function should probably check the isinstance of this
-    # object instead of passing isTerminus as well, for simplicity for the
-    # user.
+    vis = chagu.Visualisation()
+
+    # Test 1: If objectToTrack is missing a method required by the pipeline, a
+    # ValueError is raised.
+    requiredAllMethodHandles = ["GetNumberOfOutputPorts",
+                                "GetNumberOfInputPorts", "Update",
+                                "SetInputConnection"]
+    requiredVTKMethodHandles = ["GetOutputPort"]
+    requiredMethodHandles = requiredAllMethodHandles + requiredVTKMethodHandles
+
+    class testClass:
+        def __init__():
+            pass
+
+    # Test for failure when each method except for "requiredMethod" is defined.
+    expectedMsg = ("Input object has no method")
+    for requiredMethod in requiredMethodHandles:
+        methodsToAdd = copy.deepcopy(requiredMethodHandles)
+        methodsToAdd.remove(requiredMethod)
+        testObj = testClass()
+        for method in methodsToAdd:
+            setattr(testObj, method, lambda x: x)
+        with pytest.raises(ValueError) as testException:
+            vis.track_vtk_object(testObj)
+        assert expectedMsg in testException.value.message
+
+    # Test for failure when all attributes are not methods.
+    testObj = testClass()
+    for method in requiredMethodHandles:
+        setattr(testObj, method, 2)
+    with pytest.raises(ValueError) as testException:
+        vis.track_vtk_object(testObj)
+    assert expectedMsg in testException.value.message
+
+    # Test 2: If objectToTrack is valid, but not a terminus object, objectName
+    # maps to objectToTrack in the _vtkObjects dictionary in the visualisation
+    # instance.
+    #
+    # Note that this is not the recommended way to add this VTK object to a
+    # visualisation instance; vis.extract_vector_components is the supported
+    # method.
+    vtkCompsName = "testName_2"
+    vtkComps = vtk.vtkExtractVectorComponents()
+    vis.track_object(vtkComps, vtkCompsName)
+    assert vis._vtkObjects[vtkCompsName] == vtkComps
+
+    # Test 3: If objectToTrack is a valid terminus object, objectName maps to
+    # objectToTrack in the _vtkObjects and _vtkTermini dictionaries in the
+    # visualisation instance.
+    #
+    # The note described in Test 2 applies here.
+    terminusName = "testName_3"
+    actor = vtk.vtkActor()
+    mapper = vtk.vtkMapper()
+    actor.SetMapper(mapper)
+    terminus = chagu.termini.Terminus(actor)
+    vis.track_object(terminus, terminusName)
+    assert vis._vtkObjects[terminusName] == terminus
+    assert vis._vtkTermini[terminusName] == terminus
 
 
 if __name__ == "__main__":
