@@ -17,10 +17,10 @@ def test_initialisation():
     1. If name is provided as an optional argument, the visualisation instance
          has name value equal to the argument.
     2. If no arguments are provided, the visualisation object has _background
-         value equal to [0., 0., 0.], a two element list as its _windowSize
-         value, a six element list as its _boundingBox value, a _colourmap_lut
+         value equal to [0., 0., 0.], a two element list as its windowSize
+         value, a six element list as its _boundingBox value, a colourmap_lut
          value of type vtkLookupTable, _order and _pipeline values defined as
-         empty lists, and _vtkObjects, _camera, and _vtkTermini values defined
+         empty lists, and _vtkObjects, camera, and _vtkTermini values defined
          as empty dictionaries.
     3. If a valid filePath is provided, the visualisation object has
          _vtkObjects value as a dictionary with one key-value pair in it, a six
@@ -37,20 +37,20 @@ def test_initialisation():
 
     # Test 2: If no arguments are provided, the visualisation object has
     # _background value equal to [0., 0., 0.], a two element list as its
-    # _windowSize value, a six element list as its _boundingBox value, a
-    # _colourmap_lut value of type vtkLookupTable, _order and _pipeline values
-    # defined as empty lists, and _vtkObjects, _camera, and _vtkTermini values
+    # windowSize value, a six element list as its _boundingBox value, a
+    # colourmap_lut value of type vtkLookupTable, _order and _pipeline values
+    # defined as empty lists, and _vtkObjects, camera, and _vtkTermini values
     # defined as empty dictionaries.
     def check_clean(vis):
         assert vis_2._background == [0., 0., 0.]
-        assert len(vis_2._windowSize) == 2
-        assert type(vis_2._windowSize) == list
+        assert len(vis_2.windowSize) == 2
+        assert type(vis_2.windowSize) == list
         assert len(vis_2._boundingBox) == 6
         assert type(vis_2._boundingBox) == list
-        assert vis_2._colourmap_lut.IsA("vtkLookupTable") == 1
+        assert vis_2.colourmap_lut.IsA("vtkLookupTable") == 1
         assert vis_2._order == []
         assert vis_2._pipeline == []
-        assert vis_2._camera == {}
+        assert vis_2.camera == {}
         assert vis_2._vtkTermini == {}
 
     vis_2 = chagu.Visualisation()
@@ -184,9 +184,9 @@ def test_set_camera():
     11. If cameraInput["parallel projection"] is not boolean, a TypeError is
           raised.
     12. If cameraInput contains only valid camera keys with valid items, the
-          visualisation instance has _camera value identical to cameraInput.
+          visualisation instance has camera value identical to cameraInput.
     13. The most recent cameraInput used to set camera is identical to the
-          _camera value in the visualisation instance.
+          camera value in the visualisation instance.
     """
 
     vis = chagu.Visualisation()
@@ -269,22 +269,22 @@ def test_set_camera():
     assert expectedMsg in testException.value.message
 
     # Test 12: If cameraInput contains only valid camera keys with valid items,
-    # the visualisation instance has _camera value identical to cameraInput.
+    # the visualisation instance has camera value identical to cameraInput.
     cameraInput_12 = {"zoom": 10, "parallel projection": True,
                       "view up": [2, 4, 6], "position": [-4, 72, 8.2],
                       "focal point": [0, 0, 0]}
     vis.camera = cameraInput_12
-    assert vis._camera == cameraInput_12
+    assert vis.camera == cameraInput_12
 
     # Test 13: The most recent cameraInput used to set camera is identical to
-    # the _camera value in the visualisation instance.
+    # the camera value in the visualisation instance.
     cameraInput_13a = {"zoom": 10, "parallel projection": True,
                        "view up": [2, 4, 6], "position": [-4, 72, 8.2],
                        "focal point": [0, 0, 0]}
     vis.camera = cameraInput_13a
     cameraInput_13b = {}
     vis.camera = cameraInput_13b
-    assert vis._camera == cameraInput_13b
+    assert vis.camera == cameraInput_13b
 
 
 def test_set_colourmap_lut():
@@ -292,7 +292,7 @@ def test_set_colourmap_lut():
     Test chagu.Visualisation setter "colourmap_lut". We test the following
     cases:
 
-    1. If arguments are valid, the visualisation instance has _colourmap_lut
+    1. If arguments are valid, the visualisation instance has colourmap_lut
          value of type vtkLookupTablevalue.
 
     The functionality of this is largely tested by tests for the function
@@ -302,9 +302,9 @@ def test_set_colourmap_lut():
     vis = chagu.Visualisation()
 
     # Test 1: If arguments are valid, the visualisation instance has
-    # _colourmap_lut value of type vtkLookupTablevalue.
+    # colourmap_lut value of type vtkLookupTablevalue.
     vis.colourmap_lut = "PuOr"
-    assert vis._colourmap_lut.IsA("vtkLookupTable") == 1
+    assert vis.colourmap_lut.IsA("vtkLookupTable") == 1
 
 
 def test_set_windowsize():
@@ -319,7 +319,7 @@ def test_set_windowsize():
     4. If any element of windowSizeInput is zero or less, a ValueError is
          raised.
     5. If windowSizeInput is a two-element object containing integer-like
-       objects, the visualisation instance has _windowSize value equal to
+       objects, the visualisation instance has windowSize value equal to
        windowSizeInput.
     """
 
@@ -379,11 +379,11 @@ def test_set_windowsize():
     assert expectedMsg_b in testException.value.message
 
     # Task 5: If windowSizeInput is a two-element object containing
-    # integer-like objects, the visualisation instance has _windowSize value
+    # integer-like objects, the visualisation instance has windowSize value
     # equal to windowSizeInput.
     windowSizeInput_5 = [1680, 1050]
     vis.windowSize = windowSizeInput_5
-    assert vis._windowSize == windowSizeInput_5
+    assert vis.windowSize == windowSizeInput_5
 
 
 if __name__ == "__main__":
