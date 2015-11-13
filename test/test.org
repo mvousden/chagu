@@ -9,6 +9,12 @@
 # this, I am developing some tests to back-test this project. These black box
 # tests will exist from the user-interface level to the level of internals. The
 # rest of this note describes some testing objectives.
+#
+# I run tests with:
+#
+#   py.test --cov=chagu test/ --cov-report term-missing
+#
+# Using the plugin pytest-cov installable from pip.
 
 * IN-PROGRESS Write test descriptions for other files
 ** TODO filters.py
