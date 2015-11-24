@@ -23,3 +23,36 @@
 ** TODO render.py
 ** TODO sources.py
 ** TODO termini.py
+* TODO sources.py functionality (load_visualisation_toolkit_file)
+  - Note taken on [2015-11-24 Tue 09:59] \\
+    Requires track_object to pass tests.
+
+** Path is valid (has a period) and name is set
+   vis.get_vtk_object(name) returns a vtkReader object with the filename set
+   appropriately.
+   vis._boundingBox is set appropriately
+** Try with all data input types that are supported
+   vti, vtp, vtr, vts, vtu, vtk(STRUCTURED_GRID) binary.
+** Path does not exist
+   Raises valueerror
+** Path has invalid type
+   Raises valueerror
+** Loading a second file (another reader) with a different bounding box
+   - Note taken on [2015-11-24 Tue 10:21] \\
+        +-+--+-+
+     A: |      |
+        +-+--+-+
+
+        +--+
+        |  |
+        |  |
+     B: |  |
+        |  |
+        |  |                 +-------+
+        +--+                 |       |
+                             |       |
+     Resulting bounding box: |       |
+                             |       |
+                             |       |
+                             +-------+
+   Bounding box is a box that encloses all data.
