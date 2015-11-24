@@ -12,7 +12,7 @@
 #
 # I run tests with:
 #
-#   py.test --cov=chagu test/ --cov-report term-missing
+#   py.test --cov=chagu test/ --cov-report term-missing --cov-report annotate --verbose
 #
 # Using the plugin pytest-cov installable from pip.
 

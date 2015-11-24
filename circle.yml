@@ -24,7 +24,7 @@ dependencies:
 
 test:
   override:
-    - $PYTHON_EXEC_PATH/python -m pytest ~/chagu/test/ --cov=chagu --cov-report term-missing:
+    - $PYTHON_EXEC_PATH/python -m pytest ~/chagu/test/ --cov=chagu --cov-report term-missing --verbose:
         environment:
           LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_UNTAR_PATH/bin"
           PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_UNTAR_PATH/Wrapping/Python:$VTK_UNTAR_PATH/bin"
