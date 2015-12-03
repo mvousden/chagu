@@ -90,13 +90,29 @@ def save_snapshot(renderWindow, imageFilename):
 
     Returns nothing.
     """
-    im = vtk.vtkWindowToImageFilter()
-    im.SetInput(renderWindow)
+    extension = imageFilename.split(".")[-1]
 
-    writer = vtk.vtkPNGWriter()
-    writer.SetInputConnection(im.GetOutputPort())
-    writer.SetFileName(imageFilename)
-    writer.Write()
+    if extension == "png":
+        im = vtk.vtkWindowToImageFilter()
+        im.SetInput(renderWindow)
+
+        writer = vtk.vtkPNGWriter()
+        writer.SetInputConnection(im.GetOutputPort())
+        writer.SetFileName(imageFilename)
+        writer.Write()
+    elif extension in ["ps", "pdf", "eps"]:
+        writer = vtk.vtkGL2PSExporter()
+        writer.SetRenderWindow(renderWindow)
+        if extension == "eps":
+            writer.SetFileFormatToEPS()
+        elif extension == "pdf":
+            writer.SetFileFormatToPDF()
+        elif extension == "ps":
+            writer.SetFileFormatToPS()
+        writer.SetFilePrefix(".".join(imageFilename.split(".")[:-1]))
+        writer.Write()
+    else:
+        raise NotImplementedError
 
 
 def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
