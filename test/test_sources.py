@@ -54,16 +54,15 @@ def test_load_visualisation_toolkit_file():
 
     # Create the testFile.
     testFile = "testFile.xyz"
-    assert os.path.isfile(testFile) is False
     with open(testFile, "w") as fl:
         pass
+    falseExt = testFile.split(".")[-1]
 
     # Run test.
-    expectedMsg = ("\"{}\" has invalid extension \"{}\""
-                   .format(testFile, falseExt))
-    with py.test.raises(ValueError) as testException:
+    expectedMsg = ("extension")
+    with pytest.raises(ValueError) as testException:
         vis.load_visualisation_toolkit_file(testFile)
-        os.remove(testFile)  # Remove test file.
+    os.remove(testFile)   # Remove test file.
     assert expectedMsg in testException.value.message
 
     # Test 3: If filePath is valid and readerName is set, readerName maps to
@@ -79,9 +78,8 @@ def test_load_visualisation_toolkit_file():
 
     # To achieve this, we use the same visualisation object from before, but
     # load a second file.
-    print(dir(vis))
     vis.load_visualisation_toolkit_file(absFilePathData2d)
-    assert vis._boundingBox[:-2] == [-15, 15, -16.1, 16.1]
+    assert vis._boundingBox[:-2] == [-10, 10, -16.1, 16.1]
     assert 0 not in vis._boundingBox
 
 
