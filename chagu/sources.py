@@ -1,6 +1,7 @@
 # This source file defines functions that load VTK data sources. These sources
 # are at the starting terminus of the pipeline, as one might expect.
 
+import os
 import vtk
 
 import chagu.helpers as helpers
@@ -22,6 +23,12 @@ def load_visualisation_toolkit_file(self, filePath, readerName=None):
 
     Returns the name of the filereader object.
     """
+
+    # Check that the file exists.
+    if os.path.isfile(filePath) is False:
+        errorMsg = ("File \"{}\" does not exist.".format(filePath))
+        raise ValueError(errorMsg)
+
     # Come up with a name for the object.
     sensibleName = readerName if readerName is not None else "reader"
     sensibleName = helpers.generate_sensible_name(sensibleName,
