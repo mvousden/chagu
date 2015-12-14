@@ -83,3 +83,13 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
   :ARCHIVE_CATEGORY: test
   :ARCHIVE_TODO: DONE
   :END:
+
+* DONE sources.py
+  CLOSED: [2015-12-14 Mon 07:42]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2015-12-14 Mon 07:42
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_OLPATH: Write test descriptions for other files
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:
