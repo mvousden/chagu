@@ -16,6 +16,11 @@
 #
 # Using the plugin pytest-cov installable from pip.
 
+* TODO Refactor code for testability
+  We have a God object problem. Divide visualisation methods into functions
+  that create the object, and apply that object to the visualisation
+  object. This change will make code easier to test, so consider making this
+  change before implementing more tests.
 * IN-PROGRESS Write test descriptions for other files
 ** TODO filters.py
 ** TODO mask.py
@@ -27,17 +32,21 @@
   - Note taken on [2015-11-24 Tue 09:59] \\
     Requires track_object to pass tests.
 
-** Path is valid (has a period) and name is set
+** DONE Path is valid (has a period) and name is set
+   CLOSED: [2015-12-07 Mon 09:25]
    vis.get_vtk_object(name) returns a vtkReader object with the filename set
    appropriately.
    vis._boundingBox is set appropriately
-** Try with all data input types that are supported
+** TODO Try with all data input types that are supported
    vti, vtp, vtr, vts, vtu, vtk(STRUCTURED_GRID) binary.
-** Path does not exist
+** DONE Path does not exist
+   CLOSED: [2015-12-07 Mon 09:25]
    Raises valueerror
-** Path has invalid type
+** DONE Path has invalid type
+   CLOSED: [2015-12-07 Mon 09:25]
    Raises valueerror
-** Loading a second file (another reader) with a different bounding box
+** DONE Loading a second file (another reader) with a different bounding box
+   CLOSED: [2015-12-07 Mon 09:25]
    - Note taken on [2015-11-24 Tue 10:21] \\
         +-+--+-+
      A: |      |
