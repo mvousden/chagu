@@ -55,6 +55,7 @@ def test_save_snapshot():
 
     vis = chagu.Visualisation()
     vis.load_visualisation_toolkit_file(absFilePath)
+    vis.extract_vector_components(component=2)
     vis.act_surface()
     renderer, renderWindow = vis.build_renderer_and_window()
     renderWindow.SetOffScreenRendering(True)
