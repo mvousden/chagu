@@ -43,7 +43,8 @@ def test_build_renderer_and_window():
     assert vis._pipeline != []
 
 
-@pytest.mark.xfail()
+@pytest.mark.skipif(vtk.vtkVersion().GetVTKVersion() != "5.8.0",
+                    reason="vtkGL2PSExporter is not defined in VTK 5.8.")
 def test_save_snapshot():
     """
     Test chagu.render.save_snapshot. We test the following cases:
