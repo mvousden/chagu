@@ -83,6 +83,44 @@ def test_save_snapshot():
                 os.remove(imageFilename)
 
 
+def test_visualise_animate_rotate():
+    """
+    Test chagu.render.visualise_animate_rotate. We test the following cases:
+
+    1. If rotationResolution is 0, no images are produced.
+    2. If rotationResolution is 10, 10 images are produced.
+
+    This function is largely tested by test_save_snapshot and
+    test_build_renderer_and_window.
+    """
+    vis = chagu.Visualisation()
+    vis.load_visualisation_toolkit_file(absFilePath)
+    vis.extract_vector_components(component=2)
+    vis.act_surface()
+
+    imageStackName = "{}/test_visualise_animate_rotate".format(pathToThisFile)
+    try:
+        # Test 1: If rotationResolution is 0, no images are produced.
+        vis.visualise_animate_rotate(imageStackName + "_1",
+                                     rotation_resolution=0)
+        assert imageStackName not in\
+          os.listdir(os.path.dirname(os.path.realpath(__file__)))
+
+        # Test 2: If rotationResolution is 10, 10 images are produced.
+        vis.visualise_animate_rotate(imageStackName + "_2",
+                                     rotation_resolution=10)
+        for zI in xrange(10):
+            assert os.path.exists("{}_2_0{}.png".format(imageStackName, zI))
+
+    # Remove images as a cleanup activity.
+    finally:
+        filesToRemove = [imageStackName + "_1"] +\
+           ["{}_2_0{}.png".format(imageStackName, zI) for zI in xrange(10)]
+        for imageFilename in filesToRemove:
+            if os.path.exists(imageFilename):
+                os.remove(imageFilename)
+
+
 def test_visualise_interact():
     """
     This should test chagu.render.visualise_interact, but there is no easy way
