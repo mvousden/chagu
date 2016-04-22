@@ -23,7 +23,6 @@ def test_build_renderer_and_window():
     2. A vtkRenderer and a vtkRenderWindow are both returned if successful.
     3. The visualisation object has a pipeline defined.
     """
-
     vis = chagu.Visualisation()
 
     # Test 1: If no file has been loaded by the visualisation object, a
@@ -53,7 +52,6 @@ def test_save_snapshot():
     2. If imageFilename is not of a supported type, raise a
          NotImplementedError.
     """
-
     vis = chagu.Visualisation()
     vis.load_visualisation_toolkit_file(absFilePath)
     vis.extract_vector_components(component=2)
@@ -82,6 +80,42 @@ def test_save_snapshot():
         for imageFilename in imageFiles:
             if os.path.exists(imageFilename):
                 os.remove(imageFilename)
+
+
+def test_visualise_interact():
+    """
+    This should test chagu.render.visualise_interact, but there is no easy way
+    to do that. Instead, we check that the classes used in the function are
+    defined.
+    """
+    vtk.vtkRenderWindowInteractor()
+
+
+def test_visualise_save():
+    """
+    Test chagu.render.visualise_save. We test the following cases:
+
+    1. If imageFilename is a supported type, produce a file of that type.
+
+    This function is largely tested by test_save_snapshot and
+    test_build_renderer_and_window.
+    """
+    vis = chagu.Visualisation()
+    vis.load_visualisation_toolkit_file(absFilePath)
+    vis.extract_vector_components(component=2)
+    vis.act_surface()
+
+    # Test 1: If imageFilename is a supported type, produce a file of that
+    # type.
+    imageFilename = "{}/test_visualise_save.png".format(pathToThisFile)
+    try:
+        vis.visualise_save(imageFilename)
+        assert os.path.exists(imageFilename)
+
+    # Remove the image as a cleanup activity.
+    finally:
+        if os.path.exists(imageFilename):
+            os.remove(imageFilename)
 
 
 if __name__ == "__main__":
