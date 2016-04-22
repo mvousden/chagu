@@ -386,9 +386,32 @@ def test_set_windowsize():
     assert vis.windowSize == windowSizeInput_5
 
 
+@pytest.mark.skipif(True, reason="Takes a long time, and is obnoxious.")
+def test_memory():
+    """
+    This test is a bit obnoxious: it checks that a visualisation instance does
+    not retain memory after being unbound.
+    """
+
+    pathToThisFile = os.path.dirname(os.path.realpath(__file__))
+    relativeVtuFilePath = "../example/data/data.vtu"
+    absFilePath = "{}/{}".format(pathToThisFile, relativeVtuFilePath)
+
+    for zI in range(int(1e6)):
+        if zI % 1 == 0:
+            print("Creating visualisation object {} of {}."
+                  .format(zI, int(1e6)))
+        vis = chagu.Visualisation(filePath=absFilePath)
+        vis.extract_vector_components(component=2)
+        vis.act_surface
+        vis.act_cone_vector_field(1,1,20)
+        vis.build_renderer_and_window()
+
+
 if __name__ == "__main__":
     test_initialisation()
     test_set_background()
     test_set_camera()
     test_set_colourmap_lut()
     test_set_windowsize()
+    # test_memory()
