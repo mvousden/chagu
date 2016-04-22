@@ -147,13 +147,13 @@ def example_animate_rotate():
                                  rotation_resolution=4)
 
 
-if __name__ == "__main__":
-    if os.path.exists("output") is False:
-        os.mkdir("output")
-    # example_the_works()
-    # example_nasty_2d()
-    # mmm()
-    # example_autopipe_1()
-    # example_autopipe_2()
-    # example_tiny()
-    example_animate_rotate()
+# if __name__ == "__main__":
+#     if os.path.exists("output") is False:
+#         os.mkdir("output")
+#     example_the_works()
+#     example_nasty_2d()
+#     mmm()
+#     example_autopipe_1()
+#     example_autopipe_2()
+#     example_tiny()
+#     example_animate_rotate()
