@@ -44,6 +44,7 @@ def test_build_renderer_and_window():
     assert vis._pipeline != []
 
 
+@pytest.mark.xfail()
 def test_save_snapshot():
     """
     Test chagu.render.save_snapshot. We test the following cases:
