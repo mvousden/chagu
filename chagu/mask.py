@@ -257,9 +257,11 @@ def quadrilateral_plane_source(domain, resolution):
 
     Returns the vtkPlaneSource object describing the requested geometry.
     """
+
+    integerisedResolution = (int(zI) for zI in resolution)
     maskPlane = vtk.vtkPlaneSource()
     maskPlane.SetOrigin(*domain[0:3])
     maskPlane.SetPoint1(*domain[3:6])
     maskPlane.SetPoint2(*domain[6:])
-    maskPlane.SetResolution(*resolution)
+    maskPlane.SetResolution(*integerisedResolution)
     return maskPlane

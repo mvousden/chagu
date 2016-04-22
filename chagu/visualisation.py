@@ -70,7 +70,7 @@ class Visualisation(object):
         # Set initial values for properties.
         self._background = [0., 0., 0.]
         self._camera = {}
-        self._windowSize = [600., 600.]
+        self._windowSize = [600, 600]
 
         # Set initial values for "accessible" member variables.
         self.name = name
