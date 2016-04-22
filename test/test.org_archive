@@ -93,3 +93,13 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
   :ARCHIVE_CATEGORY: test
   :ARCHIVE_TODO: DONE
   :END:
+
+* DONE render.py
+  CLOSED: [2016-04-22 Fri 14:46]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2016-04-22 Fri 14:46
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_OLPATH: Write test descriptions for other files
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:

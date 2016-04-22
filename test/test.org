@@ -25,7 +25,6 @@
 ** TODO filters.py
 ** TODO mask.py
 ** TODO pipeline.py
-** TODO render.py
 ** TODO termini.py
 * TODO sources.py functionality (load_visualisation_toolkit_file)
   - Note taken on [2015-11-24 Tue 09:59] \\
