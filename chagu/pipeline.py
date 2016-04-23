@@ -69,7 +69,7 @@ def autopipe(self):
                 if self.is_nasty(vtkObjectRecv) is True:
 
                     # Search for the filereader to connect to the terminus.
-                    for zI in xrange(zJ, len(order)):
+                    for zI in xrange(len(order)):
                         vtkObjectSend = order[zI]
                         if self.is_reader(vtkObjectSend) is True:
                             toPop.append(zJ)
@@ -91,7 +91,8 @@ def autopipe(self):
                 # If we can't find a match for the terminus, raise an
                 # exception.
                 if zJ not in toPop:
-                    raise  # <!> Needs a message
+                    raise RuntimeError("No connection found for {}. Has a "
+                                       "file been read?".format(vtkObjectRecv))
 
             # If there are no input ports for the terminus, remove it from the
             # list.
@@ -106,12 +107,12 @@ def autopipe(self):
     # Connect remaining vtkObjects in order.
     for zI in xrange(1, len(order)):
         # If the zI-1th object is a fileReader, it means objects have been
-        # added in a strange order. Not much we can do about this though, so we
-        # need to check it.
+        # added in a strange order. Not much we can do about this though, but
+        # we need to check it.
         if self.is_reader(order[zI - 1]) is True:
-            raise  # <!> Needs a message
-
-        pipelineDescription.append([order[zI], order[zI - 1]])
+            pipelineDescription.append([order[zI - 1], order[zI]])
+        else:
+            pipelineDescription.append([order[zI], order[zI - 1]])
 
     # Build the pipeline from our guess.
     self.build_pipeline_from_dict(pipelineDescription)
