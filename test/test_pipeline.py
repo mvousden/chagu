@@ -65,7 +65,9 @@ def test_build_pipeline_from_dict():
     pipeline = [[readerName, compName],
                 [compName, [surfaceName, 1, 0]],
                 [compName, [conesName, 0, 1]],
-                [readerName, [conesName, 0, 0]]]
+                [compName, [conesName, 2, 0]]]
+    print("One VTK error should appear here, because we are connecting "
+          "objects inappropriately.\n")
     vis.build_pipeline_from_dict(pipeline)
 
     compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(1)
