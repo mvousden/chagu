@@ -11,6 +11,16 @@ example:
 
 ![Quiver plot](http://www.southampton.ac.uk/~mv3g08/chagu_example.png)
 
+"Python eh? I bet it's really slow!"
+====================================
+
+As of 23/04/2016, the test suite creates 25 visualisations, and performs 14
+render operations in 1.41 secons on my 2012 Dell, without compiled Python
+files. Not subtracting the time for other testing tasks, thats at most 0.1
+seconds per render operation.
+
+That's pretty fast (though you should thank VTK for that).
+
 Requirements
 ============
 
