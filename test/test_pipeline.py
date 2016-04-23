@@ -6,6 +6,7 @@ chagu/pipeline.py. Tests are detailed in the function documentation
 import chagu
 import os
 import pytest
+import subprocess as sp
 
 
 pathToThisFile = os.path.dirname(os.path.realpath(__file__))
@@ -304,8 +305,52 @@ def test_connect_vtk_objects():
     assert compInputData == readerOutputData
 
 
+def test_draw_pipeline_graphviz():
+    """
+    Test chagu.pipeline.draw_pipeline_graphviz. We test the following cases:
+
+    1. Test that the PDF is produced using the name of the visualisation.
+    2. Test that all object names are in the PDF.
+    """
+
+    visName = "test_draw_pipeline_graphviz"
+    objectNames = []
+    vis = chagu.Visualisation(visName)
+    objectNames.append(vis.load_visualisation_toolkit_file(absFilePathData))
+    objectNames.append(vis.extract_vector_components(component=2))
+    objectNames.append(vis.act_surface())
+    objectNames.append(vis.act_cone_vector_field(1, 1, 1))
+    objectNames.append(vis.act_nasty_vector_field(1))
+    objectNames.append(vis.act_colourbar())
+    vis.autopipe()
+
+    graphvizFile = "{}/{}_pipeline.gv.pdf".format(pathToThisFile, visName)
+    textFile = "{}.txt".format(graphvizFile[:-4])
+
+    try:
+        # Test 1: Test that the PDF is produced using the name of the
+        # visualisation.
+        vis.draw_pipeline_graphviz()
+        assert os.path.isfile(graphvizFile)
+
+        # Test 2: Test that all object names are in the PDF.
+        sp.Popen(["pdftotext", graphvizFile, textFile]).wait()
+        with open(textFile) as fl:
+            content = fl.read()
+        for objectName in objectNames:
+            assert objectName in content
+
+    # Cleanup
+    finally:
+        if os.path.exists(graphvizFile):
+            os.remove(graphvizFile)
+        if os.path.exists(textFile):
+            os.remove(textFile)
+
+
 if __name__ == "__main__":
     test_autopipe()
     test_build_pipeline_from_dict()
     test_check_connection()
     test_connect_vtk_objects()
+    test_draw_pipeline_graphviz()
