@@ -70,5 +70,62 @@ def test_check_connection():
     vis.check_connection(readerName, compName)
 
 
+def test_connect_vtk_objects():
+    """
+    Test chagu.pipeline.connect_vtk_objects. We test the following cases:
+
+    1. Test that the connection is checked before being made.
+    2. If input arguments are fine, check that the objects are actually
+        connected according to VTK.
+    """
+
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    compName = vis.extract_vector_components(component=2)
+
+    # Test 1: Test that the connection is checked before being made.
+
+    # Test 1a: If inputObjectName does not map to an object in the
+    # visualisation instance, a ValueError is raised.
+    fakeInputName = compName + "lies"
+    expectedMsgs = ["nvalid input object name", fakeInputName]
+    with pytest.raises(ValueError) as testException:
+        vis.connect_vtk_objects(readerName, fakeInputName)
+    for expectedMsg in expectedMsgs:
+        assert expectedMsg in testException.value.message
+
+    # Test 1b: If outputObjectName does not map to an object in the
+    # visualisation instance, a ValueError is raised.
+    fakeOutputName = readerName + "lies"
+    expectedMsgs = ["nvalid output object name", fakeOutputName]
+    with pytest.raises(ValueError) as testException:
+        vis.connect_vtk_objects(fakeOutputName, compName)
+    for expectedMsg in expectedMsgs:
+        assert expectedMsg in testException.value.message
+
+    # Test 1c: If outputPortIndex is greater than the number of output ports an
+    # object has, a ValueError is raised.
+    expectedMsgs = ["utput port index", "100"]
+    with pytest.raises(ValueError) as testException:
+        vis.connect_vtk_objects(readerName, compName, outputPortIndex=100)
+    for expectedMsg in expectedMsgs:
+        assert expectedMsg in testException.value.message
+
+    # Test 1d: If inputPortIndex is greater than the number of input ports an
+    # object has, a ValueError is raised.
+    expectedMsgs = ["nput port index", "100"]
+    with pytest.raises(ValueError) as testException:
+        vis.connect_vtk_objects(readerName, compName, inputPortIndex=100)
+    for expectedMsg in expectedMsgs:
+        assert expectedMsg in testException.value.message
+
+    # Test 2: If input arguments are fine, check that the objects are actually
+    # connected according to VTK.
+    vis.connect_vtk_objects(readerName, compName)
+    compObject = vis._vtkObjects[compName]
+    assert compObject.GetInputAlgorithm() == vis._vtkObjects[readerName]
+
+
 if __name__ == "__main__":
     test_check_connection()
+    test_connect_vtk_objects()
