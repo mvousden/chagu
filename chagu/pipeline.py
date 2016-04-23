@@ -320,7 +320,8 @@ def draw_pipeline_graphviz(self, directory=None, name=None):
     import graphviz
 
     graph = graphviz.Digraph(name=name if name is not None else
-                             "{}_pipeline".format(self.name))
+                             "{}_pipeline".format(self.name),
+                             directory=directory)
 
     # Build nodes.
     for objectName in self._vtkObjects.iterkeys():
