@@ -13,6 +13,77 @@ relativeVtuFilePathData = "../example/data/data.vtu"
 absFilePathData = "{}/{}".format(pathToThisFile, relativeVtuFilePathData)
 
 
+def test_autopipe():
+    """
+    Test chagu.pipeline.autopipe. We test the following cases:
+
+    1. Connecting objects without a fileReader raises a RuntimeError.
+    2. Nasty vector termini are connected directly to the filereader.
+    3. Termini with no inputs are not present in the pipeline.
+    4. Changing the order filters are added modifies the pipeline accordingly;
+        most recent filters are connected to termini.
+    """
+
+    vis = chagu.Visualisation()
+    compName = vis.extract_vector_components(component=2)
+    surfaceName = vis.act_surface()
+    conesName = vis.act_cone_vector_field(1, 1, 1)
+    nastyName = vis.act_nasty_vector_field(1)
+    cmapName = vis.act_colourbar()
+
+    # Test 1: Connecting objects without a fileReader raises a RuntimeError.
+    with pytest.raises(RuntimeError) as testException:
+        vis.autopipe()
+    assert "read" in testException.value.message
+
+    # Test 2: Nasty vector termini are connected directly to the filereader.
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    vis.autopipe()
+    assert [readerName, nastyName] in vis._pipeline
+
+    # Test 3: Termini with no inputs are not present in the pipeline.
+    for connection in vis._pipeline:
+        assert cmapName not in connection
+
+    # Test 4: Changing the order filters are added modifies the pipeline
+    # accordingly; most recent filters are connected to termini.
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    compName = vis.extract_vector_components(component=2)
+    sliceName = vis.slice_data_with_plane()
+    surfaceName = vis.act_surface()
+    vis.autopipe()
+
+    # Check that only the expected connections are in the pipeline (in any
+    # order, we're not that mean).
+    expectedConnections = [[readerName, compName],
+                           [compName, sliceName],
+                           [sliceName, surfaceName]]
+    resultingPipeline = vis._pipeline
+    for connection in expectedConnections:
+        assert connection in resultingPipeline
+        resultingPipeline.remove(connection)
+    assert resultingPipeline == []
+
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    sliceName = vis.slice_data_with_plane()  # Switched in order.
+    compName = vis.extract_vector_components(component=2)  # Switched in order.
+    surfaceName = vis.act_surface()
+    nastyName = vis.act_nasty_vector_field(1, maskType="plane")
+    vis.autopipe()
+
+    expectedConnections = [[readerName, sliceName],
+                           [sliceName, compName],
+                           [compName, surfaceName],
+                           [readerName, nastyName]]
+    resultingPipeline = vis._pipeline
+    for connection in expectedConnections:
+        assert connection in resultingPipeline
+        resultingPipeline.remove(connection)
+    assert resultingPipeline == []
+
+
 def test_build_pipeline_from_dict():
     """
     Test chagu.pipeline.build_pipeline_from_dict. We test the following cases:
@@ -234,6 +305,7 @@ def test_connect_vtk_objects():
 
 
 if __name__ == "__main__":
+    test_autopipe()
     test_build_pipeline_from_dict()
     test_check_connection()
     test_connect_vtk_objects()
