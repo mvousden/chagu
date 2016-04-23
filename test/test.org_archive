@@ -103,3 +103,13 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
   :ARCHIVE_CATEGORY: test
   :ARCHIVE_TODO: DONE
   :END:
+
+* DONE pipeline.py
+  CLOSED: [2016-04-23 Sat 17:25]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2016-04-23 Sat 17:25
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_OLPATH: Write test descriptions for other files
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: DONE
+  :END:
