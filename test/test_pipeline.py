@@ -64,7 +64,8 @@ def test_build_pipeline_from_dict():
     # the default here because component=2 was passed.
     pipeline = [[readerName, compName],
                 [compName, [surfaceName, 1, 0]],
-                [compName, [conesName, 0, 1]]]
+                [compName, [conesName, 0, 1]],
+                [readerName, [conesName, 0, 0]]]
     vis.build_pipeline_from_dict(pipeline)
 
     compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(1)
