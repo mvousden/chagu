@@ -246,6 +246,16 @@ def check_connection(self, outputObjectName, inputObjectName,
     Returns nothing, but will raise an error if there is a problem.
     """
 
+    # Check for invalid names.
+    if self.is_tracked(outputObjectName) is False:
+        raise ValueError("Invalid output object name {}. Did you mean one of "
+                         "{}?".format(outputObjectName,
+                                      self._vtkObjects.keys()))
+    if self.is_tracked(inputObjectName) is False:
+        raise ValueError("Invalid input object name {}. Did you mean one of "
+                         "{}?".format(inputObjectName,
+                                      self._vtkObjects.keys()))
+
     # Check that port numbers are valid. We do this by getting the number of
     # output ports for the output object and the number of input ports for the
     # input object. If the requested index is greater than the number of
@@ -262,16 +272,6 @@ def check_connection(self, outputObjectName, inputObjectName,
         raise ValueError("Input port index {} is greater than the number of "
                          "input ports that the object \"{}\" has, which is {}."
                          .format(inputPortIndex, inputObjectName, inputTot))
-
-    # Check for invalid names.
-    if self.is_tracked(outputObjectName) is False:
-        raise ValueError("Invalid output object name {}. Did you mean one of "
-                         "{}?".format(outputObjectName,
-                                      self._vtkObjects.keys()))
-    if self.is_tracked(inputObjectName) is False:
-        raise ValueError("Invalid input object name {}. Did you mean one of "
-                         "{}?".format(inputObjectName,
-                                      self._vtkObjects.keys()))
 
 
 def connect_vtk_objects(self, outputObjectName, inputObjectName,
