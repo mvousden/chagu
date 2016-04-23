@@ -221,8 +221,9 @@ def test_connect_vtk_objects():
     # Test 2: If input arguments are fine, check that the objects are actually
     # connected according to VTK.
     vis.connect_vtk_objects(readerName, compName)
-    compObject = vis._vtkObjects[compName]
-    assert compObject.GetInputAlgorithm() == vis._vtkObjects[readerName]
+    compInputData = vis._vtkObjects[compName].GetInputDataObject(0, 0)
+    readerOutputData = vis._vtkObjects[readerName].GetOutputDataObject(0)
+    assert compInputData == readerOutputData
 
 
 if __name__ == "__main__":
