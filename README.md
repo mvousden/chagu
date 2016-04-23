@@ -14,11 +14,11 @@ example:
 "Python eh? I bet it's really slow!"
 ====================================
 
-As of 23/04/2016, the test suite creates 25 visualisations, and performs 14
-render operations in 1.41 seconds on my 2012 Dell, without compiled Python
-files. Not subtracting the time for other testing tasks,
+As of 23/04/2016, the test suite creates 25 visualisations, and performs 204
+(somewhat basic) render operations all in 6.37 seconds on my 2012 Dell, without
+compiled Python files. Not subtracting the time for other testing tasks,
 
-thats at most 0.1 seconds per render operation.
+thats at most 0.03 seconds per render operation.
 
 That's pretty fast (though you should thank VTK for that).
 
