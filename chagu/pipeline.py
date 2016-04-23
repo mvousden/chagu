@@ -128,7 +128,7 @@ def build_pipeline_from_dict(self, pipelineDescription):
 
     Arguments:
 
-      - pipelineDescription: Nested list where each internal list contains two
+      - pipelineDescription: Nested list where each internal list contains
           either two strings denoting the names of objects to connect together,
           or a string and another iterable object in that order. The latter
           form is used for objects with multiple input or output ports, where
@@ -157,6 +157,7 @@ def build_pipeline_from_dict(self, pipelineDescription):
         # the docstring.
         if type(connection[1]) is str:
             inputObjName = connection[1]
+            self.check_connection(outputObjName, inputObjName)
 
             if hasattr(self._vtkObjects[inputObjName],
                        "default_input_port") is True:
