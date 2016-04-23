@@ -294,8 +294,9 @@ def connect_vtk_objects(self, outputObjectName, inputObjectName,
     """
     # Test the connection. We are working with a C library, so it's best to ask
     # permission first...
-    self.check_connection(outputObjectName, inputObjectName, outputPortIndex=0,
-                          inputPortIndex=0)
+    self.check_connection(outputObjectName, inputObjectName,
+                          outputPortIndex=outputPortIndex,
+                          inputPortIndex=inputPortIndex)
 
     # Connect the ports.
     outPort = self._vtkObjects[outputObjectName].GetOutputPort(outputPortIndex)
