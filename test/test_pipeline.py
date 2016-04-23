@@ -13,6 +13,105 @@ relativeVtuFilePathData = "../example/data/data.vtu"
 absFilePathData = "{}/{}".format(pathToThisFile, relativeVtuFilePathData)
 
 
+def test_build_pipeline_from_dict():
+    """
+    Test chagu.build_pipeline_from_dict. We test the following cases:
+
+    1. If a connection in the dictionary is invalid, a ValueError is raised.
+    2. If a connection is specified with an output port, ensure that port is
+        used in the connection.
+    3. If a connection is specified with an input port, ensure that port is
+        used in the connection.
+    4. If a default output port is specified in an object, ensure that port is
+        used in the connection if no other port information is passed.
+    5. If a default input port is specified in an object, ensure that port is
+        used in the connection if no other port information is passed.
+    6. If build_pipeline_from_dict is called again after a successful pipeline
+        build, a RuntimeError is raised.
+    """
+
+    # For reference, here's a quick chart showing numbers of inputs and
+    # outputs for the objects created below.
+
+    # +-------------+---------+--------+
+    # |    Name     | Outputs | Inputs |
+    # +-------------+---------+--------+
+    # | readerName  |    1    |    0   |
+    # | compName    |    3    |    1   |
+    # | surfaceName |    0    |    1   |
+    # | conesName   |    0    |    2   |
+    # +-------------+---------+--------+
+
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    compName = vis.extract_vector_components(component=2)
+    surfaceName = vis.act_surface()
+    conesName = vis.act_cone_vector_field(1, 1, 1)
+
+    # Test 1: If a connection in the dictionary is invalid, a ValueError is
+    # raised.
+    badName = compName + " ooh look a dragon"
+    pipeline = [[readerName, badName],
+                [compName, surfaceName]]
+    with pytest.raises(ValueError) as testException:
+        vis.build_pipeline_from_dict(pipeline)
+    assert badName in testException.value.message
+
+    # Test 2: If a connection is specified with an output port, ensure that port
+    # is used in the connection.
+
+    # Look closely, output port 1 of components is used, even though port 2 is
+    # the default here because component=2 was passed.
+    pipeline = [[readerName, compName],
+                [compName, [surfaceName, 1, 0]],
+                [compName, [conesName, 0, 1]]]
+    vis.build_pipeline_from_dict(pipeline)
+
+    compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(1)
+    surfObjectInputData = vis.get_vtk_object(surfaceName).actor.GetMapper()\
+                          .GetInputDataObject(0, 0)
+    assert compObjectOutputData == surfObjectInputData
+
+    # Test 3: If a connection is specified with an input port, ensure that
+    # port is used in the connection.
+    compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(0)
+    coneObjectInputData = vis.get_vtk_object(conesName).actor.GetMapper()\
+                          .GetInputDataObject(1, 0)
+    assert compObjectOutputData == coneObjectInputData
+
+    # Test 4: If a default output port is specified in an object, ensure that
+    # port is used in the connection if no other port information is passed.
+    vis = chagu.Visualisation()
+    readerName = vis.load_visualisation_toolkit_file(absFilePathData)
+    compName = vis.extract_vector_components(component=2)
+    surfaceName = vis.act_surface()
+    conesName = vis.act_cone_vector_field(1, 1, 1)
+
+    pipeline = [[readerName, compName],
+                [compName, surfaceName],
+                [compName, conesName]]
+    vis.build_pipeline_from_dict(pipeline)
+
+    compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(2)
+    surfObjectInputData = vis.get_vtk_object(surfaceName).actor.GetMapper()\
+                          .GetInputDataObject(0, 0)
+    assert compObjectOutputData == surfObjectInputData
+
+    # Test 5: If a default input port is specified in an object, ensure that
+    # port is used in the connection if no other port information is passed.
+    compObjectOutputData = vis.get_vtk_object(compName).GetOutputDataObject(2)
+    coneObjectInputData = vis.get_vtk_object(surfaceName).actor.GetMapper()\
+                          .GetInputDataObject(0, 0)
+    assert compObjectOutputData == coneObjectInputData
+
+    # Test 6: If build_pipeline_from_dict is called again after a successful
+    # pipeline build, a RuntimeError is raised.
+    expectedMsg = "once per visualisation instance"
+    with pytest.raises(RuntimeError) as testException:
+        vis.build_pipeline_from_dict([])
+    assert expectedMsg in testException.value.message
+
+
 def test_check_connection():
     """
     Test chagu.pipeline.check_connection. We test the following cases:
@@ -127,5 +226,6 @@ def test_connect_vtk_objects():
 
 
 if __name__ == "__main__":
+    test_build_pipeline_from_dict()
     test_check_connection()
     test_connect_vtk_objects()
