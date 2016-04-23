@@ -15,7 +15,7 @@ absFilePathData = "{}/{}".format(pathToThisFile, relativeVtuFilePathData)
 
 def test_build_pipeline_from_dict():
     """
-    Test chagu.build_pipeline_from_dict. We test the following cases:
+    Test chagu.pipeline.build_pipeline_from_dict. We test the following cases:
 
     1. If a connection in the dictionary is invalid, a ValueError is raised.
     2. If a connection is specified with an output port, ensure that port is
@@ -28,6 +28,7 @@ def test_build_pipeline_from_dict():
         used in the connection if no other port information is passed.
     6. If build_pipeline_from_dict is called again after a successful pipeline
         build, a RuntimeError is raised.
+    7. A successful connection writes the pipeline to vis._pipeline.
     """
 
     # For reference, here's a quick chart showing numbers of inputs and
@@ -113,6 +114,9 @@ def test_build_pipeline_from_dict():
     with pytest.raises(RuntimeError) as testException:
         vis.build_pipeline_from_dict([])
     assert expectedMsg in testException.value.message
+
+    # Test 7: A successful connection writes the pipeline to vis._pipeline.
+    assert pipeline == vis._pipeline
 
 
 def test_check_connection():
