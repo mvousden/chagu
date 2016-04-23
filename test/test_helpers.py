@@ -101,7 +101,7 @@ def test_vtk_base_version():
     if vtkVersion == 5:
         assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") is True
     elif vtkVersion == 6:
-        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") is True
+        assert hasattr(chagu.helpers.vtk, "vtkDataObjectSource") is False
 
 
 if __name__ == "__main__":
