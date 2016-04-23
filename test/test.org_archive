@@ -113,3 +113,19 @@ Archived entries from file /home/mark/repos/chagu/test/test.org
   :ARCHIVE_CATEGORY: test
   :ARCHIVE_TODO: DONE
   :END:
+
+* IGNORED Refactor code for testability
+  CLOSED: [2016-04-23 Sat 18:50]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2016-04-23 Sat 18:50
+  :ARCHIVE_FILE: ~/repos/chagu/test/test.org
+  :ARCHIVE_CATEGORY: test
+  :ARCHIVE_TODO: IGNORED
+  :END:
+  We have a God object problem. Divide visualisation methods into functions
+  that create the object, and apply that object to the visualisation
+  object. This change will make code easier to test, so consider making this
+  change before implementing more tests.
+
+  To be honest, this would require such a restructuring as to not be worth
+  it. I think it's pretty good and simple as it is.

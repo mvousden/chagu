@@ -16,11 +16,6 @@
 #
 # Using the plugin pytest-cov installable from pip.
 
-* TODO Refactor code for testability
-  We have a God object problem. Divide visualisation methods into functions
-  that create the object, and apply that object to the visualisation
-  object. This change will make code easier to test, so consider making this
-  change before implementing more tests.
 * IN-PROGRESS Write test descriptions for other files
 ** TODO filters.py
 ** TODO mask.py
