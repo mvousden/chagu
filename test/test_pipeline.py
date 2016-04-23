@@ -330,7 +330,7 @@ def test_draw_pipeline_graphviz():
     try:
         # Test 1: Test that the PDF is produced using the name of the
         # visualisation.
-        vis.draw_pipeline_graphviz()
+        vis.draw_pipeline_graphviz(directory=pathToThisFile)
         assert os.path.isfile(graphvizFile)
 
         # Test 2: Test that all object names are in the PDF.
