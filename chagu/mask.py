@@ -253,7 +253,7 @@ def quadrilateral_plane_source(domain, resolution):
             > 6-8: As above for the other corner P3 which is adjacent to P1.
 
       - resolution: Two element list of integers denoting the number of points
-          in each direction of the plane.
+          in each direction of the plane, in the order [P1->P2, P1->P3].
 
     Returns the vtkPlaneSource object describing the requested geometry.
     """
