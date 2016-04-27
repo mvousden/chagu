@@ -38,7 +38,6 @@ def test_volume_mask():
     # Test 1: Test!
 
 
-@pytest.mark.xfail(strict=True)
 def test_quadrilateral_plane_source():
     """
     Test chagu.mask.quadrilateral_plane_source. We test the following cases:
@@ -46,7 +45,8 @@ def test_quadrilateral_plane_source():
     1. If resolution contains a value that doesn't typecast well into an
         integer, a TypeError is raised.
     2. If any of the domain points overlap, a ValueError is raised.
-    3. If all is well, check that the vtkPlaneSource has the correct points and
+    3. If a negative resolution is passed, a ValueError is raised.
+    4. If all is well, check that the vtkPlaneSource has the correct points and
         resolution.
     """
 
@@ -62,7 +62,7 @@ def test_quadrilateral_plane_source():
     assert "10.5" in testException.value.message
 
     with pytest.raises(TypeError) as testException:
-        chagu.mask.quadrilateral_plane_source(domain, [-10, 12.00001])
+        chagu.mask.quadrilateral_plane_source(domain, [10, 12.00001])
     assert "integer" in testException.value.message
     assert "12.00001" in testException.value.message
 
@@ -75,16 +75,25 @@ def test_quadrilateral_plane_source():
         chagu.mask.quadrilateral_plane_source(domain, [10, 10])
     assert "overlap" in testException.value.message
 
-    # Test 3: If all is well, check that the returned vtkPlaneSource has the
+    # Test 3: If a negative resolution is passed, a ValueError is raised.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.quadrilateral_plane_source(domain, [-1, 4])
+    assert "-1" in testException.value.message
+
+    # Test 4: If all is well, check that the returned vtkPlaneSource has the
     # correct points and resolution.
-    domain = [0., 0., 0.,
+    domain = [0., 0., 1.,
               1., 0., 0.,
               0., 1., 0.]
-    resolution = [10, 10]
+    resolution = [10, 11]
     maskPlane = chagu.mask.quadrilateral_plane_source(domain, [10, 10])
 
-    assert type(maskPlane) == type(vtk.vtkPlaneSource)
-    # <!> some other assertions
+    assert type(maskPlane) == type(vtk.vtkPlaneSource())
+    assert list(maskPlane.GetOrigin) == domain[:3]
+    assert list(maskPlane.GetPoint1) == domain[3:6]
+    assert list(maskPlane.GetPoint2) == domain[6:]
+    assert maskPlane.GetXResolution() == resolution[0]
+    assert maskPlane.GetYResolution() == resolution[1]
 
 
 if __name__ == "__main__":
