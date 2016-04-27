@@ -89,4 +89,5 @@ validExtensions = {"vti": vtk.vtkXMLImageDataReader,
                    "vtr": vtk.vtkXMLRectilinearGridReader,
                    "vts": vtk.vtkXMLStructuredGridReader,
                    "vtu": vtk.vtkXMLUnstructuredGridReader}
-validBinaryDataTypes = {"STRUCTURED_GRID": vtk.vtkStructuredGridReader}
+validBinaryDataTypes = {"STRUCTURED_GRID": vtk.vtkStructuredGridReader,
+                        "RECTILINEAR_GRID": vtk.vtkRectilinearGridReader}
