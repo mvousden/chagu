@@ -56,7 +56,6 @@ def test_quadrilateral_plane_source():
     domain = [0., 0., 0.,
               0., 0., 1.,
               0., 1., 0.]
-
     with pytest.raises(TypeError) as testException:
         chagu.mask.quadrilateral_plane_source(domain, [10.5, 10])
     assert "integer" in testException.value.message
@@ -71,7 +70,6 @@ def test_quadrilateral_plane_source():
     domain = [0., 0., 0.,
               0., 0., 1.,
               0., 0., 1.]
-
     with pytest.raises(ValueError) as testException:
         chagu.mask.quadrilateral_plane_source(domain, [10, 10])
     assert "overlap" in testException.value.message
@@ -108,5 +106,5 @@ def test_quadrilateral_plane_source():
 if __name__ == "__main__":
     test_create_mask_from_opts()
     test_plane_mask()
-    test_volume_mask()
+    test_cube_mask()
     test_quadrilateral_plane_source()
