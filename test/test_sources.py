@@ -15,6 +15,11 @@ absFilePathData = "{}/{}".format(pathToThisFile, relativeVtuFilePathData)
 relativeVtuFilePathData2d = "../example/data/data_2d.vtu"
 absFilePathData2d = "{}/{}".format(pathToThisFile, relativeVtuFilePathData2d)
 
+relativeVtkFilePathDataAscii = "../example/data/data_ascii_space.vtk"
+absFilePathDataAscii = "{}/{}".format(pathToThisFile,
+                                      relativeVtkFilePathDataAscii)
+
+
 
 def test_load_visualisation_toolkit_file():
     """
@@ -29,6 +34,8 @@ def test_load_visualisation_toolkit_file():
         and the _boundingBox value is set appropriately.
     4. If two reader objects are created using the test outlined in 3, then
         the _boundingBox value is the combined value of the two geometries.
+    5. If the file contains empty line, it should be loaded as though the empty
+        line was not there.
     """
 
     vis = chagu.Visualisation()
@@ -81,6 +88,11 @@ def test_load_visualisation_toolkit_file():
     vis.load_visualisation_toolkit_file(absFilePathData2d)
     assert vis._boundingBox[:-2] == [-10, 10, -16.1, 16.1]
     assert 0 not in vis._boundingBox
+
+    # Test 5: If the file contains empty line, it should be loaded as though
+    # the empty line was not there.
+    vis.load_visualisation_toolkit_file(absFilePathDataAscii)
+    assert vis._boundingBox[5] == 50
 
 
 if __name__ == "__main__":
