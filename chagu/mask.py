@@ -151,14 +151,14 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
 
     # Now we can actually construct the mask filter.
     if maskType == "volume":
-        return volume_mask(domain, resolution)
+        return cube_mask(domain, resolution)
     else:
         return plane_mask(domain, resolution)
 
 
 def plane_mask(domain, resolution):
     """
-    Create a vtkProbeFilter that masks input data.
+    Create a vtkProbeFilter that masks input data in a plane.
 
     Arguments:
 
@@ -174,12 +174,12 @@ def plane_mask(domain, resolution):
 
     Returns a vtkProbeFilter that resamples data on the mask plane.
     """
-    return volume_mask(domain + domain[0:3], resolution + [1])
+    return cube_mask(domain + domain[0:3], resolution + [1])
 
 
-def volume_mask(domain, resolution):
+def cube_mask(domain, resolution):
     """
-    Create a vtkProbeFilter that masks input data.
+    Create a vtkProbeFilter that masks input data in a cube-shape.
 
     We use a probe filter to mask the points instead of vtkMaskPoints, because
     it doesn't let the user to specify where the resulting points are supposed

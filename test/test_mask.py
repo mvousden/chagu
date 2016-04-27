@@ -28,9 +28,9 @@ def test_plane_mask():
     # Test 1: Test!
 
 
-def test_volume_mask():
+def test_cube_mask():
     """
-    Test chagu.mask.volume_mask. We test the following cases:
+    Test chagu.mask.cube_mask. We test the following cases:
 
     1. Test!
     """
