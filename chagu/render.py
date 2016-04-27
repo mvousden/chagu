@@ -47,15 +47,20 @@ def build_renderer_and_window(self):
     for key in self._validCameraKeys:
         if key not in self._camera:
             if key == "focal point":
-                value = [0., 0., 0.]
+                # Look at the centre!
+                value = [(self._boundingBox[1] - self._boundingBox[0]) / 2.,
+                         (self._boundingBox[3] - self._boundingBox[2]) / 2.,
+                         (self._boundingBox[5] - self._boundingBox[4]) / 2.]
             if key == "position":
                 # This is a conservative estimate that doesn't account for
                 # camera orientation and non-squre geometries. It should fit
                 # the whole domain in though. <!>
-                # elevation = max(self._windowSize) /\
-                #     max(np.abs(self._boundingBox[:4]))
-                elevation = 89
-                value = [0., 0., elevation]
+                elevation = max(self._windowSize) /\
+                    max(np.abs(self._boundingBox[:4]))
+                xCentre = (self._boundingBox[1] - self._boundingBox[0]) / 2.
+                value = [(self._boundingBox[1] - self._boundingBox[0]) / 2.,
+                         (self._boundingBox[3] - self._boundingBox[2]) / 2.,
+                          elevation]
             if key == "parallel projection":
                 value = False
             if key == "view up":
