@@ -44,12 +44,13 @@ def load_visualisation_toolkit_file(self, filePath, readerName=None):
     if extension == "vtk":
         with open(filePath, "r") as dataFile:
             for line in dataFile.readlines():
-                if line.split()[0] == "DATASET":
-                    dataSetType = line.split()[1]
-                    if dataSetType not in validBinaryDataTypes.keys():
-                        raise NotImplementedError(errorMsg.format(dataSetType))
-                    vtReader = validBinaryDataTypes[dataSetType]()
-                    break
+                if len(line.split()) != 0:
+                    if line.split()[0] == "DATASET":
+                        dataSetType = line.split()[1]
+                        if dataSetType not in validBinaryDataTypes.keys():
+                            raise NotImplementedError(errorMsg.format(dataSetType))
+                        vtReader = validBinaryDataTypes[dataSetType]()
+                        break
 
     # Complain if we don't recognise the extension.
     elif extension not in validExtensions.keys():
