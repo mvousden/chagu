@@ -258,7 +258,23 @@ def quadrilateral_plane_source(domain, resolution):
     Returns the vtkPlaneSource object describing the requested geometry.
     """
 
-    integerisedResolution = (int(zI) for zI in resolution)
+    # Check that the resolution integerises well.
+    integerisedResolution = [int(zI) for zI in resolution]
+    if (integerisedResolution[0] != resolution[0] or\
+        integerisedResolution[1] != resolution[1]):
+        raise TypeError("Non-integer resolution {} passed.".format(resolution))
+
+    # Check that the resolution has no negative elements.
+    if integerisedResolution[0] < 0 or integerisedResolution[1] < 0:
+        raise ValueError("Negative resolution {} passed.".format(resolution))
+
+    # Check that no points are duplicates.
+    if (domain[0:3] == domain[3:6] or domain[0:3] == domain[6:] or\
+        domain[3:6] == domain[6:]):
+        raise ValueError("Points have an overlap: {}, {}, {}"
+                         .format(domain[0:3], domain[3:6], domain[6:]))
+
+    # Build the plane.
     maskPlane = vtk.vtkPlaneSource()
     maskPlane.SetOrigin(*domain[0:3])
     maskPlane.SetPoint1(*domain[3:6])
