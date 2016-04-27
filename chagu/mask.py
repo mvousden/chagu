@@ -258,6 +258,13 @@ def quadrilateral_plane_source(domain, resolution):
     Returns the vtkPlaneSource object describing the requested geometry.
     """
 
+    # Check that inputs have the correct length.
+    if len(domain) != 9:
+        raise ValueError("Non 9-element domain {} passed.".format(domain))
+    if len(resolution) != 2:
+        raise ValueError("Non 2-element resolution {} passed."
+                         .format(resolution))
+
     # Check that the resolution integerises well.
     integerisedResolution = [int(zI) for zI in resolution]
     if (integerisedResolution[0] != resolution[0] or\
