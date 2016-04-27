@@ -46,7 +46,8 @@ def test_quadrilateral_plane_source():
         integer, a TypeError is raised.
     2. If any of the domain points overlap, a ValueError is raised.
     3. If a negative resolution is passed, a ValueError is raised.
-    4. If all is well, check that the vtkPlaneSource has the correct points and
+    4. If the length of any input is incorrect, a ValueError is raised.
+    5. If all is well, check that the vtkPlaneSource has the correct points and
         resolution.
     """
 
@@ -83,7 +84,15 @@ def test_quadrilateral_plane_source():
         chagu.mask.quadrilateral_plane_source(domain, [-1, 4])
     assert "-1" in testException.value.message
 
-    # Test 4: If all is well, check that the returned vtkPlaneSource has the
+    # Test 4: If the length of any input is incorrect, a ValueError is raised.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.quadrilateral_plane_source(domain + [5], [1, 1])
+    assert "omain" in testException.value.message
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.quadrilateral_plane_source(domain, [1])
+    assert "esolution" in testException.value.message
+
+    # Test 5: If all is well, check that the returned vtkPlaneSource has the
     # correct points and resolution.
     resolution = [10, 11]
     maskPlane = chagu.mask.quadrilateral_plane_source(domain, resolution)
