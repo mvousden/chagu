@@ -76,22 +76,22 @@ def test_quadrilateral_plane_source():
     assert "overlap" in testException.value.message
 
     # Test 3: If a negative resolution is passed, a ValueError is raised.
+    domain = [0., 0., 1.,
+              1., 0., 0.,
+              0., 1., 0.]
     with pytest.raises(ValueError) as testException:
         chagu.mask.quadrilateral_plane_source(domain, [-1, 4])
     assert "-1" in testException.value.message
 
     # Test 4: If all is well, check that the returned vtkPlaneSource has the
     # correct points and resolution.
-    domain = [0., 0., 1.,
-              1., 0., 0.,
-              0., 1., 0.]
     resolution = [10, 11]
-    maskPlane = chagu.mask.quadrilateral_plane_source(domain, [10, 10])
+    maskPlane = chagu.mask.quadrilateral_plane_source(domain, resolution)
 
     assert type(maskPlane) == type(vtk.vtkPlaneSource())
-    assert list(maskPlane.GetOrigin) == domain[:3]
-    assert list(maskPlane.GetPoint1) == domain[3:6]
-    assert list(maskPlane.GetPoint2) == domain[6:]
+    assert list(maskPlane.GetOrigin()) == domain[:3]
+    assert list(maskPlane.GetPoint1()) == domain[3:6]
+    assert list(maskPlane.GetPoint2()) == domain[6:]
     assert maskPlane.GetXResolution() == resolution[0]
     assert maskPlane.GetYResolution() == resolution[1]
 
