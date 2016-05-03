@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script combines a lot of elements to produce something beautiful.
 
 import chagu

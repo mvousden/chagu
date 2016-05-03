@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script showcases the animate_rotate render method, which produces a
 # stack of images showing a visualisation rotating about the Z-axis.
 

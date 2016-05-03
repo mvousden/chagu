@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script creates the visualisation on the frontpage of our GitHub
 # repository. It showcases slices.
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script showcases nasty vectors on a 2D surface.
 
 import chagu

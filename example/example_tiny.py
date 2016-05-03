@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script shows that a respectable visualisation can be created in only a
 # few lines.
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # This script demonstrates the functionality of the autopipe by drawing pretty
 # cones.
 
