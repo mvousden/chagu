@@ -18,7 +18,7 @@ print("First, we attempt to draw a slice of the vector field without any "
       "additional filter. Notice that the vectors are all parallel, which is "
       "not represented by the data.\n")
 vis = chagu.Visualisation(filePath="data/data_ascii_space.vtk")
-vis.extract_vector_components(component=2)
+vis.extract_vector_components(component=1)
 vis.act_cone_vector_field(0.5, 0.25, 15, maskType="plane")
 vis.visualise_interact()
 
@@ -31,7 +31,7 @@ vis = chagu.Visualisation(filePath="data/data_ascii_space.vtk")
 # Here's the magic.
 vis.track_object(vtk.vtkCellDataToPointData(), "Cell to point data filter")
 
-vis.extract_vector_components(component=2)
+vis.extract_vector_components(component=1)
 vis.act_cone_vector_field(0.5, 0.25, 15, maskType="plane")
 vis.visualise_interact()
 
