@@ -158,10 +158,6 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
     plane_tilt_angle = np.tan(zMax / xyMax)
     angles = np.linspace(0, np.pi * 2, rotation_resolution)
 
-    # Create a newline for verbose printing.
-    if verbose is True:
-        print()
-
     # Render each frame independently.
     for zI in xrange(rotation_resolution):
         if verbose is True:
