@@ -30,8 +30,9 @@ def run_check_output(examplePath, outputFiles):
     # Clear existing outputs
     shutil.rmtree(outputPath, ignore_errors=True)
 
-    # Run the example.
-    ex = sp.Popen(["./{}".format(examplePath)], cwd=examplesPath,
+    # Run the example using the same Python executable used to run this script.
+    print
+    ex = sp.Popen([sys.executable, examplePath], cwd=examplesPath,
                   stderr=sp.PIPE)
     _, stderr = ex.communicate()  # Har har
 
