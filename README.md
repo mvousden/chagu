@@ -1,4 +1,4 @@
-Build status: [![Circle CI](https://circleci.com/gh/mvousden/chagu.svg?style=shield)](https://circleci.com/gh/mvousden/chagu)
+Build status: [![Circle CI](https://circleci.com/gh/mvousden/chagu.svg?style=shield)](https://circleci.com/gh/mvousden/chagu) [![codecov](https://codecov.io/gh/mvousden/chagu/branch/master/graph/badge.svg)](https://codecov.io/gh/mvousden/chagu)
 
 Chagu
 =====
