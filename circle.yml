@@ -28,3 +28,5 @@ test:
         environment:
           LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_UNTAR_PATH/bin"
           PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_UNTAR_PATH/Wrapping/Python:$VTK_UNTAR_PATH/bin"
+  post:
+    - bash <(curl --silent https://codecov.io/bash)
