@@ -18,12 +18,9 @@ dependencies:
 
 test:
   override:
-    # Activate conda environment
-    - source $CONDA_BIN/activate $CONDA_ENV
-
-    # Run tests
-    - python -m pytest $HOME/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/test-report.xml
+    # Activate conda environment and run tests.
+    - source $CONDA_BIN/activate $CONDA_ENV && python -m pytest $HOME/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/test-report.xml
 
   # Codecov business (we install codecov using pip in the dependency step).
   post:
-    - bash <(curl -s https://codecov.io/bash)
+    - source $CONDA_BIN/activate $CONDA_ENV && bash <(curl -s https://codecov.io/bash)
