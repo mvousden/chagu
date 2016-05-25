@@ -2,7 +2,7 @@
 
 machine:
   environment:
-    CONDA_PATH: $HOME/miniconda2
+    CONDA_PATH: ~/miniconda2
     CONDA_ENV: circleci-test
     CONDA_BIN: $CONDA_PATH/bin
     CHAGU_CI: $HOME/chagu/ci
