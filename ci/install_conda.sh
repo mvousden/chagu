@@ -19,7 +19,7 @@ if [ ! -d "$CONDA_BIN" ]; then
 fi
 
 # If the conda environment we want doesn't exist, we need to create it.
-if [ ! -d "~/miniconda2/envs/$CONDA_ENV" ]; then
+if [ ! -d "$CONDA_PATH/envs/$CONDA_ENV" ]; then
 
     # Create environment from conda requirements file. This installs some
     # conda packages (including VTK).
