@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # This script installs conda and creates an environment suitable for Chagu
 # idempotently. It uses environment variables defined in circle.yml.
