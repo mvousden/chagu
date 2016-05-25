@@ -2,32 +2,28 @@
 
 machine:
   environment:
-    PYTHON_BUILD_PATH: $HOME
-    PYTHON_BUILD_VERSION: 2.7.10
-    PYTHON_EXEC_PATH: $PYTHON_BUILD_PATH/Python-$PYTHON_BUILD_VERSION/bin
-    PYTHON_TARBALL: Python-$PYTHON_BUILD_VERSION.tar.xz
-    VTK_BUILD_PATH: $HOME
-    VTK_BUILD_VERSION: 5.10.1
-    VTK_UNTAR_PATH: $VTK_BUILD_PATH/VTK$VTK_BUILD_VERSION
+    CONDA_PATH: $HOME/miniconda2
+    CONDA_ENV: circleci-test
+    CONDA_BIN: $CONDA_PATH/bin
+    CHAGU_CI: $HOME/chagu/ci
 
 dependencies:
-  pre:
-    - bash -x ./install/vtk.sh
-    - bash -x ./install/python.sh
 
-  post:
-    - $PYTHON_EXEC_PATH/pip install -r ./install/requirements.txt
+  # Setup conda idempotently.
+  pre:
+    - $CHAGU_CI/install_conda.sh
 
   cache_directories:
-    - ~/Python-2.7.10/
-    - ~/VTK5.10.1/
+    - $CONDA_PATH
 
 test:
   override:
-    - $PYTHON_EXEC_PATH/python -m pytest ~/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/report.xml:
-        environment:
-          LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_UNTAR_PATH/bin"
-          PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_UNTAR_PATH/Wrapping/Python:$VTK_UNTAR_PATH/bin"
+    # Activate conda environment
+    - source $CONDA_BIN/activate $CONDA_ENV
+
+    # Run tests
+    - python -m pytest $HOME/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/test-report.xml
+
+  # Codecov business (we install codecov using pip in the dependency step).
   post:
-    - sudo pip install codecov
     - bash <(curl -s https://codecov.io/bash)
