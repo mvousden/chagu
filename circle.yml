@@ -18,6 +18,8 @@ dependencies:
 
 test:
   override:
+    # Add Chagu to PYTHONPATH
+    - export PYTHONPATH="$PYTHONPATH:~/chagu/"
     # Activate conda environment and run tests.
     - source $CONDA_BIN/activate $CONDA_ENV && python -m pytest $HOME/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/test-report.xml
 
