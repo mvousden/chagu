@@ -29,4 +29,5 @@ test:
           LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$VTK_UNTAR_PATH/bin"
           PYTHONPATH: "$PYTHONPATH:$HOME/chagu:$VTK_UNTAR_PATH/Wrapping/Python:$VTK_UNTAR_PATH/bin"
   post:
-    - pip install codecov && codecov
+    - sudo pip install codecov
+    - bash <(curl -s https://codecov.io/bash)
