@@ -14,7 +14,7 @@ dependencies:
     - $CHAGU_CI/install_conda.sh
 
   cache_directories:
-    - $HOME/miniconda2
+    - ~/miniconda2
 
 test:
   override:
