@@ -9,20 +9,22 @@ machine:
 
 dependencies:
 
-  # Setup conda idempotently.
   pre:
+    # Setup Conda idempotently.
     - $CHAGU_CI/install_conda.sh
 
   cache_directories:
+    # Tilde required here instead of $HOME to be recognised as an absolute path
+    # by CircleCI.
     - ~/miniconda2
 
 test:
   override:
-    # Activate conda environment and run tests.
+    # Activate Conda environment and run tests.
     - source $CONDA_BIN/activate $CONDA_ENV && python -m pytest $HOME/chagu/test/ --cov=chagu --cov-report term-missing --verbose --junitxml=$CIRCLE_TEST_REPORTS/test-report.xml:
         environment:
           PYTHONPATH: "$PYTHONPATH:$HOME/chagu"
 
-  # Codecov business (we install codecov using pip in the dependency step).
+  # Codecov business (we install Codecov using pip in the dependency step).
   post:
     - source $CONDA_BIN/activate $CONDA_ENV && bash <(curl -s https://codecov.io/bash)
