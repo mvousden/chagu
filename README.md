@@ -40,8 +40,9 @@ To get some idea of how to use this module, add the path of this repository to
 your PYTHONPATH. Some examples are in "example/examples.py", which demonstrate
 the functionality of this module.
 
-If you want to help out, the "notes/chagu.org" orgfile contains some tasks to
-do. Try opening it with emacs.
+If you want to help out, check the issue tracker for tasks and create a fork or
+branch to implement the feature you want to create or bug you want to fix. Do
+also let me know if Chagu has been helpful in your work!
 
 A Word on Offscreen Rendering
 =============================
