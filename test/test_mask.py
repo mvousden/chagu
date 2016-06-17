@@ -54,6 +54,14 @@ def test_create_mask_from_opts():
                                          maskType="volume")
     assert "maskResolution" in testException.value.message
 
+    # Invalid maskType string.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=None,
+                                         maskResolution=None,
+                                         maskType="cube")
+    assert "cube" in testException.value.message
+
     # len(domain)-len(resolution) != 9-2 or 12-3
     with pytest.raises(ValueError) as testException:
         chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
