@@ -97,8 +97,8 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
 
     else:
         if maskDomain is not None and maskResolution is not None:
-            if (len(maskDomain) == 9 and len(maskResolution) == 2) or\
-               (len(maskDomain) == 12 and len(maskResolution) == 3):
+            if ((len(maskDomain) == 9 and len(maskResolution) == 2) or\
+                (len(maskDomain) == 12 and len(maskResolution) == 3)) is False:
                 errorMsg = ("Invalid combination for the lengths of "
                             "maskDomain and maskResolution: {}-{}. Must "
                             "be either 9-2 or 12-3."
@@ -106,13 +106,16 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
                 raise ValueError(errorMsg)
 
         # Fill in the mask type since it has not been defined before.
-        maskType = "plane" if len(maskDomain) == 9 else "volume"
+        if maskDomain is not None:
+            maskType = "plane" if len(maskDomain) == 9 else "volume"
+        else:
+            maskType = "plane" if len(maskResolution) == 2 else "volume"
 
     # We will need to know the geometry of the dataset if we have to guess
     # the domain or the resolution, so we find that now if appropriate. We
     # take a small amount from the edges to ensure the sampling is inside
     # the bounding box.
-    if maskDomain is None or maskResolution is None:
+    if maskDomain is None:
         minX, maxX, minY, maxY, minZ, maxZ = boundingBox
         minX *= 1 - 1e-3
         maxX *= 1 - 1e-3
@@ -121,10 +124,9 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
         minZ *= 1 - 1e-3
         maxZ *= 1 - 1e-3
 
-    # If we are masking but don't know our domain, just use the bounding box
-    # data. If we are plane-masking, put the plane between the maximum and
-    # minimum depth co-ordinate.
-    if maskDomain is None:
+        # If we are masking but don't know our domain, just use the bounding
+        # box data. If we are plane-masking, put the plane between the maximum
+        # and minimum depth co-ordinate.
         if maskType == "volume":
             domain = [minX, minY, minZ,
                       maxX, minY, minZ,
@@ -136,16 +138,23 @@ def create_mask_from_opts(boundingBox, glyphSize, maskDomain=None,
                       maxX, minY, plane_z,
                       minX, maxY, plane_z]
     else:
-        domain = maskDomain
+        domain = list(np.array(maskDomain) * (1 - 1e-3))
 
     # If we are masking but don't know our resolution, use glyphSize and the
-    # bounding box to estimate a nice resolution. We use integer division
-    # because resolution values must be integers.
+    # domain to estimate a nice resolution.
     if maskResolution is None:
-        resolution = [max((maxX - minX) // (glyphSize * 1.1), 1),
-                      max((maxY - minY) // (glyphSize * 1.1), 1)]
+        minX = domain[0]
+        maxX = domain[3]
+        minY = domain[1]
+        maxY = domain[7]
+
+        # We use integer division because resolution values must be integers.
+        resolution = [max(int((maxX - minX) / (glyphSize * 1.1)), 1),
+                      max(int((maxY - minY) // (glyphSize * 1.1)), 1)]
         if maskType == "volume":
-            resolution += [max((maxZ - minZ) // (glyphSize * 1.1), 1)]
+            minZ = domain[2]
+            maxZ = domain[11]
+            resolution += [max(int((maxZ - minZ) // (glyphSize * 1.1)), 1)]
     else:
         resolution = maskResolution
 
