@@ -201,6 +201,27 @@ def cube_mask(domain, resolution):
 
     Returns a vtkProbeFilter that resamples data on the masking volume.
     """
+
+    # Check that resolution elements are non-negative integers.
+    for element in resolution:
+        if int(element) != element:
+            raise TypeError("Resolution element '{}' cannot be cast as an "
+                            "integer.".format(element))
+        if abs(element) != element:
+            raise ValueError("Resolution element '{}' is negative."
+                             .format(element))
+
+    # Check inputs are of the correct lengths.
+    if len(domain) != 12:
+        raise ValueError("Domain '{}' is list of length {}. It must be a list "
+                         "of length 12 to define four corners in 3D space."
+                         .format(domain, len(domain)))
+    if len(resolution) != 3:
+        raise ValueError("Resolution '{}' is list of length {}. It must be a "
+                         "list of length 3 to define the number of points in "
+                         "each dimension of 3D space."
+                         .format(resolution, len(resolution)))
+
     # Convert the points to numpy arrays so that adding them in intervals
     # becomes much easier.
     corners = np.array([domain[0:3], domain[3:6], domain[6:9], domain[9:]])
@@ -213,7 +234,7 @@ def cube_mask(domain, resolution):
     numberOfPlanes = resolution[-1]
 
     # Define the vector along which to propogate the planes.
-    propVector = corners[3] - corners[0]
+    propVector = np.array(corners[3]) - np.array(corners[0])
 
     # Define the multiples from the number of planes to draw.
     if numberOfPlanes == 1:
