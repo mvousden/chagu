@@ -40,7 +40,7 @@ def test_get_vtk_object():
     # Test 2: If objectName maps to a vtkObject in self._vtkObjects, a
     # vtkObject is returned.
     reader = vis.get_vtk_object(readerName)
-    assert type(reader) == type(vtk.vtkActor())
+    assert reader.IsA("vtkObject")
 
     # Test 3: If objectName maps to a Terminus in self._vtkObjects, a terminus
     # is returned.
