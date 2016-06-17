@@ -12,7 +12,8 @@ compName = vis.extract_vector_components(component=2)
 
 arrowLength = 1.0
 nastyName = vis.act_nasty_vector_field(arrowLength, maskType="plane")
-surfaceName = vis.act_surface(position=[0., 0., -arrowLength / 2.])
+surfaceName = vis.act_surface(position=[0., 0., -arrowLength / 2.],
+                              wireframe=True)
 cmapName = vis.act_colourbar()
 
 vis.visualise_interact()
