@@ -8,6 +8,39 @@ import vtk
 import chagu.helpers as helpers
 
 
+def contour(self, values=0, contourName=None):
+    """
+    Use a vtkContourFilter to, well, create a contour filter. If this filter is
+    applied to a surface, an isosurface is produced.
+
+    Arguments:
+
+      - values: Float or iterable object of floats denoting the values of the
+          contours to draw.
+
+      - contourName: String or None denoting the name to give to the contour
+          object. This should not clash with an existing name. If this is None,
+          a sensible name is chosen. If there is a clash, the name is changed
+          (and returned).
+
+    Returns the name of the contour object.
+    """
+    # Come up with a name for the object.
+    sensibleName = contourName if contourName is not None else "contour"
+    sensibleName = helpers.generate_sensible_name(sensibleName,
+                                                  self.is_tracked)
+
+    # Create the object.
+    contourFilter = vtk.vtkContourFilter()
+    if hasattr(values, "__getitem__"):
+        for zI in range(len(values)):
+            contourFilter.SetValue(zI, values[zI])
+    else:
+        contourFilter.SetValue(0, values)
+    self.track_object(contourFilter, sensibleName)
+    return sensibleName
+
+
 def extract_vector_components(self, componentsName=None, component=0):
     """
     Use a vtkExtractVectorComponents object to, well, extract the vector
