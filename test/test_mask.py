@@ -89,16 +89,6 @@ def test_cube_mask():
         chagu.mask.cube_mask(domain, [1])
     assert "esolution" in testException.value.message
 
-    # Test 5: If the final element of resolution is one, ensure only one plane
-    # is created.
-    domain = [0., 0., 0.,
-              5., 0., 0.,
-              0., 5., 0.,
-              0., 0., 1.]
-    maskFilter = chagu.mask.cube_mask(domain, [10, 10, 1])
-    maskVolumeData = maskFilter.GetInputDataObject(0, 0)
-    # <!> More assertions?
-
 
 def test_quadrilateral_plane_source():
     """
