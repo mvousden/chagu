@@ -4,11 +4,11 @@ chagu/mask.py. Tests are detailed in the function documentation.
 """
 
 import chagu
+import numpy as np
 import pytest
 import vtk
 
 
-@pytest.mark.xfail
 def test_create_mask_from_opts():
     """
     Test chagu.mask.create_mask_from_opts. We test the following cases:
@@ -16,9 +16,6 @@ def test_create_mask_from_opts():
     1. Check for inconsistent inputs regarding the type of the mask, and the
         length of the domain and resolution lists.
     2. Behaviours function as intended (see the function's docstring).
-    3. Increasing glyphSize decreases the number of points in the mask, and
-        vice versa.
-
     """
 
     # Test 1: Check for inconsistent inputs regarding the type of the mask, and
@@ -78,6 +75,182 @@ def test_create_mask_from_opts():
                                          maskResolution=range(2),
                                          maskType=None)
     assert "1-2" in testException.value.message
+
+    # Test 2: Behaviours function as intended (see the function's docstring).
+    #
+    # We check each behaviour in order.
+    boundingBox = [-10, 10, -5, 5, -2, 2]
+    glyphSize = 1
+    planeDomain = [-5, -2.5, 0,
+                   5, -2.5, 0,
+                   -5, 2.5, 0]
+    volumeDomain = [-5, -2.5, -1.5,
+                    5, -2.5, -1.5,
+                    -5, 2.5, -1.5,
+                    -5, -2.5, 1.5]
+    planeResolution = [5, 3]
+    volumeResolution = [5, 3, 2]
+    aTol = 2e-2
+
+    # Behaviour 1.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=None,
+                                            maskType="plane")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox[:4] + [0, 0])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 18 * 9 * 1
+
+    # Behaviour 2.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=None,
+                                            maskType="volume")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox)) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 18 * 9 * 3
+
+    # Behaviour 3.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=planeDomain,
+                                            maskResolution=None,
+                                            maskType="plane")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([planeDomain[0], planeDomain[3],
+                             planeDomain[1], planeDomain[7],
+                             planeDomain[2], planeDomain[2]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 9 * 4 * 1
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=planeDomain,
+                                            maskResolution=None,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([planeDomain[0], planeDomain[3],
+                             planeDomain[1], planeDomain[7],
+                             planeDomain[2], planeDomain[2]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 9 * 4 * 1
+
+    # Behaviour 4.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=volumeDomain,
+                                            maskResolution=None,
+                                            maskType="volume")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([volumeDomain[0], volumeDomain[3],
+                             volumeDomain[1], volumeDomain[7],
+                             volumeDomain[2], volumeDomain[11]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 9 * 4 * 2
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=volumeDomain,
+                                            maskResolution=None,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([volumeDomain[0], volumeDomain[3],
+                             volumeDomain[1], volumeDomain[7],
+                             volumeDomain[2], volumeDomain[11]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == 9 * 4 * 2
+
+    # Behaviour 5.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=planeResolution,
+                                            maskType="plane")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox[:4] + [0, 0])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        planeResolution)
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=planeResolution,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox[:4] + [0, 0])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        planeResolution)
+
+    # Behaviour 6.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=volumeResolution,
+                                            maskType="volume")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox)) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        volumeResolution)
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=None,
+                                            maskResolution=volumeResolution,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array(boundingBox)) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        volumeResolution)
+
+    # Behaviour 7.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=planeDomain,
+                                            maskResolution=planeResolution,
+                                            maskType="plane")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([planeDomain[0], planeDomain[3],
+                             planeDomain[1], planeDomain[7],
+                             planeDomain[2], planeDomain[2]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        planeResolution)
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=planeDomain,
+                                            maskResolution=planeResolution,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([planeDomain[0], planeDomain[3],
+                             planeDomain[1], planeDomain[7],
+                             planeDomain[2], planeDomain[2]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        planeResolution)
+
+    # Behaviour 8.
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=volumeDomain,
+                                            maskResolution=volumeResolution,
+                                            maskType="volume")
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([volumeDomain[0], volumeDomain[3],
+                             volumeDomain[1], volumeDomain[7],
+                             volumeDomain[2], volumeDomain[11]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        volumeResolution)
+
+    mask = chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                            maskDomain=volumeDomain,
+                                            maskResolution=volumeResolution,
+                                            maskType=None)
+    assert mask.IsA("vtkProbeFilter")
+    assert (np.abs(np.array(mask.GetInput().GetBounds()) -
+                   np.array([volumeDomain[0], volumeDomain[3],
+                             volumeDomain[1], volumeDomain[7],
+                             volumeDomain[2], volumeDomain[11]])) < aTol).all()
+    assert mask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                        volumeResolution)
+
+    # Well that was fun!
 
 
 def test_plane_mask():
