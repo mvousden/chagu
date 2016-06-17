@@ -28,7 +28,6 @@ def test_plane_mask():
     # Test 1: Test!
 
 
-@pytest.mark.xfail
 def test_cube_mask():
     """
     Test chagu.mask.cube_mask. We test the following cases:
@@ -38,8 +37,8 @@ def test_cube_mask():
     2. If any of the domain points overlap, a ValueError is raised.
     3. If a negative resolution is passed, a ValueError is raised.
     4. If the length of any input is incorrect, a ValueError is raised.
-    5. If the final element of resolution is one, ensure only one plane is
-         created.
+    5. If all is well, check that the polydata has the correct points and
+        resolution.
     """
 
     # Test 1: If resolution contains a value that doesn't typecast well into an
@@ -88,6 +87,23 @@ def test_cube_mask():
     with pytest.raises(ValueError) as testException:
         chagu.mask.cube_mask(domain, [1])
     assert "esolution" in testException.value.message
+
+    # Test 5: If all is well, check that the polydata has the correct points
+    # and resolution.
+    domain = [-2, -2, -2,
+               2, -2, -2,
+              -2,  2, -2,
+              -2, -2, 2]
+    resolution = [10, 11, 13]
+    cubeMask = chagu.mask.cube_mask(domain, resolution)
+
+    assert cubeMask.IsA("vtkProbeFilter")
+    cubeMask.GetInput().Update()
+    assert cubeMask.GetInput().GetBounds() == (domain[0], domain[3],
+                                               domain[1], domain[7],
+                                               domain[2], domain[11])
+    assert cubeMask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                            resolution)
 
 
 def test_quadrilateral_plane_source():
