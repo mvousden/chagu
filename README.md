@@ -37,7 +37,7 @@ Getting Started and Helping Out
 ===============================
 
 To get some idea of how to use this module, add the path of this repository to
-your PYTHONPATH. Some examples are in "example/examples.py", which demonstrate
+your PYTHONPATH. Some examples are in "example/" (obviously), which demonstrate
 the functionality of this module.
 
 If you want to help out, check the issue tracker for tasks and create a fork or
