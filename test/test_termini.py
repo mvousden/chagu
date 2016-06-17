@@ -25,9 +25,9 @@ def test_nasty_arrow_polydata():
     assert "-14.34" in testException.value.message
 
     with pytest.raises(ValueError) as testException:
-        chagu.termini.nasty_arrow_polydata(14, 7.5, 2)
+        chagu.termini.nasty_arrow_polydata(14, -7.5, 2)
     assert "positive" in testException.value.message
-    assert "7.5" in testException.value.message
+    assert "-7.5" in testException.value.message
 
     with pytest.raises(ValueError) as testException:
         chagu.termini.nasty_arrow_polydata(14, 7, 0)
@@ -42,10 +42,10 @@ def test_nasty_arrow_polydata():
     arrowPolyData = chagu.termini.nasty_arrow_polydata(lx, ly, lz)
 
     assert arrowPolyData.GetNumberOfPoints() == 18
-    assert np.abs(np.array(arrowPolyData.GetPoint(0)) -
-                  np.array([-lx / 2., lz / 2., lz / 2.])) < 1e-3
-    assert np.abs(np.array(arrowPolyData.GetPoint(4)) -
-                  np.array([lx / 2., 0., lz / 2.])) < 1e-3
+    assert (np.abs(np.array(arrowPolyData.GetPoint(0)) -
+                   np.array([-lx / 2., lz / 2., lz / 2.])) < 1e-3).all()
+    assert (np.abs(np.array(arrowPolyData.GetPoint(4)) -
+                   np.array([lx / 2., 0., lz / 2.])) < 1e-3).all()
 
     # I could easily waste all day checking each point meticulously, but a
     # visual check would save so much time if this is changed in future.
