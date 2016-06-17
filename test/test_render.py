@@ -36,8 +36,8 @@ def test_build_renderer_and_window():
     vis.act_surface()
 
     renderer, renderWindow = vis.build_renderer_and_window()
-    assert type(renderer) == type(vtk.vtkRenderer())
-    assert type(renderWindow) == type(vtk.vtkRenderWindow())
+    assert renderer.IsA("vtkRenderer")
+    assert renderWindow.IsA("vtkRenderWindow")
 
     # Test 3: The visualisation object has a pipeline defined.
     assert vis._pipeline != []

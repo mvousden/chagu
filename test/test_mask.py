@@ -163,7 +163,7 @@ def test_quadrilateral_plane_source():
     resolution = [10, 11]
     maskPlane = chagu.mask.quadrilateral_plane_source(domain, resolution)
 
-    assert type(maskPlane) == type(vtk.vtkPlaneSource())
+    assert maskPlane.IsA("vtkPlaneSource")
     assert list(maskPlane.GetOrigin()) == domain[:3]
     assert list(maskPlane.GetPoint1()) == domain[3:6]
     assert list(maskPlane.GetPoint2()) == domain[6:]
