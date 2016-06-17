@@ -8,14 +8,74 @@ import pytest
 import vtk
 
 
+@pytest.mark.xfail
 def test_create_mask_from_opts():
     """
     Test chagu.mask.create_mask_from_opts. We test the following cases:
 
-    1. Test!
+    1. Check for inconsistent inputs regarding the type of the mask, and the
+        length of the domain and resolution lists.
+    2. Behaviours function as intended (see the function's docstring).
+    3. Increasing glyphSize decreases the number of points in the mask, and
+        vice versa.
+
     """
 
-    # Test 1: Test!
+    # Test 1: Check for inconsistent inputs regarding the type of the mask, and
+    # the length of the domain and resolution lists.
+    boundingBox = [-10, 10, -5, 5, -2, 2]
+    glyphSize = 1
+
+    # Plane mask, len(domain) != 9.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=range(10),
+                                         maskResolution=None, maskType="plane")
+    assert "maskDomain" in testException.value.message
+
+    # Plane mask, len(resolution) != 2.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=None,
+                                         maskResolution=range(5),
+                                         maskType="plane")
+    assert "maskResolution" in testException.value.message
+
+    # Volume mask, len(domain) != 12.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=range(50),
+                                         maskResolution=None,
+                                         maskType="volume")
+    assert "maskDomain" in testException.value.message
+
+    # Volume mask, len(resolution) != 3.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=None,
+                                         maskResolution=range(5),
+                                         maskType="volume")
+    assert "maskResolution" in testException.value.message
+
+    # len(domain)-len(resolution) != 9-2 or 12-3
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=range(9),
+                                         maskResolution=range(3),
+                                         maskType=None)
+    assert "9-3" in testException.value.message
+
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=range(2),
+                                         maskResolution=range(12),
+                                         maskType=None)
+    assert "2-12" in testException.value.message
+
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize, maskDomain=range(1),
+                              maskResolution=range(2), maskType=None)
+    assert "1-2" in testException.value.message
 
 
 def test_plane_mask():
