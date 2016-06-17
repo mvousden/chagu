@@ -232,6 +232,7 @@ class Visualisation(object):
         self._windowSize = windowSizeValue
 
     # Filter functions.
+    contour = filters.contour
     extract_vector_components = filters.extract_vector_components
     slice_data_with_plane = filters.slice_data_with_plane
 
