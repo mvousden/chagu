@@ -28,7 +28,7 @@ Requirements
 To use Chagu like we do, you will need:
 
  - Python 2.7.10
- - VTK 5.10.1, 6.3.0 (support for >=7 is coming, possibly)
+ - VTK 5.10.1 or 6.3.0 (support for >=7 is coming, possibly)
  - Numpy
  - Matplotlib
  - GraphViz (the python module)
