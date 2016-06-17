@@ -62,7 +62,7 @@ def test_no_examples_missing():
                       "example_autopipe_1.py",
                       "example_autopipe_2.py",
                       "example_custom_vtk_object.py",
-                      "example_frontpage_slices.py",
+                      "example_frontpage.py",
                       "example_nasty_2d.py",
                       "example_the_works.py",
                       "example_tiny.py"]
@@ -95,8 +95,8 @@ def test_example_custom_vtk_object():
 
 
 @pytest.mark.skipif(interactive is False, reason="Requires user interaction.")
-def test_example_frontpage_slices():
-    run_check_output("example_frontpage_slices.py", ["out.png"])
+def test_example_frontpage():
+    run_check_output("example_frontpage.py", ["out.png"])
 
 
 @pytest.mark.skipif(interactive is False, reason="Requires user interaction.")
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         test_example_autopipe_1()
         test_example_autopipe_2()
         test_example_custom_vtk_object()
-        test_example_frontpage_slices()
+        test_example_frontpage()
         test_example_nasty_2d()
         test_example_the_works()
         test_example_tiny()
