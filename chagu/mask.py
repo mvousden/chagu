@@ -255,6 +255,7 @@ def cube_mask(domain, resolution):
         maskVolume.AddInputConnection(thisPlane.GetOutputPort())
 
     # Phew!
+    maskVolume.Update()
     maskFilter = vtk.vtkProbeFilter()
     maskFilter.SetInputConnection(maskVolume.GetOutputPort())
     return maskFilter

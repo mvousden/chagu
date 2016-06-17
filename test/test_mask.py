@@ -98,7 +98,6 @@ def test_cube_mask():
     cubeMask = chagu.mask.cube_mask(domain, resolution)
 
     assert cubeMask.IsA("vtkProbeFilter")
-    cubeMask.GetInput().Update()
     assert cubeMask.GetInput().GetBounds() == (domain[0], domain[3],
                                                domain[1], domain[7],
                                                domain[2], domain[11])
