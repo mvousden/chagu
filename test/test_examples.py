@@ -63,6 +63,7 @@ def test_no_examples_missing():
                       "example_autopipe_2.py",
                       "example_custom_vtk_object.py",
                       "example_frontpage.py",
+                      "example_isosurface.py",
                       "example_nasty_2d.py",
                       "example_the_works.py",
                       "example_tiny.py"]
