@@ -511,9 +511,51 @@ def lookup_table_from_RGB_colourmap(colourMap, scalarRange=[-1., 1.],
 
 def nasty_arrow_polydata(length, width, thickness):
     """
-    Create polydata representing a 3D arrow that looks like --->. The origin of
-    the arrow is at the centre of the shaft pointing in the positive
-    x-direction. Polydata in this case is a series of points, and the
+    Create polydata representing a 3D arrow that looks like this:
+
+
+                             length
+                      |-------------------|
+
+                                  +--+       -
+                                 / \  \      |
+                                +   \  \     |
+                      +--------------+  \    |w
+                     /|           \ /    \   |i
+                  - +--------------+      +  |d
+                  | |O|                  /   |t
+        thickness | | +--------------+  /    |h
+                  | |/              /  /     |
+                  - +--------------/  /      |
+                                  +--+       -
+                      y          /  /
+                     /|\        +--+   \
+                      |               /thickness
+                      O-->x          \
+                     /
+                   |/
+                   z-
+
+
+    or as a bird's eye view:
+
+                                 +--+       -
+                                  \  \      |
+                                   \  \     |
+                   - +--------------+  \    |w
+                   | |                  \   |i
+         thickness | |                   +  |d
+                   | |                  /   |t
+                   - +--------------+  /    |h
+                                   /  /     |
+                                  /  /      |
+                                 +--+       -
+
+                     |------------------|
+                            length
+
+    The origin of the arrow (O) is at the centre of the shaft pointing in the
+    positive x-direction. Polydata in this case is a series of points, and the
     connectivity between these points used to form cells.
 
     Arguments:
@@ -535,7 +577,7 @@ def nasty_arrow_polydata(length, width, thickness):
     wHf = width / 2.
     zHf = thickness / 2.
 
-    # Some diagonal lengths using pythagoras.
+    # Some diagonal lengths using Pythagoras.
     x = (0.5 * thickness ** 2) ** 0.5
     y = (3.0 * thickness ** 2) ** 0.5
 
@@ -551,13 +593,13 @@ def nasty_arrow_polydata(length, width, thickness):
     # Pointy bit.
     points[4] = lHf, 0., zHf
 
-    # Abusing symmetry to analyse negative width coordinates.
+    # Abusing symmetry to calculate negative width coordinates.
     for zI in xrange(4):
         cloneIx = 3 - zI
         points[zI + 5] = [points[cloneIx, 0], -points[cloneIx, 1],
                           points[cloneIx, 2]]
 
-    # Abusing symmetry to analyse negative depth coordinates.
+    # Abusing symmetry to calculate negative depth coordinates.
     for zI in xrange(9):
         points[9 + zI] = points[zI, 0], points[zI, 1], -points[zI, 2]
 
