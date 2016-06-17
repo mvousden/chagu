@@ -572,6 +572,17 @@ def nasty_arrow_polydata(length, width, thickness):
 
     Returns a vtkPolyData object representing the arrow.
     """
+    # Checking inputs.
+    if length <= 0:
+        raise ValueError("Non-positive length '{}' passed to "
+                         "nasty_arrow_polydata.".format(length))
+    if width <= 0:
+        raise ValueError("Non-positive width '{}' passed to "
+                         "nasty_arrow_polydata.".format(width))
+    if thickness <= 0:
+        raise ValueError("Non-positive thickness '{}' passed to "
+                         "nasty_arrow_polydata.".format(thickness))
+
     # Some shorthand for readability.
     lHf = length / 2.
     wHf = width / 2.
