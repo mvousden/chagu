@@ -100,6 +100,11 @@ def test_example_frontpage_slices():
 
 
 @pytest.mark.skipif(interactive is False, reason="Requires user interaction.")
+def test_example_isosurface():
+    run_check_output("example_isosurface.py", [])
+
+
+@pytest.mark.skipif(interactive is False, reason="Requires user interaction.")
 def test_example_nasty_2d():
     run_check_output("example_nasty_2d.py",
                      ["2d_nasty_pipeline.gv.pdf"])
