@@ -25,7 +25,7 @@ compName = vis.extract_vector_components(component=2)
 surfName = vis.act_surface(opacity=0.2)
 
 contourName = vis.contour(-0.3)
-isoSurfaceName = vis.act_surface(opacity=0.5)
+isoSurfaceName = vis.act_surface(opacity=0.5, colourMap="PRGn")
 
 slices = []
 cones = []
