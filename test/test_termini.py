@@ -4,11 +4,12 @@ chagu/termini.py. Tests are detailed in the function documentation.
 """
 
 import chagu
+import numpy as np
 import pytest
 import vtk
 
 
-def test_nasty_arrow_polydata()
+def test_nasty_arrow_polydata():
     """
     Test chagu.mask.create_mask_from_opts. We test the following cases:
 
@@ -38,7 +39,7 @@ def test_nasty_arrow_polydata()
     lx = 10
     ly = 5
     lz = 2
-    arrowPolyData = chagu.termini.nasty_arrow_polydata(lx, ly, lz
+    arrowPolyData = chagu.termini.nasty_arrow_polydata(lx, ly, lz)
 
     assert arrowPolyData.GetNumberOfPoints() == 18
     assert np.abs(np.array(arrowPolyData.GetPoint(0)) -
