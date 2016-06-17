@@ -15,7 +15,7 @@ import sys
 pathToThisFile = os.path.dirname(os.path.realpath(__file__))
 examplesPath = "{}/../example".format(pathToThisFile)
 outputPath = "{}/output".format(examplesPath)
-interactive = True if "--interactive" in sys.argv else False
+interactive = False
 
 
 def run_check_output(examplePath, outputFiles):
