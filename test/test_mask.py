@@ -20,12 +20,64 @@ def test_create_mask_from_opts():
 
 def test_plane_mask():
     """
-    Test chagu.mask.plane_mask. We test the following cases:
-
-    1. Test!
+    Test chagu.mask.plane_mask. These tests are very similar to those used in
+    test_cube_mask, since plane_mask is a convenience function for cube_mask.
     """
 
-    # Test 1: Test!
+    # Test 1: If resolution contains a value that doesn't typecast well into an
+    # integer, a TypeError is raised.
+    domain = [0., 0., 0.,
+              0., 0., 1.,
+              0., 1., 0.]
+    with pytest.raises(TypeError) as testException:
+        chagu.mask.plane_mask(domain, [14.2, 10])
+    assert "integer" in testException.value.message
+    assert "14.2" in testException.value.message
+
+    with pytest.raises(TypeError) as testException:
+        chagu.mask.plane_mask(domain, [10, 3.1412, 1])
+    assert "integer" in testException.value.message
+    assert "3.14" in testException.value.message
+
+    # Test 2: If any of the domain points overlap, a ValueError is raised.
+    domain = [0., 0., 0.,
+              0., 0., 1.,
+              0., 0., 1.]
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.plane_mask(domain, [10, 10])
+    assert "overlap" in testException.value.message
+
+    # Test 3: If a negative resolution is passed, a ValueError is raised.
+    domain = [0., 0., 1.,
+              1., 0., 0.,
+              0., 1., 0.]
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.plane_mask(domain, [1, -4])
+    assert "-4" in testException.value.message
+
+    # Test 4: If the length of any input is incorrect, a ValueError is raised.
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.plane_mask(domain + [5], [1, 1])
+    assert "omain" in testException.value.message
+    with pytest.raises(ValueError) as testException:
+        chagu.mask.plane_mask(domain, [1, 1, 1])
+    assert "esolution" in testException.value.message
+
+    # Test 5: If all is well, check that the polydata has the correct points
+    # and resolution.
+    domain = [-2, -2, 0,
+               2, -2, 0,
+              -2,  2, 0]
+    resolution = [5, 11]
+    planeMask = chagu.mask.plane_mask(domain, resolution)
+
+    assert planeMask.IsA("vtkProbeFilter")
+    assert planeMask.GetInput().GetBounds() == (domain[0], domain[3],
+                                               domain[1], domain[7],
+                                               domain[2], domain[2])
+    assert planeMask.GetInput().GetNumberOfCells() == reduce(lambda x, y: x * y,
+                                                            resolution)
+
 
 
 def test_cube_mask():
