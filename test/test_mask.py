@@ -73,8 +73,10 @@ def test_create_mask_from_opts():
     assert "2-12" in testException.value.message
 
     with pytest.raises(ValueError) as testException:
-        chagu.mask.create_mask_from_opts(boundingBox, glyphSize, maskDomain=range(1),
-                              maskResolution=range(2), maskType=None)
+        chagu.mask.create_mask_from_opts(boundingBox, glyphSize,
+                                         maskDomain=range(1),
+                                         maskResolution=range(2),
+                                         maskType=None)
     assert "1-2" in testException.value.message
 
 
