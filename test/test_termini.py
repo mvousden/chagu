@@ -9,6 +9,15 @@ import pytest
 import vtk
 
 
+@pytest.mark.skipif(True, reason="Not yet implemented")
+def test_lookup_table_from_RGB_colourmap():
+    """
+    Test chagu.termini.lookup_table_from_RGB_colourmap. We test the following
+    cases:
+    """
+    return
+
+
 def test_nasty_arrow_polydata():
     """
     Test chagu.termini.nasty_arrow_polydata. We test the following cases:
@@ -52,4 +61,5 @@ def test_nasty_arrow_polydata():
 
 
 if __name__ == "__main__":
+    test_lookup_table_from_RGB_colourmap()
     test_nasty_arrow_polydata()
