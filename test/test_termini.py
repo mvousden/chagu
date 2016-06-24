@@ -11,7 +11,7 @@ import vtk
 
 def test_nasty_arrow_polydata():
     """
-    Test chagu.mask.create_mask_from_opts. We test the following cases:
+    Test chagu.termini.nasty_arrow_polydata. We test the following cases:
 
     1. If any dimension is not positive, a ValueError is raised.
     2. If all is well, check the number of points and their positions for a few
