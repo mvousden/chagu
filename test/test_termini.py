@@ -14,8 +14,29 @@ def test_lookup_table_from_RGB_colourmap():
     """
     Test chagu.termini.lookup_table_from_RGB_colourmap. We test the following
     cases:
+
+    1. If colourMap is a string that does not match a colourmap defined in
+        matplotlib.cm, an AttributeError is raised.
+    2. If scalarRange minimum and maximum values are reversed, a ValueError is
+        raised.
+    3. If tableSize is less than 1, a ValueError is raised.
+    4. If all is well, check that the colourmap has been mapped properly with
+        the correct number of segments.
     """
-    return
+
+    # Test 1: If colourMap is a string that does not match a colourmap defined
+    # in matplotlib.cm, an AttributeError is raised.
+    cMap = "RdBu"
+    with pytest.raises(AttributeError):
+        chagu.termini.lookup_table_from_RGB_colourmap(cMap + "quackers")
+
+    # Test 2: If scalarRange minimum and maximum values are reversed, a
+    # ValueError is raised.
+    scalarRange = [-1, 1][::-1]
+    with pytest.raises(ValueError):
+        chagu.termini.lookup_table_from_RGB_colourmap(cMap,
+                                                      scalarRange=scalarRange)
+    # <!>
 
 
 def test_nasty_arrow_polydata():
