@@ -153,6 +153,8 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
 
     if zMax is None:
         zMax = self._camera["position"][2]  # Elevation
+
+    if xyMax is None:
         xyMax = zMax * 1.95  # <!> Not sure why.
 
     plane_tilt_angle = np.tan(zMax / xyMax)
