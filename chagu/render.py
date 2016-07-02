@@ -165,8 +165,10 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
         if verbose is True:
             print "Rendering frame {} of {}.".format(zI + 1,
                                                      rotation_resolution)
-        xPos = np.cos(angles[zI]) * xyMax
-        yPos = np.sin(angles[zI]) * xyMax
+        xCentre = (self._boundingBox[1] - self._boundingBox[0]) / 2.
+        yCentre = (self._boundingBox[3] - self._boundingBox[2]) / 2.
+        xPos = np.cos(angles[zI]) * xyMax + xCentre
+        yPos = np.sin(angles[zI]) * xyMax + yCentre
         zPos = zMax
         camera.SetPosition(xPos, yPos, zPos)
 
