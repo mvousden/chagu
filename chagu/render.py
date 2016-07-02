@@ -204,6 +204,12 @@ def visualise_interact(self):
     interactor.Initialize()
     interactor.Start()
 
+    camera = renderer.GetActiveCamera()
+    print("Camera information:")
+    print("Camera position: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetPosition()))
+    print("Camera view-up: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetViewUp()))
+    print("Camera focal point: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetFocalPoint()))
+
     renderWindow.Finalize()
     interactor.TerminateApp()
 
