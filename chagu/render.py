@@ -177,10 +177,13 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
         yUp = (1 - zUp) * np.sin(angles[zI])
         camera.SetViewUp(xUp, yUp, zUp)
 
+        renderer.ResetCameraClippingRange()
+
         # The format specifier of the output filename should vary with the
         # resolution.
         outSpecifier = len(str(rotation_resolution))
         outPath = "{}_{:0{}}.png".format(imageStackName, zI, outSpecifier)
+
         save_snapshot(renderWindow, outPath)
 
 
@@ -220,6 +223,7 @@ def visualise_save(self, imageFilename, offscreenRendering=True):
     Returns nothing.
     """
     renderer, renderWindow = self.build_renderer_and_window()
+    renderer.ResetCameraClippingRange()
     renderWindow.SetOffScreenRendering(offscreenRendering)
     renderWindow.Render()
     save_snapshot(renderWindow, imageFilename)
