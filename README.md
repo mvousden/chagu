@@ -1,4 +1,4 @@
-Build status: [![Circle CI](https://circleci.com/gh/mvousden/chagu.svg?style=shield)](https://circleci.com/gh/mvousden/chagu) [![codecov](https://codecov.io/gh/mvousden/chagu/branch/development/graph/badge.svg)](https://codecov.io/gh/mvousden/chagu)
+Pretty badges: [![Circle CI](https://circleci.com/gh/mvousden/chagu.svg?style=shield)](https://circleci.com/gh/mvousden/chagu) [![codecov](https://codecov.io/gh/mvousden/chagu/branch/development/graph/badge.svg)](https://codecov.io/gh/mvousden/chagu)
 
 Chagu
 =====
@@ -28,7 +28,7 @@ Requirements
 To use Chagu like we do, you will need:
 
  - Python 2.7.10
- - VTK 5.10.1, 6.3.0 (support for >=7 is coming, possibly)
+ - VTK 5.10.1 or 6.3.0 (support for >=7 is coming, possibly)
  - Numpy
  - Matplotlib
  - GraphViz (the python module)
@@ -37,7 +37,7 @@ Getting Started and Helping Out
 ===============================
 
 To get some idea of how to use this module, add the path of this repository to
-your PYTHONPATH. Some examples are in "example/examples.py", which demonstrate
+your PYTHONPATH. Some examples are in "example/" (obviously), which demonstrate
 the functionality of this module.
 
 If you want to help out, check the issue tracker for tasks and create a fork or

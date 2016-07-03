@@ -153,6 +153,8 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
 
     if zMax is None:
         zMax = self._camera["position"][2]  # Elevation
+
+    if xyMax is None:
         xyMax = zMax * 1.95  # <!> Not sure why.
 
     plane_tilt_angle = np.tan(zMax / xyMax)
@@ -163,8 +165,10 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
         if verbose is True:
             print "Rendering frame {} of {}.".format(zI + 1,
                                                      rotation_resolution)
-        xPos = np.cos(angles[zI]) * xyMax
-        yPos = np.sin(angles[zI]) * xyMax
+        xCentre = (self._boundingBox[1] - self._boundingBox[0]) / 2.
+        yCentre = (self._boundingBox[3] - self._boundingBox[2]) / 2.
+        xPos = np.cos(angles[zI]) * xyMax + xCentre
+        yPos = np.sin(angles[zI]) * xyMax + yCentre
         zPos = zMax
         camera.SetPosition(xPos, yPos, zPos)
 
@@ -173,10 +177,13 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
         yUp = (1 - zUp) * np.sin(angles[zI])
         camera.SetViewUp(xUp, yUp, zUp)
 
+        renderer.ResetCameraClippingRange()
+
         # The format specifier of the output filename should vary with the
         # resolution.
         outSpecifier = len(str(rotation_resolution))
         outPath = "{}_{:0{}}.png".format(imageStackName, zI, outSpecifier)
+
         save_snapshot(renderWindow, outPath)
 
 
@@ -197,6 +204,12 @@ def visualise_interact(self):
     interactor.Initialize()
     interactor.Start()
 
+    camera = renderer.GetActiveCamera()
+    print("Camera information:")
+    print("Camera position: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetPosition()))
+    print("Camera view-up: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetViewUp()))
+    print("Camera focal point: {:3.3f}, {:3.3f}, {:3.3f}".format(*camera.GetFocalPoint()))
+
     renderWindow.Finalize()
     interactor.TerminateApp()
 
@@ -216,6 +229,7 @@ def visualise_save(self, imageFilename, offscreenRendering=True):
     Returns nothing.
     """
     renderer, renderWindow = self.build_renderer_and_window()
+    renderer.ResetCameraClippingRange()
     renderWindow.SetOffScreenRendering(offscreenRendering)
     renderWindow.Render()
     save_snapshot(renderWindow, imageFilename)
