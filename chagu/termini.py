@@ -56,6 +56,8 @@ class Terminus:
         if vtkEndObject is not None:
             self.SetInputConnection = vtkEndObject.SetInputConnection
             self.GetNumberOfInputPorts = vtkEndObject.GetNumberOfInputPorts
+            self.GetNumberOfOutputPorts = vtkEndObject.GetNumberOfOutputPorts
+            self.GetOutputPort = vtkEndObject.GetOutputPort
 
 
 def act_colourbar(self, colourBarName=None, colourMap=None, labelProps={},
