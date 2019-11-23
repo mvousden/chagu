@@ -72,7 +72,7 @@ def load_visualisation_toolkit_file(self, filePath, readerName=None):
     # Get some bounding box data for later. If we have already loaded some
     # data, keep the most extreme.
     thisBoundingBox = vtReader.GetOutputDataObject(0).GetBounds()
-    for zI in xrange(3):
+    for zI in range(3):
         self._boundingBox[zI * 2] = min(self._boundingBox[zI * 2],
                                         thisBoundingBox[zI * 2])
         self._boundingBox[zI * 2 + 1] = max(self._boundingBox[zI * 2 + 1],

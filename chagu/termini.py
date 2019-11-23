@@ -484,7 +484,7 @@ def lookup_table_from_RGB_colourmap(colourMap, scalarRange=[-1., 1.],
     # plotting.
     segments = colourMap._segmentdata
     ctf = vtk.vtkColorTransferFunction()
-    for zI in xrange(len(segments['blue'])):
+    for zI in range(len(segments['blue'])):
 
         # Segment data is a dictionary with three values corresponding to
         # "red", "green", and "blue". These values are arrays of tuples, where
@@ -552,13 +552,13 @@ def nasty_arrow_polydata(length, width, thickness):
     points[4] = lHf, 0., zHf
 
     # Abusing symmetry to analyse negative width coordinates.
-    for zI in xrange(4):
+    for zI in range(4):
         cloneIx = 3 - zI
         points[zI + 5] = [points[cloneIx, 0], -points[cloneIx, 1],
                           points[cloneIx, 2]]
 
     # Abusing symmetry to analyse negative depth coordinates.
-    for zI in xrange(9):
+    for zI in range(9):
         points[9 + zI] = points[zI, 0], points[zI, 1], -points[zI, 2]
 
     # Create a vtkPoints object to use with polydata, and populate it.

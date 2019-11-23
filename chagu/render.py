@@ -37,7 +37,7 @@ def build_renderer_and_window(self):
     # Build the renderer, and add all the actors that this visualisation object
     # is looking after.
     renderer = vtk.vtkRenderer()
-    for terminus in self._vtkTermini.itervalues():
+    for terminus in self._vtkTermini.values():
         renderer.AddActor(terminus.actor)
     renderer.SetBackground(*self._background)
 
@@ -161,10 +161,10 @@ def visualise_animate_rotate(self, imageStackName, offscreenRendering=True,
     angles = np.linspace(0, np.pi * 2, rotation_resolution)
 
     # Render each frame independently.
-    for zI in xrange(rotation_resolution):
+    for zI in range(rotation_resolution):
         if verbose is True:
-            print "Rendering frame {} of {}.".format(zI + 1,
-                                                     rotation_resolution)
+            print("Rendering frame {} of {}.".format(zI + 1,
+                                                     rotation_resolution))
         xCentre = (self._boundingBox[1] - self._boundingBox[0]) / 2.
         yCentre = (self._boundingBox[3] - self._boundingBox[2]) / 2.
         xPos = np.cos(angles[zI]) * xyMax + xCentre

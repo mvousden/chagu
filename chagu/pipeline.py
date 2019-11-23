@@ -52,7 +52,7 @@ def autopipe(self):
     #   because we are not connecting it to anything.
     # - If the terminus is a nasty vector terminus, connect it directly to the
     #   filereader if possible.
-    for zJ in xrange(len(order)):
+    for zJ in range(len(order)):
         vtkObjectRecv = order[zJ]
         if isinstance(self.get_vtk_object(vtkObjectRecv),
                       termini.Terminus) is True:
@@ -69,7 +69,7 @@ def autopipe(self):
                 if self.is_nasty(vtkObjectRecv) is True:
 
                     # Search for the filereader to connect to the terminus.
-                    for zI in xrange(len(order)):
+                    for zI in range(len(order)):
                         vtkObjectSend = order[zI]
                         if self.is_reader(vtkObjectSend) is True:
                             toPop.append(zJ)
@@ -79,7 +79,7 @@ def autopipe(self):
                 else:
 
                     # Search for the vtkObject to connect to the terminus.
-                    for zI in xrange(zJ, len(order)):
+                    for zI in range(zJ, len(order)):
                         vtkObjectSend = order[zI]
                         if isinstance(self.get_vtk_object(vtkObjectSend),
                                       termini.Terminus) is False:
@@ -105,7 +105,7 @@ def autopipe(self):
         order.pop(index)
 
     # Connect remaining vtkObjects in order.
-    for zI in xrange(1, len(order)):
+    for zI in range(1, len(order)):
         # If the zI-1th object is a fileReader, it means objects have been
         # added in a strange order. Not much we can do about this though, but
         # we need to check it.
@@ -324,7 +324,7 @@ def draw_pipeline_graphviz(self, directory=None, name=None):
                              directory=directory)
 
     # Build nodes.
-    for objectName in self._vtkObjects.iterkeys():
+    for objectName in self._vtkObjects.keys():
         graph.node(objectName)
 
     # Build edges.

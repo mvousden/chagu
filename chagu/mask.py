@@ -256,7 +256,7 @@ def cube_mask(domain, resolution):
         theseCorners = []
 
         # Add some multiple of the final corner to each corner.
-        for zI in xrange(3):
+        for zI in range(3):
             theseCorners += list(corners[zI] + multiple * propVector)
 
         # Create the plane and add it to the volume.
